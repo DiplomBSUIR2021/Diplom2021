@@ -1,15 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.diploma.demo.view.MailController"
-            prefHeight="400.0" prefWidth="600.0">
-    <Button text="Входящие" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-    <Button text="Исходящие" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-</GridPane>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.diploma.demo.view.MailController"
+      prefHeight="400.0" prefWidth="600.0">
+   <TabPane tabClosingPolicy="UNAVAILABLE">
+      <tabs>
+         <Tab fx:id="IncomingMailPage" text="Входящая корреспонденция">
+            <fx:include source="mail/incoming-mail-page.fxml"/>
+         </Tab>
+         <Tab fx:id="OutcomingMailPage" text="Исходящая корреспонденция">
+            <fx:include source="mail/outcoming-mail-page.fxml"/>
+         </Tab>
+      </tabs>
+
+   </TabPane>
+</VBox>
