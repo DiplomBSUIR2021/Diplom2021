@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.diploma.demo.view.maintab.MainTabController">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="906.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Жильцы">
+            <content>
+                  <ScrollPane>
+                     <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <ScrollPane AnchorPane.bottomAnchor="-189.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-706.0" AnchorPane.topAnchor="0.0">
+                              <content>
+                            <TabPane prefHeight="369.0" prefWidth="906.0" tabClosingPolicy="UNAVAILABLE">
+                              <tabs>
+                                <Tab text="Юрлица">
+                                  <content>
+                                    <AnchorPane>
+                                      <VBox>
+                                        <TableView fx:id="businessOwnerTableView" prefHeight="314.0" prefWidth="890.0">
+                                          <columns>
+                                            <TableColumn text="#">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="id" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Название">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="name" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Дата регистрации">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="registrationDate" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Документ">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="docType" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Номер документа">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="docN" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Дата регистрации">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="docRegistration.date" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Орг. зарегист.">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="docRegistration.issueOrganization" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Адрес">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="address" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Почтовый адрес">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="postAddress" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Номер птн">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="ptnN" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Телефон">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="phoneNumber" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                            <TableColumn text="Доля">
+                                              <cellValueFactory>
+                                                <PropertyValueFactory property="ownership.proportion" />
+                                              </cellValueFactory>
+                                            </TableColumn>
+                                          </columns>
+                                        </TableView>
+                                        <Button onAction="#openCreateBusiness" text="добавить" />
+                                      </VBox>
+                                    </AnchorPane>
+                                  </content>
+                                </Tab>
+                                <Tab text="Физлица">
+                                  <content>
+                                    <AnchorPane>
+                                      <TableView fx:id="individualOwnerTableView">
+                                        <columns>
+                                          <TableColumn text="#" />
+                                          <TableColumn text="ФИО" />
+                                          <TableColumn text="Дата рождения" />
+                                          <TableColumn text="Документ" />
+                                          <TableColumn text="Номер документа" />
+                                          <TableColumn text="Дата регистрации" />
+                                          <TableColumn text="Орг. зарегист." />
+                                          <TableColumn text="Адрес" />
+                                          <TableColumn text="Почтовый адрес" />
+                                          <TableColumn text="Номер птн" />
+                                          <TableColumn text="Телефон" />
+                                          <TableColumn text="Номер помещения" />
+                                        </columns>
+                                      </TableView>
+                                      <Button onAction="#openCreateBusiness" text="добавить" />
+                                    </AnchorPane>
+                                  </content>
+                                </Tab>
+                              </tabs>
+                            </TabPane>
+                              </content>
+                           </ScrollPane>
+                    </AnchorPane>
+                     </content>
+                  </ScrollPane>
+            </content>
+          </Tab>
+          <Tab text="Земельный участок">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+
+            </content>
+          </Tab>
+            <Tab text="Здание">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab text="Помещения">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

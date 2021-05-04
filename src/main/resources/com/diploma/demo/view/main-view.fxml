@@ -13,7 +13,7 @@
     <TabPane tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab fx:id="mainPageTab" text="Главная">
-                <fx:include source="main-page-tab.fxml"/>
+                <fx:include source="maintab/main-page-tab.fxml"/>
             </Tab>
             <Tab fx:id="mailPageTab" text="Корреспонденция">
                 <fx:include source="mail-page-tab.fxml"/>

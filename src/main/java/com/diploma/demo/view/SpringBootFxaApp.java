@@ -1,7 +1,6 @@
 package com.diploma.demo.view;
 
 import com.diploma.demo.DemoApplication;
-import com.diploma.demo.core.landplot.controller.LandPlotController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
