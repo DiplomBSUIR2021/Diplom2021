@@ -57,7 +57,7 @@ public class Owner {
             @AttributeOverride(name = "city", column = @Column(name = "post_city")),
             @AttributeOverride(name = "street", column = @Column(name = "post_street")),
             @AttributeOverride(name = "homeNumber", column = @Column(name = "post_home_number")),
-            @AttributeOverride(name = "apartmentN", column = @Column(name = "post_apartment_n")),
+            @AttributeOverride(name = "apartmentn", column = @Column(name = "post_apartment_n")),
     })
     @Embedded
     private Address postAddress;
