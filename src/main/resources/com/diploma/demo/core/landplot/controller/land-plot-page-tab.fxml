@@ -6,9 +6,9 @@
 
 <VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.diploma.demo.view.landplot.LandPlotController">
    <children>
-      <TabPane tabClosingPolicy="UNAVAILABLE">
+      <TabPane tabClosingPolicy="UNAVAILABLE" fx:id="landPlotsTabPane">
          <tabs>
-            <Tab fx:id="landPlotsTab" text="landPlots">
+            <Tab fx:id="landPlotsTabView" text="landPlots">
                <VBox alignment="CENTER" spacing="10">
                   <Button fx:id="refreshTableButton" onAction="#refresh">Refresh</Button>
                   <TableView fx:id="tableView" prefHeight="336.0" prefWidth="1007.0">
@@ -41,64 +41,56 @@
                   </TableView>
                </VBox>
             </Tab>
-            <Tab fx:id="createlandPlotsTab" text="create landPlots">
+            <Tab fx:id="landPlotsTabCreate" text="create landPlots">
                <ScrollPane>
                   <GridPane alignment="center" hgap="10" prefHeight="550.0" vgap="10">
 
                      <Text text="Welcome" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
 
-                     <Label text="Appartmente:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                     <Label text="id:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                     <TextField fx:id="idTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                     <TextField fx:id="appartmentTextField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     <Label text="Apartment:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                     <TextField fx:id="apartmentTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                     <Label text="city:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                     <Label text="city:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                     <TextField fx:id="cityTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                     <TextField fx:id="cityTextField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     <Label text="home_number:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                     <TextField fx:id="homeNumberTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                     <Label text="home_number:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                     <Label text="region:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                     <TextField fx:id="regionTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-                     <TextField fx:id="homeNumberTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     <Label text="street:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                     <TextField fx:id="streetTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-                     <Label text="region:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                     <Label text="cadastral_number:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                     <TextField fx:id="cadastralNumberTextField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-                     <TextField fx:id="regionTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                     <Label text="category:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                     <TextField fx:id="categoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
 
-                     <Label text="street:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                     <Label text="current_marks:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                     <TextField fx:id="currentMarksTextField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
 
-                     <TextField fx:id="streetTextField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                     <Label text="intended_use:" GridPane.columnIndex="0" GridPane.rowIndex="10" />
+                     <TextField fx:id="intetdedUseTextField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
 
-                     <Label text="cadastral_number:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-
-                     <TextField fx:id="cadastralNumberTextField" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-
-                     <Label text="category:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
-
-                     <TextField fx:id="categoryTextField" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-
-                     <Label text="current_marks:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
-
-                     <TextField fx:id="currentMarksTextField" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-
-                     <Label text="intended_use:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
-
-                     <TextField fx:id="intetdedUseTextField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-
-                     <Label text="land_plot_purpose:" GridPane.columnIndex="0" GridPane.rowIndex="10" />
-
-                     <TextField fx:id="LandPlotPurposeTextField" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                     <Label text="land_plot_purpose:" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+                     <TextField fx:id="landPlotPurposeTextField" GridPane.columnIndex="1" GridPane.rowIndex="11" />
 
 
-                     <Label text="notes:" GridPane.columnIndex="0" GridPane.rowIndex="11" />
-
-                     <TextField fx:id="notesTextField" GridPane.columnIndex="1" GridPane.rowIndex="11" />
-
-
-                     <Label text="surface:" GridPane.columnIndex="0" GridPane.rowIndex="12" />
-
-                     <TextField fx:id="surfaceTextField" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                     <Label text="notes:" GridPane.columnIndex="0" GridPane.rowIndex="12" />
+                     <TextField fx:id="notesTextField" GridPane.columnIndex="1" GridPane.rowIndex="12" />
 
 
-                     <Button fx:id="createButton" onAction="#click" text="Create" GridPane.columnIndex="0" GridPane.rowIndex="13" />
+                     <Label text="surface:" GridPane.columnIndex="0" GridPane.rowIndex="13" />
+                     <TextField fx:id="surfaceTextField" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+
+
+                     <Button fx:id="createButton" onAction="#click" text="Create" GridPane.columnIndex="0" GridPane.rowIndex="14" />
+                     <Button fx:id="updateButton" onAction="#updateLandPlot" text="Update" GridPane.columnIndex="1" GridPane.rowIndex="14" />
                   </GridPane>
                </ScrollPane>
             </Tab>

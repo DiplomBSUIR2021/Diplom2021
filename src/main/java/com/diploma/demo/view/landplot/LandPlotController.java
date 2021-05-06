@@ -17,12 +17,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Component
 @FxmlView("land-plot.fxml")
 public class LandPlotController {
     LandPlotServiceImpl landPlotService;
+
+    @FXML
+    private TabPane landPlotsTabPane;
+    @FXML
+    private Tab landPlotsTabView;
+    @FXML
+    private Tab landPlotsTabCreate;
 
     @FXML
     private TableView tableView;
@@ -55,7 +63,9 @@ public class LandPlotController {
 
 
     @FXML
-    private TextField appartmentTextField;
+    private TextField idTextField;
+    @FXML
+    private TextField apartmentTextField;
     @FXML
     private TextField cityTextField;
     @FXML
@@ -73,7 +83,7 @@ public class LandPlotController {
     @FXML
     private TextField intetdedUseTextField;
     @FXML
-    private TextField LandPlotPurposeTextField;
+    private TextField landPlotPurposeTextField;
     @FXML
     private TextField notesTextField;
     @FXML
@@ -86,31 +96,103 @@ public class LandPlotController {
     private void click(ActionEvent event) {
         LandPlot landPlot = new LandPlot();
         Address address = new Address();
-
         landPlot.setAddress(address);
 
-        if (isNotEmptyField(appartmentTextField)) {
-            address.setApartmentn(Long.parseLong(appartmentTextField.getText()));
-            appartmentTextField.setText("");
+        idTextField.setText("");
+        updateLandPlotFromTextField(landPlot);
+        landPlotService.addLandPlot(landPlot);
+        
+        refresh();
+        landPlotsTabPane.getSelectionModel().select(landPlotsTabView);
+    }
+    
+    @FXML
+    private void updateLandPlot(ActionEvent event) {
+        Long id = Long.parseLong(idTextField.getText());
+        if (id == null) {
+            return;
+        }
+        Optional<LandPlot> landPlot = landPlotService.getById(id);
+        landPlot.ifPresent(val -> {
+            idTextField.setText("");
+            updateLandPlotFromTextField(val);
+            landPlotService.updateLandPlot(val);
+
+            refresh();
+        });
+        landPlotsTabPane.getSelectionModel().select(landPlotsTabView);
+    }
+
+    @FXML
+    void refresh() {
+        ObservableList<LandPlot> plots = FXCollections.observableArrayList(landPlotService.getAll());
+        this.tableView.getItems().clear();
+        this.tableView.getItems().addAll(plots);
+    }
+
+    @FXML
+    void initialize() {
+        updateLandPlot();
+        this.tableView.setRowFactory(tv -> {
+            TableRow<LandPlot> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
+                        && event.getClickCount() == 2) {
+
+                    LandPlot clickedRow = row.getItem();
+                    feelTextFields(clickedRow);
+                    landPlotsTabPane.getSelectionModel().select(landPlotsTabCreate);
+                    System.out.println("row clicket");
+                    System.out.println(clickedRow.getId());
+                }
+            });
+            return row ;
+        });
+    }
+
+    void feelTextFields(LandPlot landPlot) {
+        setTextFieldValue(idTextField, landPlot.getId().toString());
+        if (landPlot.getAddress().getApartmentn() != null) {
+            setTextFieldValue(apartmentTextField, landPlot.getAddress().getApartmentn().toString());
+        } else {
+            setTextFieldValue(apartmentTextField,"");
+        }
+        setTextFieldValue(cityTextField, landPlot.getAddress().getCity());
+        setTextFieldValue(homeNumberTextField, landPlot.getAddress().getHomeNumber());
+        setTextFieldValue(regionTextField,landPlot.getAddress().getRegion());
+        setTextFieldValue(streetTextField, landPlot.getAddress().getStreet());
+
+        setTextFieldValue(cadastralNumberTextField, landPlot.getCadastralNumber());
+        setTextFieldValue(categoryTextField, landPlot.getCategory());
+        setTextFieldValue(currentMarksTextField, landPlot.getCurrentMarks());
+        setTextFieldValue(intetdedUseTextField, landPlot.getIntendedUse());
+        setTextFieldValue(landPlotPurposeTextField, landPlot.getLandPlotPurpose());
+        setTextFieldValue(notesTextField, landPlot.getNotes());
+    }
+
+    private void updateLandPlotFromTextField(LandPlot landPlot) {
+        if (isNotEmptyField(apartmentTextField)) {
+            landPlot.getAddress().setApartmentn(Long.parseLong(apartmentTextField.getText()));
+            apartmentTextField.setText("");
         }
 
         if (isNotEmptyField(cityTextField)) {
-            address.setCity(cityTextField.getText());
+            landPlot.getAddress().setCity(cityTextField.getText());
             cityTextField.setText("");
         }
 
         if (isNotEmptyField(homeNumberTextField)) {
-            address.setHomeNumber(homeNumberTextField.getText());
+            landPlot.getAddress().setHomeNumber(homeNumberTextField.getText());
             homeNumberTextField.setText("");
         }
 
         if (isNotEmptyField(regionTextField)) {
-            address.setRegion(regionTextField.getText());
+            landPlot.getAddress().setRegion(regionTextField.getText());
             regionTextField.setText("");
         }
 
         if (isNotEmptyField(streetTextField)) {
-            address.setStreet(streetTextField.getText());
+            landPlot.getAddress().setStreet(streetTextField.getText());
             streetTextField.setText("");
         }
 
@@ -136,51 +218,32 @@ public class LandPlotController {
             intetdedUseTextField.setText("");
         }
 
-        if (isNotEmptyField(LandPlotPurposeTextField)) {
-            landPlot.setLandPlotPurpose(LandPlotPurposeTextField.getText());
-            LandPlotPurposeTextField.setText("");
+        if (isNotEmptyField(landPlotPurposeTextField)) {
+            landPlot.setLandPlotPurpose(landPlotPurposeTextField.getText());
+            landPlotPurposeTextField.setText("");
         }
 
         if (isNotEmptyField(notesTextField)) {
             landPlot.setNotes(notesTextField.getText());
             notesTextField.setText("");
         }
-
-        landPlotService.addLandPlot(landPlot);
-
-        createButton.setText("You've clicked!");
     }
 
-    @FXML
-    void refresh() {
-        ObservableList<LandPlot> plots = FXCollections.observableArrayList(landPlotService.getAll());
-        this.tableView.getItems().clear();
-        this.tableView.getItems().addAll(plots);
-    }
-
-    @FXML
-    void initialize() {
-        update();
-        this.tableView.setRowFactory(tv -> {
-            TableRow<LandPlot> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
-                        && event.getClickCount() == 2) {
-
-                    LandPlot clickedRow = row.getItem();
-                    System.out.println("row clicket");
-                    System.out.println(clickedRow.getId());
-                }
-            });
-            return row ;
-        });
-    }
 
     private boolean isNotEmptyField(TextField field) {
-        return !field.getText().isEmpty();
+        return !field.getText().isEmpty() && !field.getText().equals("");
     }
 
-    void update() {
+    private void setTextFieldValue(TextField textField, String value) {
+        if (value == null || value.isEmpty()) {
+            textField.setText("");
+        } else {
+            textField.setText(value);
+        }
+    }
+
+
+    void updateLandPlot() {
         tcID.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         tcAppartamentn.setCellValueFactory(cellData -> {
