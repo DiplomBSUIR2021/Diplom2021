@@ -4,6 +4,8 @@ import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,7 +25,12 @@ public class LandPlotControllerRead {
     @FXML
     private TableView tableView;
 
-
+    @FXML
+    void refresh() {
+        ObservableList<LandPlot> plots = FXCollections.observableArrayList(landPlotService.getAll());
+        this.tableView.getItems().clear();
+        this.tableView.getItems().addAll(plots);
+    }
 
     @FXML
     void initialize() {
