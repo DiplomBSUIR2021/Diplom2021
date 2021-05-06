@@ -1,14 +1,10 @@
 package com.diploma.demo.view.landplot;
 
 import com.diploma.demo.core.landplot.LandPlot;
-import com.diploma.demo.core.landplot.service.LandPlotService;
 import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,6 +23,8 @@ public class LandPlotControllerRead {
     @FXML
     private TableView tableView;
 
+
+
     @FXML
     void initialize() {
         update();
@@ -38,7 +36,12 @@ public class LandPlotControllerRead {
         this.tableView.getColumns().add(nameColumn);
 
         TableColumn<LandPlot, Long> appart = new TableColumn<>("Appartamentn");
-        appart.setCellValueFactory(cellData -> new SimpleLongProperty(cellData.getValue().getAddress().getApartmentn()).asObject());
+        appart.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getAddress().getApartmentn() != null) {
+                return new SimpleLongProperty(cellData.getValue().getAddress().getApartmentn()).asObject();
+            }
+            return null;
+        });
         this.tableView.getColumns().add(appart);
 
 
@@ -68,16 +71,10 @@ public class LandPlotControllerRead {
         addStringValueInTable("Notes", "notes");
 
         List<LandPlot> plots = landPlotService.getAll();
-        for (int i = 0; i < plots.size(); i += 1) {
-            System.out.println(plots.get(i).getLandPlotPurpose());
-        }
         this.tableView.getItems().addAll(plots);
     }
 
     private void addStringValueInTable(String name, String nameInDatabase) {
-        System.out.println("name : " + name);
-        System.out.println("nameInDatabase : " + nameInDatabase);
-
         TableColumn<LandPlot, String> columm = new TableColumn<>(name);
         columm.setCellValueFactory(new PropertyValueFactory<>(nameInDatabase));
         this.tableView.getColumns().add(columm);
