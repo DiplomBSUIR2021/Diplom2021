@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.ListView?>
 <VBox xmlns:fx="http://javafx.com/fxml" spacing="10" alignment="CENTER"
-      fx:controller="com.diploma.demo.view.landplot.LandPlotController">
+      fx:controller="com.diploma.demo.view.landplot.LandPlotController2">
 
     <GridPane>
         <Label text="Кадастровый номер" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
