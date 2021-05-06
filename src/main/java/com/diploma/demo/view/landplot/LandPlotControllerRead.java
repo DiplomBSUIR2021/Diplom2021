@@ -1,15 +1,17 @@
 package com.diploma.demo.view.landplot;
 
+import com.diploma.demo.core.landplot.Address;
 import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,105 @@ public class LandPlotControllerRead {
     @FXML
     private TableView tableView;
 
+
+
+    @FXML
+    private TextField appartmentTextField;
+    @FXML
+    private TextField cityTextField;
+    @FXML
+    private TextField homeNumberTextField;
+    @FXML
+    private TextField regionTextField;
+    @FXML
+    private TextField streetTextField;
+    @FXML
+    private TextField cadastralNumberTextField;
+    @FXML
+    private TextField categoryTextField;
+    @FXML
+    private TextField currentMarksTextField;
+    @FXML
+    private TextField intetdedUseTextField;
+    @FXML
+    private TextField LandPlotPurposeTextField;
+    @FXML
+    private TextField notesTextField;
+    @FXML
+    private TextField surfaceTextField;
+
+    @FXML
+    private Button createButton;
+
+    @FXML
+    private void click(ActionEvent event) {
+        LandPlot landPlot = new LandPlot();
+        Address address = new Address();
+
+        landPlot.setAddress(address);
+
+        if (isNotEmptyField(appartmentTextField)) {
+            address.setApartmentn(Long.parseLong(appartmentTextField.getText()));
+            appartmentTextField.setText("");
+        }
+
+        if (isNotEmptyField(cityTextField)) {
+            address.setCity(cityTextField.getText());
+            cityTextField.setText("");
+        }
+
+        if (isNotEmptyField(homeNumberTextField)) {
+            address.setHomeNumber(homeNumberTextField.getText());
+            homeNumberTextField.setText("");
+        }
+
+        if (isNotEmptyField(regionTextField)) {
+            address.setRegion(regionTextField.getText());
+            regionTextField.setText("");
+        }
+
+        if (isNotEmptyField(streetTextField)) {
+            address.setStreet(streetTextField.getText());
+            streetTextField.setText("");
+        }
+
+
+        ////////////////////////////////////////////////////
+        if (isNotEmptyField(cadastralNumberTextField)) {
+            landPlot.setCadastralNumber(cadastralNumberTextField.getText());
+            cadastralNumberTextField.setText("");
+        }
+
+        if (isNotEmptyField(categoryTextField)) {
+            landPlot.setCategory(categoryTextField.getText());
+            categoryTextField.setText("");
+        }
+
+        if (isNotEmptyField(currentMarksTextField)) {
+            landPlot.setCurrentMarks(currentMarksTextField.getText());
+            currentMarksTextField.setText("");
+        }
+
+        if (isNotEmptyField(intetdedUseTextField)) {
+            landPlot.setIntendedUse(intetdedUseTextField.getText());
+            intetdedUseTextField.setText("");
+        }
+
+        if (isNotEmptyField(LandPlotPurposeTextField)) {
+            landPlot.setLandPlotPurpose(LandPlotPurposeTextField.getText());
+            LandPlotPurposeTextField.setText("");
+        }
+
+        if (isNotEmptyField(notesTextField)) {
+            landPlot.setNotes(notesTextField.getText());
+            notesTextField.setText("");
+        }
+
+        landPlotService.addLandPlot(landPlot);
+
+        createButton.setText("You've clicked!");
+    }
+
     @FXML
     void refresh() {
         ObservableList<LandPlot> plots = FXCollections.observableArrayList(landPlotService.getAll());
@@ -35,6 +136,23 @@ public class LandPlotControllerRead {
     @FXML
     void initialize() {
         update();
+        this.tableView.setRowFactory(tv -> {
+            TableRow<LandPlot> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
+                        && event.getClickCount() == 2) {
+
+                    LandPlot clickedRow = row.getItem();
+                    System.out.println("row clicket");
+                    System.out.println(clickedRow.getId());
+                }
+            });
+            return row ;
+        });
+    }
+
+    private boolean isNotEmptyField(TextField field) {
+        return !field.getText().isEmpty();
     }
 
     void update() {
