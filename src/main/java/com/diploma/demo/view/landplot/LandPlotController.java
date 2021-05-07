@@ -15,7 +15,11 @@ import javafx.scene.input.MouseButton;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +28,10 @@ import java.util.Optional;
 @FxmlView("land-plot.fxml")
 public class LandPlotController {
     LandPlotServiceImpl landPlotService;
+
+
+    @PersistenceContext
+    private EntityManager em;
 
     @FXML
     private TabPane landPlotsTabPane;
@@ -93,6 +101,12 @@ public class LandPlotController {
     private Button createButton;
 
     @FXML
+    private Button btnHistory;
+    private String btnHistoryInactiveText = "Get History";
+    private String btnHistoryActiveText = "Back to all data";
+    private Long activeRowID = null;
+
+    @FXML
     private void click(ActionEvent event) {
         LandPlot landPlot = new LandPlot();
         Address address = new Address();
@@ -131,23 +145,61 @@ public class LandPlotController {
     }
 
     @FXML
+    @Transactional
+    void getHistory() {
+        if (this.btnHistory.getText().equals(btnHistoryInactiveText)) {
+            this.btnHistory.setText(btnHistoryActiveText);
+            System.out.println(activeRowID);
+            List test = getHistoryById(activeRowID);
+            List<LandPlot> resultOfSearch = new ArrayList<>();
+            test.forEach(objAud -> {
+                Object[] testobj = (Object[]) objAud;
+                System.out.println("Here");
+                resultOfSearch.add((LandPlot) testobj[0]);
+                System.out.println(testobj[0]);
+                System.out.println(testobj[0].getClass());
+                System.out.println(testobj[1]);
+                System.out.println(testobj[2]);
+
+            });
+
+            ObservableList<LandPlot> plots = FXCollections.observableArrayList(resultOfSearch);
+            this.tableView.getItems().clear();
+            this.tableView.getItems().addAll(plots);
+        } else {
+            this.btnHistory.setText(btnHistoryInactiveText);
+            refresh();
+        }
+
+    }
+
+    @FXML
     void initialize() {
         updateLandPlot();
         this.tableView.setRowFactory(tv -> {
             TableRow<LandPlot> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
-                        && event.getClickCount() == 2) {
-
+                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY) {
                     LandPlot clickedRow = row.getItem();
-                    feelTextFields(clickedRow);
-                    landPlotsTabPane.getSelectionModel().select(landPlotsTabCreate);
-                    System.out.println("row clicket");
-                    System.out.println(clickedRow.getId());
+                    if (event.getClickCount() == 2) {
+                        activeRowID = row.getItem().getId();
+                        feelTextFields(clickedRow);
+                        landPlotsTabPane.getSelectionModel().select(landPlotsTabCreate);
+                        System.out.println("row clicket");
+                        System.out.println(clickedRow.getId());
+                    } else if (event.getClickCount() == 1) {
+                        activeRowID = row.getItem().getId();
+                        System.out.println("1 click");
+                        System.out.println(clickedRow.getId());
+                    }
                 }
             });
             return row ;
         });
+    }
+
+    public List getHistoryById(long id) {
+        return landPlotService.getRevisions(id);
     }
 
     void feelTextFields(LandPlot landPlot) {

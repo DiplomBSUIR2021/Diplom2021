@@ -10,4 +10,5 @@ public interface LandPlotService {
     void updateLandPlot(LandPlot landPlot);
     Optional<LandPlot> getById(Long id);
     List<LandPlot> getAll();
+
 }

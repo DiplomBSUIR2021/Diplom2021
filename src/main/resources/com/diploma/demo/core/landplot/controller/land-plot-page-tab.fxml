@@ -11,6 +11,7 @@
             <Tab fx:id="landPlotsTabView" text="landPlots">
                <VBox alignment="CENTER" spacing="10">
                   <Button fx:id="refreshTableButton" onAction="#refresh">Refresh</Button>
+                  <Button fx:id="btnHistory" onAction="#getHistory"> Get History</Button>
                   <TableView fx:id="tableView" prefHeight="336.0" prefWidth="1007.0">
                      <columns>
                         <TableColumn fx:id="tcID" text="ID">
@@ -94,7 +95,7 @@
                   </GridPane>
                </ScrollPane>
             </Tab>
-            <Tab>
+            <Tab fx:id="landPlotTabHistory" text="History">
 
             </Tab>
          </tabs>

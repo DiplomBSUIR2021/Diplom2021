@@ -27,7 +27,7 @@ public class Address {
     @Column(name="home_number")
     private String homeNumber;
 
-    @Column(name="apartmentn")
+    @Column(name="apartment_n")
     private Long apartmentn;
 
 
