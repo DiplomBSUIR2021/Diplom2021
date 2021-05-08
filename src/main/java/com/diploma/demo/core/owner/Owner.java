@@ -26,6 +26,9 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name ="type")
+    private String type;
+
     @Column(name = "name")
     private String name;
 
@@ -45,9 +48,12 @@ public class Owner {
     @JoinColumn(name="owner_id")
     private StateRegistration docRegistration;
 
-    //личный номер (УНП для юрлица)
+    //личный номер (УНП для юрлица) ///  registration_number or personal_number??
     @Column(name = "registration_number")
-    private String personalNumber;
+    private String registrationNumber;
+
+    /*@Column(name = "personal_number")
+    private String personalNumber;*/
 
     @Embedded
     private Address registrationAddress;
