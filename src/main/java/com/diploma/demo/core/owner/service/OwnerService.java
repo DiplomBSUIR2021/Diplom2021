@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface OwnerService {
     List<Owner> getAll();
+    Owner addOwner(Owner owner);
 }

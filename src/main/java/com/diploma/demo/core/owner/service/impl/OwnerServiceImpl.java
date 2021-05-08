@@ -17,4 +17,9 @@ public class OwnerServiceImpl implements OwnerService {
     public List<Owner> getAll() {
         return ownerRepository.findAll();
     }
+
+    @Override
+    public Owner addOwner(Owner owner) {
+        return ownerRepository.saveAndFlush(owner);
+    }
 }

@@ -1,9 +1,12 @@
 package com.diploma.demo.view.utils;
 
+import com.diploma.demo.core.landplot.Address;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 
+import java.time.LocalDate;
 import java.util.function.Consumer;
 
 public class CrudController {
@@ -15,12 +18,15 @@ public class CrudController {
 
     private TabPane tabPane;
 
-    protected void setTextFieldValue(TextField textField, String value) {
-        if (value == null || value.isEmpty()) {
-            textField.setText("");
-        } else {
-            textField.setText(value);
+    private String getStringValue(String str) {
+        if (str == null || str.isEmpty()) {
+            return "";
         }
+        return str;
+    }
+
+    protected void setTextFieldValue(TextField textField, String value) {
+        textField.setText(getStringValue(value));
     }
 
     protected void setTextFieldValue(TextField textField, Double value) {
@@ -39,6 +45,12 @@ public class CrudController {
         if (isNotEmptyField(textField)) {
             action.accept(Long.parseLong(textField.getText()));
             textField.setText("");
+        }
+    }
+
+    protected void setDateFromDatePicker(Consumer<LocalDate> action, DatePicker datePicker) {
+        if (datePicker != null) {
+            action.accept(datePicker.getValue());
         }
     }
 
@@ -71,5 +83,29 @@ public class CrudController {
             System.out.println("we here");
             tabPane.getSelectionModel().select(tab);
         }
+    }
+
+    protected String getFullAddress(Address address) {
+        if (address == null) {
+            System.out.println(" null address");
+            return "";
+        }
+
+        String region = getStringValue(address.getRegion());
+        String city = getStringValue(address.getCity());
+        String street = getStringValue(address.getStreet());
+        String homeNumber = getStringValue(address.getHomeNumber());
+
+        Long apartmentL = address.getApartmentn();
+        String apartment;
+        if (apartmentL == null) {
+            apartment = "";
+        } else {
+            apartment = address.getApartmentn().toString();
+        }
+
+        return "Region: " + region + " .City: " + city + " .Street: " + street + " .Home number: " +
+                homeNumber + " .Apartment: " + apartment;
+
     }
 }
