@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.diploma.demo.view.MainController"
-            prefHeight="400.0" prefWidth="600.0">
-    <TabPane tabClosingPolicy="UNAVAILABLE">
+<VBox prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.diploma.demo.view.MainController">
+    <TabPane prefHeight="400.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab fx:id="mainPageTab" text="Главная">
-                <fx:include source="maintab/main-page-tab.fxml"/>
+                <fx:include source="maintab/main-page-tab.fxml" />
             </Tab>
             <Tab fx:id="mailPageTab" text="Корреспонденция">
-                <fx:include source="mail-page-tab.fxml"/>
+                <fx:include source="mail-page-tab.fxml" />
             </Tab>
             <Tab fx:id="counterPageTab" text="Контроль датчиков">
-                <fx:include source="counter-page-tab.fxml"/>
+                <fx:include source="counter-page-tab.fxml" />
             </Tab>
         </tabs>
 
