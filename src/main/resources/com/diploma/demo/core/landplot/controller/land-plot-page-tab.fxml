@@ -10,36 +10,43 @@
          <tabs>
             <Tab fx:id="landPlotsTabView" text="landPlots">
                <VBox alignment="CENTER" spacing="10">
-                  <Button fx:id="refreshTableButton" onAction="#refresh">Refresh</Button>
-                  <Button fx:id="btnHistory" onAction="#getHistory"> Get History</Button>
-                  <TableView fx:id="tableView" prefHeight="336.0" prefWidth="1007.0">
-                     <columns>
-                        <TableColumn fx:id="tcID" text="ID">
-                        </TableColumn>
-                        <TableColumn fx:id="tcAppartamentn" text="Appartamentn">
-                        </TableColumn>
-                        <TableColumn fx:id="tcCity" text="City">
-                        </TableColumn>
-                        <TableColumn fx:id="tcHomeNumber" text="Home number">
-                        </TableColumn>
-                        <TableColumn fx:id="tcRegion" text="Region">
-                        </TableColumn>
-                        <TableColumn fx:id="tcStreet" text="Street">
-                        </TableColumn>
-                        <TableColumn fx:id="tcCadastralNumber" text="cadastral number">
-                        </TableColumn>
-                        <TableColumn fx:id="tcCategory" text="Category">
-                        </TableColumn>
-                        <TableColumn fx:id="tcCurrentMarks" text="Current marks">
-                        </TableColumn>
-                        <TableColumn fx:id="tcIntendedUse" text="Intended use">
-                        </TableColumn>
-                        <TableColumn fx:id="tcPurpose" text="Purpose">
-                        </TableColumn>
-                        <TableColumn fx:id="tcNotes" text="Notes">
-                        </TableColumn>
-                     </columns>
-                  </TableView>
+                  <HBox alignment="CENTER">
+                     <Button fx:id="refreshTableButton" onAction="#refresh">Refresh</Button>
+                     <Button fx:id="btnHistory" onAction="#getHistory"> Get History</Button>
+                     <Button fx:id="btnDelete" onAction="#delete">Delete</Button>
+                  </HBox>
+                  <ScrollPane>
+                     <TableView fx:id="tableView" prefHeight="336.0" prefWidth="1107.0">
+                        <columns>
+                           <TableColumn fx:id="tcID" text="ID">
+                           </TableColumn>
+                           <TableColumn fx:id="tcAppartamentn" text="Appartamentn">
+                           </TableColumn>
+                           <TableColumn fx:id="tcCity" text="City">
+                           </TableColumn>
+                           <TableColumn fx:id="tcHomeNumber" text="Home number">
+                           </TableColumn>
+                           <TableColumn fx:id="tcRegion" text="Region">
+                           </TableColumn>
+                           <TableColumn fx:id="tcStreet" text="Street">
+                           </TableColumn>
+                           <TableColumn fx:id="tcCadastralNumber" text="cadastral number">
+                           </TableColumn>
+                           <TableColumn fx:id="tcCategory" text="Category">
+                           </TableColumn>
+                           <TableColumn fx:id="tcCurrentMarks" text="Current marks">
+                           </TableColumn>
+                           <TableColumn fx:id="tcIntendedUse" text="Intended use">
+                           </TableColumn>
+                           <TableColumn fx:id="tcPurpose" text="Purpose">
+                           </TableColumn>
+                           <TableColumn fx:id="tcNotes" text="Notes">
+                           </TableColumn>
+                           <TableColumn fx:id="tcSurface" text="Surface">
+                           </TableColumn>
+                        </columns>
+                     </TableView>
+                  </ScrollPane>
                </VBox>
             </Tab>
             <Tab fx:id="landPlotsTabCreate" text="create landPlots">

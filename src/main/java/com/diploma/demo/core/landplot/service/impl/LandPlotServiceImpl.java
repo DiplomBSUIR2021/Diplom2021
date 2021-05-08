@@ -9,7 +9,6 @@ import org.hibernate.envers.query.AuditQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +22,7 @@ public class LandPlotServiceImpl implements LandPlotService {
 
     @Override
     public LandPlot addLandPlot(LandPlot landPlot) {
-        LandPlot savedLandPlot = landPlotRepository.saveAndFlush(landPlot);
-        return savedLandPlot;
+        return landPlotRepository.saveAndFlush(landPlot);
     }
 
     public Optional<LandPlot>  getById(Long id) {
@@ -40,12 +38,24 @@ public class LandPlotServiceImpl implements LandPlotService {
     }
 
     public List getRevisions(Long id) {
-        AuditQuery auditQuery = null;
+        AuditQuery auditQuery;
         auditQuery = auditReader.createQuery()
                 .forRevisionsOfEntity(LandPlot.class, false,true);
 
         auditQuery.add(AuditEntity.id().eq(id));
 
         return auditQuery.getResultList();
+    }
+
+    @Override
+    public void deleteLandPlot(Long id) {
+        landPlotRepository.deleteById(id);
+        landPlotRepository.flush();
+    }
+
+    @Override
+    public void deleteLandPlot(LandPlot landPlot) {
+        landPlotRepository.delete(landPlot);
+        landPlotRepository.flush();
     }
 }
