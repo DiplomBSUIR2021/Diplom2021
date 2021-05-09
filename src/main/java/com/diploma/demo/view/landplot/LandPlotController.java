@@ -7,7 +7,6 @@ import com.diploma.demo.view.utils.CrudController;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -24,7 +23,7 @@ import java.util.Optional;
 
 @Component
 @FxmlView("land-plot.fxml")
-public class LandPlotController extends CrudController {
+public class LandPlotController<T> extends CrudController {
     LandPlotServiceImpl landPlotService;
 
 
@@ -130,42 +129,20 @@ public class LandPlotController extends CrudController {
     }
 
     @FXML
-    void refresh() {
-        ObservableList<LandPlot> plots = FXCollections.observableArrayList(landPlotService.getAll());
-        this.tableView.getItems().clear();
-        this.tableView.getItems().addAll(plots);
+    protected void refresh() {
+        refreshTableView(landPlotService);
     }
 
     @FXML
     void getHistory() {
-        if (this.btnHistory.getText().equals(btnHistoryInactiveText)) {
-            this.btnHistory.setText(btnHistoryActiveText);
-            System.out.println(activeRowID);
-            List test =  landPlotService.getRevisions(activeRowID);
-            List<LandPlot> resultOfSearch = new ArrayList<>();
-            test.forEach(objAud -> {
-                Object[] testobj = (Object[]) objAud;
-                System.out.println("Here");
-                resultOfSearch.add((LandPlot) testobj[0]);
-                System.out.println(testobj[0]);
-                System.out.println(testobj[0].getClass());
-                System.out.println(testobj[1]);
-                System.out.println(testobj[2]);
-
-            });
-
-            ObservableList<LandPlot> plots = FXCollections.observableArrayList(resultOfSearch);
-            this.tableView.getItems().clear();
-            this.tableView.getItems().addAll(plots);
-        } else {
-            this.btnHistory.setText(btnHistoryInactiveText);
-            refresh();
-        }
+        getHistory(landPlotService);
     }
 
     @FXML
     void initialize() {
         setTabPane(landPlotsTabPane);
+        setTableView(tableView);
+        setBtnHistory(btnHistory);
         updateLandPlot();
         this.tableView.setRowFactory(tv -> {
             TableRow<LandPlot> row = new TableRow<>();
@@ -191,11 +168,7 @@ public class LandPlotController extends CrudController {
 
     @FXML
     private void delete() {
-        if (activeRowID == null) {
-            return;
-        }
-        landPlotService.deleteLandPlot(activeRowID);
-        refresh();
+        deleteEntity(landPlotService);
     }
 
     void feelTextFields(LandPlot landPlot) {

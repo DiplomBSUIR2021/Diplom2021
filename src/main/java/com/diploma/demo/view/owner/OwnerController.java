@@ -1,13 +1,10 @@
 package com.diploma.demo.view.owner;
 
 import com.diploma.demo.core.landplot.Address;
-import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.owner.Owner;
 import com.diploma.demo.core.owner.service.impl.OwnerServiceImpl;
 import com.diploma.demo.view.utils.CrudController;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -65,22 +62,26 @@ public class OwnerController extends CrudController {
     private TextField tfDocN;
 
     @FXML
+    private Button btnHistory;
+
+    @FXML
     void initialize() {
         setTabPane(tabPane);
+        setTableView(ownerTableView);
+        setBtnHistory(btnHistory);
         read();
         this.ownerTableView.setRowFactory(tv -> {
             TableRow<Owner> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY) {
                     Owner clickedRow = row.getItem();
+                    activeRowID = row.getItem().getId();
                     if (event.getClickCount() == 2) {
-                        activeRowID = row.getItem().getId();
                         feelTextFields(clickedRow);
                         selectTab(tabCreate);
                         System.out.println("row clicket");
                         System.out.println(clickedRow.getId());
                     } else if (event.getClickCount() == 1) {
-                        activeRowID = row.getItem().getId();
                         System.out.println("1 click");
                         System.out.println(clickedRow.getId());
                     }
@@ -88,6 +89,10 @@ public class OwnerController extends CrudController {
             });
             return row;
         });
+    }
+    @FXML
+    private void getHistory() {
+        getHistory(ownerService);
     }
 
     @FXML
@@ -121,17 +126,11 @@ public class OwnerController extends CrudController {
     }
     @FXML
     private void delete() {
-        if (activeRowID == null) {
-            return;
-        }
-        ownerService.delete(activeRowID);
-        refresh();
+        deleteEntity(ownerService);
     }
 
-    void refresh() {
-        ObservableList<Owner> plots = FXCollections.observableArrayList(ownerService.getAll());
-        this.ownerTableView.getItems().clear();
-        this.ownerTableView.getItems().addAll(plots);
+    protected void refresh() {
+        refreshTableView(ownerService);
     }
 
     private void updateObjectFromTextField(Owner owner) {

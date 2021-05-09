@@ -1,12 +1,14 @@
 package com.diploma.demo.view.utils;
 
+import com.diploma.demo.core.MyCrudService;
 import com.diploma.demo.core.landplot.Address;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class CrudController {
@@ -17,6 +19,8 @@ public class CrudController {
     public final String btnHistoryActiveText = "Back to all data";
 
     private TabPane tabPane;
+    private TableView tableView;
+    private Button btnHistory;
 
     private String getStringValue(String str) {
         if (str == null || str.isEmpty()) {
@@ -54,6 +58,7 @@ public class CrudController {
     }
 
     protected void setLongValFromTextField(Consumer<Long> action, TextField textField) {
+        // handle errors
         if (isNotEmptyField(textField)) {
             action.accept(Long.parseLong(textField.getText()));
             textField.setText("");
@@ -82,6 +87,14 @@ public class CrudController {
 
     protected void setTabPane(TabPane newTabPane) {
         this.tabPane = newTabPane;
+    }
+
+    protected void setTableView(TableView tableView) {
+        this.tableView = tableView;
+    }
+
+    protected void setBtnHistory(Button btnHistory) {
+        this.btnHistory = btnHistory;
     }
 
     protected void selectTab(Tab tab) {
@@ -118,5 +131,49 @@ public class CrudController {
 
         return "Region: " + region + " .City: " + city + " .Street: " + street + " .Home number: " +
                 homeNumber + " .Apartment: " + apartment;
+    }
+
+    protected void refreshTableView(MyCrudService crudService) {
+        // handle errors
+        ObservableList plots = FXCollections.observableArrayList(crudService.getAll());
+        this.tableView.getItems().clear();
+        this.tableView.getItems().addAll(plots);
+    }
+
+    protected void refreshTableView(ObservableList newData ) {
+        // handle errors
+        this.tableView.getItems().clear();
+        this.tableView.getItems().addAll(newData);
+    }
+
+    protected void deleteEntity(MyCrudService crudService) {
+        if (activeRowID == null) {
+            return;
+        }
+        crudService.delete(activeRowID);
+        refreshTableView(crudService);
+    }
+
+    protected void getHistory(MyCrudService crudService) {
+        if (this.btnHistory.getText().equals(btnHistoryInactiveText)) {
+            this.btnHistory.setText(btnHistoryActiveText);
+            System.out.println(activeRowID);
+            List test =  crudService.getRevisions(activeRowID);
+            List<Object> resultOfSearch = new ArrayList<>();
+            test.forEach(objAud -> {
+                Object[] testobj = (Object[]) objAud;
+                System.out.println("Here");
+                resultOfSearch.add(testobj[0]);
+                System.out.println(testobj[0]);
+                System.out.println(testobj[0].getClass());
+                System.out.println(testobj[1]);
+                System.out.println(testobj[2]);
+
+            });
+            refreshTableView(FXCollections.observableArrayList(resultOfSearch));
+        } else {
+            this.btnHistory.setText(btnHistoryInactiveText);
+            refreshTableView(crudService);
+        }
     }
 }

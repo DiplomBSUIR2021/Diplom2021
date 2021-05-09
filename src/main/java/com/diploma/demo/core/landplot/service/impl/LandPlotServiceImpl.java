@@ -1,5 +1,6 @@
 package com.diploma.demo.core.landplot.service.impl;
 
+import com.diploma.demo.core.MyCrudService;
 import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.repository.LandPlotRepository;
 import com.diploma.demo.core.landplot.service.LandPlotService;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LandPlotServiceImpl implements LandPlotService {
+public class LandPlotServiceImpl implements LandPlotService, MyCrudService {
     @Autowired
     LandPlotRepository landPlotRepository;
 
@@ -48,13 +49,13 @@ public class LandPlotServiceImpl implements LandPlotService {
     }
 
     @Override
-    public void deleteLandPlot(Long id) {
+    public void delete(Long id) {
         landPlotRepository.deleteById(id);
         landPlotRepository.flush();
     }
 
     @Override
-    public void deleteLandPlot(LandPlot landPlot) {
+    public void delete(LandPlot landPlot) {
         landPlotRepository.delete(landPlot);
         landPlotRepository.flush();
     }

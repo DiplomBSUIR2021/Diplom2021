@@ -10,7 +10,7 @@ public interface LandPlotService {
     void updateLandPlot(LandPlot landPlot);
     Optional<LandPlot> getById(Long id);
     List<LandPlot> getAll();
-    void deleteLandPlot(Long id);
-    void deleteLandPlot(LandPlot landPlot);
+    void delete(Long id);
+    void delete(LandPlot landPlot);
 
 }
