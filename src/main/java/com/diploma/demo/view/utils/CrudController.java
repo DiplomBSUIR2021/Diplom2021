@@ -25,6 +25,14 @@ public class CrudController {
         return str;
     }
 
+    protected Long getIdFromTextField(TextField tfID) {
+        String idText = getStringValue(tfID.getText());
+        if (idText.equals("")) {
+            return null;
+        }
+        return Long.parseLong(idText);
+    }
+
     protected void setTextFieldValue(TextField textField, String value) {
         textField.setText(getStringValue(value));
     }
@@ -35,6 +43,10 @@ public class CrudController {
         } else {
             textField.setText(value.toString());
         }
+    }
+
+    protected void setDatePicker(DatePicker datePicker,LocalDate date) {
+            datePicker.setValue(date);
     }
 
     protected boolean isNotEmptyField(TextField field) {
@@ -106,6 +118,5 @@ public class CrudController {
 
         return "Region: " + region + " .City: " + city + " .Street: " + street + " .Home number: " +
                 homeNumber + " .Apartment: " + apartment;
-
     }
 }

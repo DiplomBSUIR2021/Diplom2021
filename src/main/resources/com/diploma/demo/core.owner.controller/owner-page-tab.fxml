@@ -18,47 +18,56 @@
                              fx:id="tabPane">
                         <tabs>
                             <Tab fx:id="tabView" text = "data">
-                                <TableView fx:id="ownerTableView">
-                                    <columns>
-                                        <TableColumn fx:id="tcID" text="#" />
-                                        <TableColumn fx:id="tcType" text="Тип"/>
-                                        <TableColumn fx:id="tcName" text="ФИО" />
-                                        <TableColumn fx:id="tcBirthDate" text="Дата рождения"/>
-                                        <TableColumn fx:id="tcDocType" text="Документ" />
-                                        <TableColumn fx:id="tcDocN" text="Номер документа" />
-                                        <TableColumn fx:id="tcRegistrationDate" text="Дата регистрации" />
-                                        <!--<TableColumn text="Орг. зарегист." />-->
-                                        <TableColumn fx:id="tcAddress" text="Адрес" />
-                                        <!--<TableColumn text="Почтовый адрес" />-->
-                                        <TableColumn text="Номер птн" />
-                                        <TableColumn text="Телефон" />
-                                        <TableColumn text="Номер помещения" />
-                                    </columns>
-                                </TableView>
+                                <VBox>
+                                    <HBox>
+                                        <Button onAction="#delete">Delete</Button>
+                                    </HBox>
+                                    <TableView fx:id="ownerTableView">
+                                        <columns>
+                                            <TableColumn fx:id="tcID" text="#" />
+                                            <TableColumn fx:id="tcType" text="Тип"/>
+                                            <TableColumn fx:id="tcName" text="ФИО" />
+                                            <TableColumn fx:id="tcBirthDate" text="Дата рождения"/>
+                                            <TableColumn fx:id="tcDocType" text="Документ" />
+                                            <TableColumn fx:id="tcDocN" text="Номер документа" />
+                                            <TableColumn fx:id="tcRegistrationDate" text="Дата регистрации" />
+                                            <!--<TableColumn text="Орг. зарегист." />-->
+                                            <TableColumn fx:id="tcAddress" text="Адрес" />
+                                            <!--<TableColumn text="Почтовый адрес" />-->
+                                            <TableColumn text="Номер птн" />
+                                            <TableColumn text="Телефон" />
+                                            <TableColumn text="Номер помещения" />
+                                        </columns>
+                                    </TableView>
+                                </VBox>
                             </Tab>
-                            <Tab text ="Create Owner">
+                            <Tab fx:id="tabCreate" text ="Create Owner">
                                 <ScrollPane>
-                                    <GridPane>
-                                        <Label text="id: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                                        <TextField fx:id="tfID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <VBox alignment="CENTER" spacing="10">
+                                        <HBox>
+                                            <Button fx:id="btnCreate" onAction="#create">Create</Button>
+                                            <Button onAction="#update">Update</Button>
+                                        </HBox>
+                                        <GridPane>
+                                            <Label text="id: " GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                            <TextField fx:id="tfID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                                        <Label text="type: " GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                        <TextField fx:id="tfType" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                            <Label text="type: " GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                            <TextField fx:id="tfType" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                                        <Label text="name: " GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                                        <TextField fx:id="tfName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                            <Label text="name: " GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                            <TextField fx:id="tfName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                                        <Label text="birth date: " GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                                        <DatePicker fx:id="tfBirthDate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                            <Label text="birth date: " GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                            <DatePicker fx:id="tfBirthDate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                                        <Label text="doc type: " GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                                        <TextField fx:id="tfDocType" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                            <Label text="doc type: " GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                            <TextField fx:id="tfDocType" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-                                        <Label text="doc n: " GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                                        <TextField fx:id="tfDocN" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-
-                                        <Button fx:id="btnCreate" onAction="#create">Create</Button>
-                                    </GridPane>
+                                            <Label text="doc n: " GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                            <TextField fx:id="tfDocN" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                        </GridPane>
+                                    </VBox>
                                 </ScrollPane>
                             </Tab>
                             <Tab text="Физлица">

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -20,6 +21,8 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "owner")
 @Audited
+// @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+
 public class Owner {
 
     @Id
