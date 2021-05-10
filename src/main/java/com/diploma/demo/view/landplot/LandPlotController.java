@@ -6,7 +6,6 @@ import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
 import com.diploma.demo.view.utils.CrudController;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -16,9 +15,10 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 
 @Component
@@ -93,7 +93,9 @@ public class LandPlotController<T> extends CrudController {
     private TextField surfaceTextField;
 
     @FXML
-    private Button btnHistory;
+    private Button btnEntityHistory;
+    @FXML
+    private Button btnFullHistory;
 
     @FXML
     private void click(ActionEvent event) {
@@ -134,15 +136,23 @@ public class LandPlotController<T> extends CrudController {
     }
 
     @FXML
-    void getHistory() {
-        getHistory(landPlotService);
+    void getEntityHistory() {
+        getEntityHistory(landPlotService);
+    }
+
+    @FXML
+    private void getFullHistory() {
+        getFullHistory(landPlotService);
     }
 
     @FXML
     void initialize() {
         setTabPane(landPlotsTabPane);
         setTableView(tableView);
-        setBtnHistory(btnHistory);
+
+        setBtnEntityHistory(btnEntityHistory);
+        setBtnFullHistory(btnFullHistory);
+
         updateLandPlot();
         this.tableView.setRowFactory(tv -> {
             TableRow<LandPlot> row = new TableRow<>();
@@ -215,16 +225,36 @@ public class LandPlotController<T> extends CrudController {
         tcID.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         tcAppartamentn.setCellValueFactory(cellData -> {
-            if (cellData.getValue().getAddress().getApartmentn() != null) {
+            if (cellData.getValue().getAddress() != null && cellData.getValue().getAddress().getApartmentn() != null) {
                 return new SimpleLongProperty(cellData.getValue().getAddress().getApartmentn()).asObject();
             }
             return null;
         });
 
-        tcCity.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().getCity()));
-        tcHomeNumber.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().getHomeNumber()));
-        tcRegion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().getRegion()));
-        tcStreet.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().getStreet()));
+        tcCity.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getAddress() != null) {
+                return new SimpleStringProperty(cellData.getValue().getAddress().getCity());
+            }
+            return null;
+        });
+        tcHomeNumber.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getAddress() != null) {
+                return new SimpleStringProperty(cellData.getValue().getAddress().getHomeNumber());
+            }
+            return null;
+        });
+        tcRegion.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getAddress() != null) {
+                return new SimpleStringProperty(cellData.getValue().getAddress().getRegion());
+            }
+            return null;
+        });
+        tcStreet.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getAddress() != null) {
+                return new SimpleStringProperty(cellData.getValue().getAddress().getStreet());
+            }
+            return null;
+        });
 
         tcCadastralNumber.setCellValueFactory(new PropertyValueFactory<>("cadastralNumber"));
         tcCategory.setCellValueFactory(new PropertyValueFactory<>("category"));

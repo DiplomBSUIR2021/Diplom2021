@@ -8,4 +8,5 @@ public interface MyCrudService<T> {
     void delete(Long id);
     List<T> getAll();
     List getRevisions(Long id);
+    List getAllRevisions();
 }

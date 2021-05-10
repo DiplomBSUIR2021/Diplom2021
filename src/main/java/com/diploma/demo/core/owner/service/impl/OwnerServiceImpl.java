@@ -61,4 +61,13 @@ public class OwnerServiceImpl implements OwnerService, MyCrudService {
 
         return auditQuery.getResultList();
     }
+
+    @Override
+    public List getAllRevisions() {
+        AuditQuery auditQuery;
+        auditQuery = auditReader.createQuery()
+                .forRevisionsOfEntity(Owner.class, false,true);
+
+        return auditQuery.getResultList();
+    }
 }

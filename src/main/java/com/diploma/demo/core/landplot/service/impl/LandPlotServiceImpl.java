@@ -49,6 +49,15 @@ public class LandPlotServiceImpl implements LandPlotService, MyCrudService {
     }
 
     @Override
+    public List getAllRevisions() {
+        AuditQuery auditQuery;
+        auditQuery = auditReader.createQuery()
+                .forRevisionsOfEntity(LandPlot.class, false,true);
+
+        return auditQuery.getResultList();
+    }
+
+    @Override
     public void delete(Long id) {
         landPlotRepository.deleteById(id);
         landPlotRepository.flush();

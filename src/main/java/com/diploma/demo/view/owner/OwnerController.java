@@ -62,13 +62,18 @@ public class OwnerController extends CrudController {
     private TextField tfDocN;
 
     @FXML
-    private Button btnHistory;
+    private Button btnEntityHistory;
+    @FXML
+    private Button btnFullHistory;
 
     @FXML
     void initialize() {
         setTabPane(tabPane);
         setTableView(ownerTableView);
-        setBtnHistory(btnHistory);
+
+        setBtnEntityHistory(btnEntityHistory);
+        setBtnFullHistory(btnFullHistory);
+
         read();
         this.ownerTableView.setRowFactory(tv -> {
             TableRow<Owner> row = new TableRow<>();
@@ -91,8 +96,12 @@ public class OwnerController extends CrudController {
         });
     }
     @FXML
-    private void getHistory() {
-        getHistory(ownerService);
+    private void getEntityHistory() {
+        getEntityHistory(ownerService);
+    }
+    @FXML
+    private void getFullHistory() {
+        getFullHistory(ownerService);
     }
 
     @FXML

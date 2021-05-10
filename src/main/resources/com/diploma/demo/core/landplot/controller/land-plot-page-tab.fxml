@@ -15,7 +15,8 @@
                <VBox alignment="CENTER" spacing="10">
                   <HBox alignment="CENTER">
                      <Button fx:id="refreshTableButton" onAction="#refresh">Refresh</Button>
-                     <Button fx:id="btnHistory" onAction="#getHistory"> Get History</Button>
+                     <Button fx:id="btnEntityHistory" onAction="#getEntityHistory"> Get entity history</Button>
+                     <Button fx:id="btnFullHistory" onAction="#getFullHistory"></Button>
                      <Button fx:id="btnDelete" onAction="#delete">Delete</Button>
                   </HBox>
                   <ScrollPane>

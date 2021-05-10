@@ -15,12 +15,16 @@ public class CrudController {
 
     protected Long activeRowID = null;
 
-    public final String btnHistoryInactiveText = "Get History";
-    public final String btnHistoryActiveText = "Back to all data";
+    private final String btnEntityHistoryInactiveText = "Get entity history";
+    private final String btnEntityHistoryActiveText = "Back to all data";
+
+    private final String btnFullHistoryInactiveTest = "Get full history";
+    private final String btnFullHistoryActiveText = "Back to current data";
 
     private TabPane tabPane;
     private TableView tableView;
-    private Button btnHistory;
+    private Button btnEntityHistory;
+    private Button btnFullHistory;
 
     private String getStringValue(String str) {
         if (str == null || str.isEmpty()) {
@@ -93,8 +97,14 @@ public class CrudController {
         this.tableView = tableView;
     }
 
-    protected void setBtnHistory(Button btnHistory) {
-        this.btnHistory = btnHistory;
+    protected void setBtnEntityHistory(Button btnEntityHistory) {
+        this.btnEntityHistory = btnEntityHistory;
+        this.btnEntityHistory.setText(btnEntityHistoryInactiveText);
+    }
+
+    public void setBtnFullHistory(Button btnFullHistory) {
+        this.btnFullHistory = btnFullHistory;
+        this.btnFullHistory.setText(btnFullHistoryInactiveTest);
     }
 
     protected void selectTab(Tab tab) {
@@ -154,25 +164,42 @@ public class CrudController {
         refreshTableView(crudService);
     }
 
-    protected void getHistory(MyCrudService crudService) {
-        if (this.btnHistory.getText().equals(btnHistoryInactiveText)) {
-            this.btnHistory.setText(btnHistoryActiveText);
+    private List<Object> getObjectsFromRevisions(List revisions) {
+        List<Object> result = new ArrayList<>();
+        revisions.forEach(audObj -> {
+            System.out.println(audObj);
+            Object[] audit = (Object[]) audObj;
+            System.out.println("HERE");
+            System.out.println(audit[0]);
+            System.out.println(audit[0].getClass());
+            result.add(audit[0]);
+        });
+        return result;
+    }
+
+    protected void getEntityHistory(MyCrudService crudService) {
+        if (this.btnEntityHistory.getText().equals(btnEntityHistoryInactiveText)) {
+            this.btnEntityHistory.setText(btnEntityHistoryActiveText);
             System.out.println(activeRowID);
             List test =  crudService.getRevisions(activeRowID);
-            List<Object> resultOfSearch = new ArrayList<>();
-            test.forEach(objAud -> {
-                Object[] testobj = (Object[]) objAud;
-                System.out.println("Here");
-                resultOfSearch.add(testobj[0]);
-                System.out.println(testobj[0]);
-                System.out.println(testobj[0].getClass());
-                System.out.println(testobj[1]);
-                System.out.println(testobj[2]);
+            List<Object> resultOfSearch = getObjectsFromRevisions(test);
 
-            });
             refreshTableView(FXCollections.observableArrayList(resultOfSearch));
         } else {
-            this.btnHistory.setText(btnHistoryInactiveText);
+            this.btnEntityHistory.setText(btnEntityHistoryInactiveText);
+            refreshTableView(crudService);
+        }
+    }
+
+    protected void getFullHistory(MyCrudService crudService) {
+        if (this.btnFullHistory.getText().equals(btnFullHistoryInactiveTest)) {
+            this.btnFullHistory.setText(btnFullHistoryActiveText);
+            List revisions = crudService.getAllRevisions();
+            List <Object> resultOfSearch = getObjectsFromRevisions(revisions);
+            refreshTableView(FXCollections.observableArrayList(resultOfSearch));
+
+        } else {
+            this.btnFullHistory.setText(btnFullHistoryInactiveTest);
             refreshTableView(crudService);
         }
     }
