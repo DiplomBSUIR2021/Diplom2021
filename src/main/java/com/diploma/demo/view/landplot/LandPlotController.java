@@ -153,6 +153,9 @@ public class LandPlotController<T> extends CrudController {
         setBtnEntityHistory(btnEntityHistory);
         setBtnFullHistory(btnFullHistory);
 
+        setTextFieldOnlyDigitsInput(idTextField);
+        setTextFieldOnlyDigitsInput(apartmentTextField);
+
         updateLandPlot();
         this.tableView.setRowFactory(tv -> {
             TableRow<LandPlot> row = new TableRow<>();

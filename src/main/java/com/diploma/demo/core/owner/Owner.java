@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
@@ -21,7 +20,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "owner")
 @Audited
-// @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 
 public class Owner {
 
@@ -38,6 +36,9 @@ public class Owner {
     //дата рождения(госрегистрации юрлица)
     @Column(name="registration_date")
     private LocalDate registrationDate;
+
+    @Column(name="birth_date")
+    private LocalDate birthDate;
 
     //тип документа, удостоверяющего личность(юрлица)
     @Column(name ="doc_type")
@@ -79,13 +80,13 @@ public class Owner {
     @Pattern(regexp = "\\+375[0-9]{9}")
     private String phoneNumber;
 
-    @Column(name="viber_number")
-    @Pattern(regexp = "\\+375[0-9]{9}")
-    private String viberNumber;
-
     @Column(name="telegram_number")
     @Pattern(regexp = "\\+375[0-9]{9}")
     private String telegramNumber;
+
+    @Column(name="viber_number")
+    @Pattern(regexp = "\\+375[0-9]{9}")
+    private String viberNumber;
 
     @Column(name="whatsapp_number")
     @Pattern(regexp = "\\+375[0-9]{9}")

@@ -2,6 +2,8 @@ package com.diploma.demo.view.utils;
 
 import com.diploma.demo.core.MyCrudService;
 import com.diploma.demo.core.landplot.Address;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -53,6 +55,12 @@ public class CrudController {
         }
     }
 
+    protected void setComboBoxValue(ComboBox<String> comboBox, String value) {
+        if (value != null) {
+            comboBox.setValue(value);
+        }
+    }
+
     protected void setDatePicker(DatePicker datePicker,LocalDate date) {
             datePicker.setValue(date);
     }
@@ -75,6 +83,10 @@ public class CrudController {
         }
     }
 
+    protected void eraseDate(Consumer<LocalDate> action) {
+        action.accept(null);
+    }
+
     protected void setStringValFromTextField(Consumer<String> action, TextField textField) {
         if (isNotEmptyField(textField)) {
             action.accept(textField.getText());
@@ -86,6 +98,13 @@ public class CrudController {
         if (isNotEmptyField(textField)) {
             action.accept(Double.parseDouble(textField.getText()));
             textField.setText("");
+        }
+    }
+
+    protected void setStringValFromComboBox(Consumer<String> action, ComboBox<String> comboBox) {
+        // errors
+        if (comboBox.getValue() != null) {
+           action.accept(comboBox.getValue());
         }
     }
 
@@ -139,8 +158,8 @@ public class CrudController {
             apartment = address.getApartmentn().toString();
         }
 
-        return "Region: " + region + " .City: " + city + " .Street: " + street + " .Home number: " +
-                homeNumber + " .Apartment: " + apartment;
+        return "Region: " + region + "\nCity: " + city + "\nStreet: " + street + "\nHome number: " +
+                homeNumber + "\nApartment: " + apartment;
     }
 
     protected void refreshTableView(MyCrudService crudService) {
@@ -202,5 +221,16 @@ public class CrudController {
             this.btnFullHistory.setText(btnFullHistoryInactiveTest);
             refreshTableView(crudService);
         }
+    }
+
+    protected void setTextFieldOnlyDigitsInput(TextField textField) {
+        textField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    textField.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
     }
 }
