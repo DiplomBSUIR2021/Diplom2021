@@ -1,6 +1,5 @@
 package com.diploma.demo.core;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -9,4 +8,6 @@ public interface MyCrudService<T> {
     List<T> getAll();
     List getRevisions(Long id);
     List getAllRevisions();
+    Optional<T> findById(Long id);
+    void update(T object);
 }

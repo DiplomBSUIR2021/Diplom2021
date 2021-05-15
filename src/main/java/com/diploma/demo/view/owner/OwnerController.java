@@ -15,15 +15,14 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @FxmlView("owner-page-tab.fxml")
-public class OwnerController extends CrudController {
+public class OwnerController extends CrudController<Owner> {
     OwnerServiceImpl ownerService;
 
     @FXML
-    private TableView ownerTableView;
+    private TableView<Owner> ownerTableView;
     @FXML
     private TabPane tabPane;
     @FXML
@@ -64,7 +63,7 @@ public class OwnerController extends CrudController {
     @FXML
     private TextField tfID;
     @FXML
-    private ComboBox cbType;
+    private ComboBox<String> cbType;
     @FXML
     private String individualOwnerCase;
     @FXML
@@ -136,11 +135,6 @@ public class OwnerController extends CrudController {
                     if (event.getClickCount() == 2) {
                         feelTextFields(clickedRow);
                         selectTab(tabCreate);
-                        System.out.println("row clicket");
-                        System.out.println(clickedRow.getId());
-                    } else if (event.getClickCount() == 1) {
-                        System.out.println("1 click");
-                        System.out.println(clickedRow.getId());
                     }
                 }
             });
@@ -171,18 +165,7 @@ public class OwnerController extends CrudController {
     }
     @FXML
     private void update() {
-        Long id = getIdFromTextField(tfID);
-        if (id == null) {
-            return;
-        }
-        Optional<Owner> owner = ownerService.findById(id);
-        owner.ifPresent(val -> {
-            tfID.setText("");
-            updateObjectFromTextField(val);
-            ownerService.updateOwner(val);
-
-            refresh();
-        });
+        update(ownerService, getIdFromTextField(tfID));
         selectTab(tabView);
     }
     @FXML
@@ -194,7 +177,8 @@ public class OwnerController extends CrudController {
         refreshTableView(ownerService);
     }
 
-    private void updateObjectFromTextField(Owner owner) {
+    @Override
+    protected void updateObjectFromTextField(Owner owner) {
         setStringValFromComboBox(owner::setType, cbType);
 
         setStringValFromTextField(owner::setName, tfName);

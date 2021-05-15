@@ -101,7 +101,7 @@
                      <TextField fx:id="surfaceTextField" GridPane.columnIndex="1" GridPane.rowIndex="13" />
 
 
-                     <Button fx:id="createButton" onAction="#click" text="Create" GridPane.columnIndex="0" GridPane.rowIndex="14" />
+                     <Button fx:id="createButton" onAction="#create" text="Create" GridPane.columnIndex="0" GridPane.rowIndex="14" />
                      <Button fx:id="updateButton" onAction="#updateLandPlot" text="Update" GridPane.columnIndex="1" GridPane.rowIndex="14" />
                   </GridPane>
                </ScrollPane>

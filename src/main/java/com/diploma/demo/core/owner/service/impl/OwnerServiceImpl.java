@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class OwnerServiceImpl implements OwnerService, MyCrudService {
+public class OwnerServiceImpl implements OwnerService {
     @Autowired
     OwnerRepository ownerRepository;
 
@@ -37,7 +37,7 @@ public class OwnerServiceImpl implements OwnerService, MyCrudService {
     }
 
     @Override
-    public void updateOwner(Owner owner) {
+    public void update(Owner owner) {
         ownerRepository.saveAndFlush(owner);
     }
 

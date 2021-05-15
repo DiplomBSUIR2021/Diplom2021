@@ -11,9 +11,10 @@ import javafx.scene.control.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
-public class CrudController {
+public abstract class CrudController<T> {
 
     protected Long activeRowID = null;
 
@@ -134,14 +135,12 @@ public class CrudController {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("we here");
             tabPane.getSelectionModel().select(tab);
         }
     }
 
     protected String getFullAddress(Address address) {
         if (address == null) {
-            System.out.println(" null address");
             return "";
         }
 
@@ -186,11 +185,7 @@ public class CrudController {
     private List<Object> getObjectsFromRevisions(List revisions) {
         List<Object> result = new ArrayList<>();
         revisions.forEach(audObj -> {
-            System.out.println(audObj);
             Object[] audit = (Object[]) audObj;
-            System.out.println("HERE");
-            System.out.println(audit[0]);
-            System.out.println(audit[0].getClass());
             result.add(audit[0]);
         });
         return result;
@@ -199,7 +194,6 @@ public class CrudController {
     protected void getEntityHistory(MyCrudService crudService) {
         if (this.btnEntityHistory.getText().equals(btnEntityHistoryInactiveText)) {
             this.btnEntityHistory.setText(btnEntityHistoryActiveText);
-            System.out.println(activeRowID);
             List test =  crudService.getRevisions(activeRowID);
             List<Object> resultOfSearch = getObjectsFromRevisions(test);
 
@@ -231,6 +225,21 @@ public class CrudController {
                     textField.setText(newValue.replaceAll("[^\\d]", ""));
                 }
             }
+        });
+    }
+
+    protected abstract  void updateObjectFromTextField(T object);
+
+    protected void update(MyCrudService crudService, Long id) {
+        if (id == null) {
+            return;
+        }
+        Optional<T> object = crudService.findById(id);
+        object.ifPresent(val -> {
+            updateObjectFromTextField(val);
+            crudService.update(val);
+
+            refreshTableView(crudService);
         });
     }
 }

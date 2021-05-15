@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class LandPlotServiceImpl implements LandPlotService, MyCrudService {
+public class LandPlotServiceImpl implements LandPlotService {
     @Autowired
     LandPlotRepository landPlotRepository;
 
@@ -26,11 +26,11 @@ public class LandPlotServiceImpl implements LandPlotService, MyCrudService {
         return landPlotRepository.saveAndFlush(landPlot);
     }
 
-    public Optional<LandPlot>  getById(Long id) {
+    public Optional<LandPlot> findById(Long id) {
         return landPlotRepository.findById(id);
     }
 
-    public void updateLandPlot(LandPlot landPlot) {
+    public void update(LandPlot landPlot) {
         landPlotRepository.saveAndFlush(landPlot);
     }
 
