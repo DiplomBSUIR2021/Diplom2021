@@ -1,5 +1,6 @@
 package com.diploma.demo.core.landplot.service.impl;
 
+import com.diploma.demo.core.MyCrudService;
 import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.repository.LandPlotRepository;
 import com.diploma.demo.core.landplot.service.LandPlotService;
@@ -25,11 +26,11 @@ public class LandPlotServiceImpl implements LandPlotService {
         return landPlotRepository.saveAndFlush(landPlot);
     }
 
-    public Optional<LandPlot>  getById(Long id) {
+    public Optional<LandPlot> findById(Long id) {
         return landPlotRepository.findById(id);
     }
 
-    public void updateLandPlot(LandPlot landPlot) {
+    public void update(LandPlot landPlot) {
         landPlotRepository.saveAndFlush(landPlot);
     }
 
@@ -48,13 +49,22 @@ public class LandPlotServiceImpl implements LandPlotService {
     }
 
     @Override
-    public void deleteLandPlot(Long id) {
+    public List getAllRevisions() {
+        AuditQuery auditQuery;
+        auditQuery = auditReader.createQuery()
+                .forRevisionsOfEntity(LandPlot.class, false,true);
+
+        return auditQuery.getResultList();
+    }
+
+    @Override
+    public void delete(Long id) {
         landPlotRepository.deleteById(id);
         landPlotRepository.flush();
     }
 
     @Override
-    public void deleteLandPlot(LandPlot landPlot) {
+    public void delete(LandPlot landPlot) {
         landPlotRepository.delete(landPlot);
         landPlotRepository.flush();
     }

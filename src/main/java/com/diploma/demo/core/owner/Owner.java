@@ -20,11 +20,15 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "owner")
 @Audited
+
 public class Owner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name ="type")
+    private String type;
 
     @Column(name = "name")
     private String name;
@@ -32,6 +36,9 @@ public class Owner {
     //дата рождения(госрегистрации юрлица)
     @Column(name="registration_date")
     private LocalDate registrationDate;
+
+    @Column(name="birth_date")
+    private LocalDate birthDate;
 
     //тип документа, удостоверяющего личность(юрлица)
     @Column(name ="doc_type")
@@ -45,9 +52,12 @@ public class Owner {
     @JoinColumn(name="owner_id")
     private StateRegistration docRegistration;
 
-    //личный номер (УНП для юрлица)
+    //личный номер (УНП для юрлица) ///  registration_number or personal_number??
     @Column(name = "registration_number")
-    private String personalNumber;
+    private String registrationNumber;
+
+    /*@Column(name = "personal_number")
+    private String personalNumber;*/
 
     @Embedded
     private Address registrationAddress;
@@ -70,13 +80,13 @@ public class Owner {
     @Pattern(regexp = "\\+375[0-9]{9}")
     private String phoneNumber;
 
-    @Column(name="viber_number")
-    @Pattern(regexp = "\\+375[0-9]{9}")
-    private String viberNumber;
-
     @Column(name="telegram_number")
     @Pattern(regexp = "\\+375[0-9]{9}")
     private String telegramNumber;
+
+    @Column(name="viber_number")
+    @Pattern(regexp = "\\+375[0-9]{9}")
+    private String viberNumber;
 
     @Column(name="whatsapp_number")
     @Pattern(regexp = "\\+375[0-9]{9}")

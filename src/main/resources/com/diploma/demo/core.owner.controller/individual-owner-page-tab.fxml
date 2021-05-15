@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.diploma.demo.view.maintab.MainTabController">
+    <TableView fx:id="individualOwnerTableView">
+        <columns>
+            <TableColumn text="#" />
+            <TableColumn text="ФИО" />
+            <TableColumn text="Дата рождения" />
+            <TableColumn text="Документ" />
+            <TableColumn text="Номер документа" />
+            <TableColumn text="Дата регистрации" />
+            <TableColumn text="Орг. зарегист." />
+            <TableColumn text="Адрес" />
+            <TableColumn text="Почтовый адрес" />
+            <TableColumn text="Номер птн" />
+            <TableColumn text="Телефон" />
+            <TableColumn text="Номер помещения" />
+        </columns>
+    </TableView>
+    <!--<Button onAction="#openCreateBusiness" text="добавить" />-->
+</AnchorPane>

@@ -6,10 +6,8 @@ import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
 import com.diploma.demo.view.utils.CrudController;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
@@ -17,16 +15,12 @@ import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 
 @Component
 @FxmlView("land-plot.fxml")
-public class LandPlotController extends CrudController {
+public class LandPlotController extends CrudController<LandPlot> {
     LandPlotServiceImpl landPlotService;
-
 
     @FXML
     private TabPane landPlotsTabPane;
@@ -36,7 +30,7 @@ public class LandPlotController extends CrudController {
     private Tab landPlotsTabCreate;
 
     @FXML
-    private TableView tableView;
+    private TableView<LandPlot> tableView;
 
     @FXML
     private TableColumn<LandPlot, Long> tcID;
@@ -64,7 +58,6 @@ public class LandPlotController extends CrudController {
     private TableColumn<LandPlot, String> tcNotes;
     @FXML
     private TableColumn<LandPlot, Double> tcSurface;
-
 
     @FXML
     private TextField idTextField;
@@ -94,16 +87,18 @@ public class LandPlotController extends CrudController {
     private TextField surfaceTextField;
 
     @FXML
-    private Button btnHistory;
+    private Button btnEntityHistory;
+    @FXML
+    private Button btnFullHistory;
 
     @FXML
-    private void click(ActionEvent event) {
+    private void create() {
         LandPlot landPlot = new LandPlot();
         Address address = new Address();
         landPlot.setAddress(address);
 
         idTextField.setText("");
-        updateLandPlotFromTextField(landPlot);
+        updateObjectFromTextField(landPlot);
         landPlotService.addLandPlot(landPlot);
         
         refresh();
@@ -111,77 +106,47 @@ public class LandPlotController extends CrudController {
     }
     
     @FXML
-    private void updateLandPlot(ActionEvent event) {
-        String idText = idTextField.getText();
-        if (idText == null || idText.isEmpty()) {
-            return;
-        }
-        Long id = Long.parseLong(idTextField.getText());
-
-        Optional<LandPlot> landPlot = landPlotService.getById(id);
-        landPlot.ifPresent(val -> {
-            idTextField.setText("");
-            updateLandPlotFromTextField(val);
-            landPlotService.updateLandPlot(val);
-
-            refresh();
-        });
+    private void updateLandPlot() {
+        update(landPlotService, getIdFromTextField(idTextField) );
         selectTab(landPlotsTabView);
     }
 
     @FXML
-    void refresh() {
-        ObservableList<LandPlot> plots = FXCollections.observableArrayList(landPlotService.getAll());
-        this.tableView.getItems().clear();
-        this.tableView.getItems().addAll(plots);
+    protected void refresh() {
+        refreshTableView(landPlotService);
     }
 
     @FXML
-    void getHistory() {
-        if (this.btnHistory.getText().equals(btnHistoryInactiveText)) {
-            this.btnHistory.setText(btnHistoryActiveText);
-            System.out.println(activeRowID);
-            List test =  landPlotService.getRevisions(activeRowID);
-            List<LandPlot> resultOfSearch = new ArrayList<>();
-            test.forEach(objAud -> {
-                Object[] testobj = (Object[]) objAud;
-                System.out.println("Here");
-                resultOfSearch.add((LandPlot) testobj[0]);
-                System.out.println(testobj[0]);
-                System.out.println(testobj[0].getClass());
-                System.out.println(testobj[1]);
-                System.out.println(testobj[2]);
+    void getEntityHistory() {
+        getEntityHistory(landPlotService);
+    }
 
-            });
-
-            ObservableList<LandPlot> plots = FXCollections.observableArrayList(resultOfSearch);
-            this.tableView.getItems().clear();
-            this.tableView.getItems().addAll(plots);
-        } else {
-            this.btnHistory.setText(btnHistoryInactiveText);
-            refresh();
-        }
+    @FXML
+    private void getFullHistory() {
+        getFullHistory(landPlotService);
     }
 
     @FXML
     void initialize() {
         setTabPane(landPlotsTabPane);
-        updateLandPlot();
+        setTableView(tableView);
+
+        setBtnEntityHistory(btnEntityHistory);
+        setBtnFullHistory(btnFullHistory);
+
+        setTextFieldOnlyDigitsInput(idTextField);
+        setTextFieldOnlyDigitsInput(apartmentTextField);
+
+        read();
         this.tableView.setRowFactory(tv -> {
             TableRow<LandPlot> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY) {
                     LandPlot clickedRow = row.getItem();
+                    activeRowID = row.getItem().getId();
                     if (event.getClickCount() == 2) {
-                        activeRowID = row.getItem().getId();
                         feelTextFields(clickedRow);
                         selectTab(landPlotsTabCreate);
-                        System.out.println("row clicket");
-                        System.out.println(clickedRow.getId());
-                    } else if (event.getClickCount() == 1) {
-                        activeRowID = row.getItem().getId();
-                        System.out.println("1 click");
-                        System.out.println(clickedRow.getId());
                     }
                 }
             });
@@ -191,11 +156,7 @@ public class LandPlotController extends CrudController {
 
     @FXML
     private void delete() {
-        if (activeRowID == null) {
-            return;
-        }
-        landPlotService.deleteLandPlot(activeRowID);
-        refresh();
+        deleteEntity(landPlotService);
     }
 
     void feelTextFields(LandPlot landPlot) {
@@ -219,7 +180,8 @@ public class LandPlotController extends CrudController {
         setTextFieldValue(surfaceTextField, landPlot.getSurface());
     }
 
-    private void updateLandPlotFromTextField(LandPlot landPlot) {
+    @Override
+    protected void updateObjectFromTextField(LandPlot landPlot) {
         setLongValFromTextField(i -> landPlot.getAddress().setApartmentn(i), apartmentTextField);
 
         setStringValFromTextField(i -> landPlot.getAddress().setCity(i), cityTextField);
@@ -227,31 +189,50 @@ public class LandPlotController extends CrudController {
         setStringValFromTextField(i -> landPlot.getAddress().setRegion(i), regionTextField);
         setStringValFromTextField(i -> landPlot.getAddress().setStreet(i), streetTextField);
 
-        ////////////////////////////////////////////////////
-        setStringValFromTextField(i -> landPlot.setCadastralNumber(i), cadastralNumberTextField);
-        setStringValFromTextField(i -> landPlot.setCategory(i), categoryTextField);
-        setStringValFromTextField(i -> landPlot.setCurrentMarks(i), currentMarksTextField);
-        setStringValFromTextField(i -> landPlot.setIntendedUse(i), intetdedUseTextField);
-        setStringValFromTextField(i -> landPlot.setLandPlotPurpose(i), landPlotPurposeTextField);
-        setStringValFromTextField(i -> landPlot.setNotes(i) , notesTextField);
+        setStringValFromTextField(landPlot::setCadastralNumber, cadastralNumberTextField);
+        setStringValFromTextField(landPlot::setCategory, categoryTextField);
+        setStringValFromTextField(landPlot::setCurrentMarks, currentMarksTextField);
+        setStringValFromTextField(landPlot::setIntendedUse, intetdedUseTextField);
+        setStringValFromTextField(landPlot::setLandPlotPurpose, landPlotPurposeTextField);
+        setStringValFromTextField(landPlot::setNotes, notesTextField);
 
-        setDoubleValFromTextField(i -> landPlot.setSurface(i), surfaceTextField);
+        setDoubleValFromTextField(landPlot::setSurface, surfaceTextField);
     }
 
-    void updateLandPlot() {
+    void read() {
         tcID.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         tcAppartamentn.setCellValueFactory(cellData -> {
-            if (cellData.getValue().getAddress().getApartmentn() != null) {
+            if (cellData.getValue().getAddress() != null && cellData.getValue().getAddress().getApartmentn() != null) {
                 return new SimpleLongProperty(cellData.getValue().getAddress().getApartmentn()).asObject();
             }
             return null;
         });
 
-        tcCity.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().getCity()));
-        tcHomeNumber.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().getHomeNumber()));
-        tcRegion.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().getRegion()));
-        tcStreet.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAddress().getStreet()));
+        tcCity.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getAddress() != null) {
+                return new SimpleStringProperty(cellData.getValue().getAddress().getCity());
+            }
+            return null;
+        });
+        tcHomeNumber.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getAddress() != null) {
+                return new SimpleStringProperty(cellData.getValue().getAddress().getHomeNumber());
+            }
+            return null;
+        });
+        tcRegion.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getAddress() != null) {
+                return new SimpleStringProperty(cellData.getValue().getAddress().getRegion());
+            }
+            return null;
+        });
+        tcStreet.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getAddress() != null) {
+                return new SimpleStringProperty(cellData.getValue().getAddress().getStreet());
+            }
+            return null;
+        });
 
         tcCadastralNumber.setCellValueFactory(new PropertyValueFactory<>("cadastralNumber"));
         tcCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
