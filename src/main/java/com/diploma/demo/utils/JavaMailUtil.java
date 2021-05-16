@@ -1,5 +1,7 @@
 package com.diploma.demo.utils;
 
+import javafx.scene.control.TextField;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -9,7 +11,7 @@ import java.util.Properties;
 
 public class JavaMailUtil {
 
-    public static void sendMail(String recepient,String title,String text) throws Exception {
+    public static void sendMail(String recepient, String ccrecepient, String theme, String body) throws Exception {
         System.out.println("Starting...");
         Properties properties = new Properties();
 
@@ -28,18 +30,18 @@ public class JavaMailUtil {
             }
         });
 
-        Message message = prepareMessage(session,myAccountEmail,recepient,title,text);
+
+        Message message = prepareMessage(session,myAccountEmail,recepient,ccrecepient,theme,body);
         Transport.send(message);
         System.out.println("Success");
-
-
     }
 
-    private static Message prepareMessage(Session session,String myAccountEmail,String recepient,String title,String text) {
+    private static Message prepareMessage(Session session, String myAccountEmail, String recepient, String ccrecepient, String title, String text) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
-            message.setRecipient(Message.RecipientType.TO,new InternetAddress(recepient));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recepient) );
+            message.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccrecepient));
             message.setSubject(title);
             message.setText(text);
             return message;
