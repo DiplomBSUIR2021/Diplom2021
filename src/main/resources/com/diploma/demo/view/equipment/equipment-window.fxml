@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane fx:id="generalTablePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.diploma.demo.view.equipment.EquipmentTable">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="312.66664123535156" minHeight="10.0" prefHeight="312.66664123535156" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="195.33334350585938" minHeight="10.0" prefHeight="87.33335876464844" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Таблица">
+               <content>
+                  <ScrollPane prefHeight="200.0" prefWidth="200.0">
+                     <content>
+                        <TableView fx:id="equipmentTable" prefHeight="283.0" prefWidth="599.0">
+                           <columns>
+                              <TableColumn fx:id="col1" prefWidth="69.33334350585938" text="[1] ID" />
+                              <TableColumn fx:id="col2" prefWidth="171.33331298828125" text="[2] Модель" />
+                              <TableColumn fx:id="col3" prefWidth="144.0" text="[3] Номер" />
+                              <TableColumn fx:id="col4" prefWidth="206.6666259765625" text="[4] Срок действительности(дней)" />
+                           </columns>
+                        </TableView>
+                     </content>
+                  </ScrollPane>
+               </content>
+            </Tab>
+            <Tab text="Редактирование">
+               <content>
+                  <GridPane>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.66668701171875" minWidth="10.0" prefWidth="204.66668701171875" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="206.66668701171875" minWidth="10.0" prefWidth="195.33331298828125" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="90.33331298828125" minHeight="6.333334445953369" prefHeight="44.00001017252604" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="183.66666555404663" minHeight="10.0" prefHeight="45.00000254313151" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="219.00002670288083" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="219.00002670288083" minHeight="10.0" prefHeight="38.66664632161459" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="219.00002670288083" minHeight="10.0" prefHeight="41.333338419596345" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="219.00002670288083" minHeight="10.0" prefHeight="75.33332824707031" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Button fx:id="editEquipmentButton" mnemonicParsing="false" onAction="#editEquipment" prefHeight="25.0" prefWidth="100.0" text="Изменить" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button fx:id="addEquipmentButton" mnemonicParsing="false" onAction="#addEquipment" prefHeight="25.0" prefWidth="100.0" text="Добавить" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                        <Label text="[1] ID:" GridPane.halignment="CENTER" />
+                        <Label text="[2]  Модель:" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <TextField fx:id="textField1" prefHeight="25.0" prefWidth="148.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                        <TextField fx:id="textField2" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="[3] Номер" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label text="[4] Срок действительности" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Button fx:id="deleteEquipmentButton" mnemonicParsing="false" onAction="#deleteEquipment" prefHeight="25.0" prefWidth="100.0" text="Удалить" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <TextField fx:id="textField3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="textField4" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                     </children>
+                  </GridPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+      <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshTableButtonAction" prefHeight="25.0" prefWidth="100.0" text="Обновление данных" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Button>
+   </children>
+</GridPane>

@@ -2,4 +2,4 @@ databaseChangeLog:
   - include:
       file: db/changelog/04262021_create_tables.sql
   - include:
-      file: db/changelog/03052021_upd_owners.sql
+      file: db/changelog/05142021_create_equipment_tables.sql

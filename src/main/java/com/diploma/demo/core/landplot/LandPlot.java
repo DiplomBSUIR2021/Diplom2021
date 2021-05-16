@@ -24,18 +24,17 @@ public class LandPlot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded
-    private Address address;
-
     @Column(name = "cadastral_number")
     private String cadastralNumber;
 
+    @Embedded
+    private Address address;
+
+    @Column(name = "surface")
+    private Double surface;
+
     @Column(name="category")
     private String category;
-
-    //актуальные отметки
-    @Column(name="current_marks")
-    private String currentMarks;
 
     //Целевое назначение земельного участка
     @Column(name="intended_use")
@@ -44,13 +43,6 @@ public class LandPlot {
     //Назначение земельного участка в соответствии с единой классификацией назначения объектов недвижимого имущества
     @Column(name="land_plot_purpose")
     private String landPlotPurpose;
-
-    // примечания
-    @Column(name="notes")
-    private String notes;
-
-    @Column(name = "surface")
-    private Double surface;
 
     @OneToMany(mappedBy = "landPlot",
             fetch = FetchType.LAZY)
@@ -67,4 +59,15 @@ public class LandPlot {
 
     @OneToMany(mappedBy = "landPlot")
     private List<Owner> owner;
+
+    //актуальные отметки
+    @Column(name="current_marks")
+    private String currentMarks;
+
+    // примечания
+    @Column(name="notes")
+    private String notes;
+
+
+
 }

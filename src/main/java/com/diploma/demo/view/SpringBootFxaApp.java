@@ -1,6 +1,7 @@
 package com.diploma.demo.view;
 
 import com.diploma.demo.DemoApplication;
+import com.diploma.demo.core.landplot.controller.LandPlotController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -18,7 +19,7 @@ public class SpringBootFxaApp extends Application {
     public void init() throws Exception {
         this.context = new SpringApplicationBuilder()
                 .sources(DemoApplication.class)
-                .run(getParameters().getRaw().toArray(new String[0]));
+                    .run(getParameters().getRaw().toArray(new String[0]));
     }
 
     @Override

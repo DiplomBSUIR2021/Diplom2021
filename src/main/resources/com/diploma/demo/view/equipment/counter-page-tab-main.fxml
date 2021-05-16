@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<GridPane prefHeight="400.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.diploma.demo.view.CounterController">
+    <ChoiceBox fx:id="floorChoiceBox" onAction="#setMinimapChanges" prefHeight="25.0" prefWidth="127.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+        <items>
+        <FXCollections fx:factory="observableArrayList">
+            <String fx:value="1 этаж" />
+            <String fx:value="2 этаж" />
+        </FXCollections>
+    </items>
+        <value>
+            <String fx:value="1 этаж" />
+        </value>
+    </ChoiceBox>
+    <Button fx:id="notificationsWindow" onAction="#openNotificationsWindow" prefHeight="25.0" prefWidth="155.0" text="Рассылка уведомлений" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <Text GridPane.columnIndex="1" GridPane.rowIndex="0" />
+    <Text text="Этаж" wrappingWidth="54.708340883255005" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+    <Button fx:id="fullMapWindowOpenButton" onAction="#openFullMapWindow" prefHeight="25.0" prefWidth="155.0" text="Увеличить карту" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+   <Text text="Тип карты" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+   <ChoiceBox fx:id="mapTypeChoiceBox" onAction="#setMinimapChanges" prefHeight="25.0" prefWidth="128.0" GridPane.columnIndex="7" GridPane.rowIndex="1">
+      <items>
+         <FXCollections fx:factory="observableArrayList">
+            <String fx:value="Общая карта" />
+             <String fx:value="Пожарная система" />
+         </FXCollections>
+      </items>
+       <value>
+           <String fx:value="Общая карта" />
+       </value>
+   </ChoiceBox>
+   <ImageView fx:id="minimapImageView" fitHeight="253.0" fitWidth="363.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="4">
+      <image>
+         <Image url="@/img/building/1 этаж Общая карта.png" />
+      </image></ImageView>
+   <columnConstraints>
+      <ColumnConstraints maxWidth="102.00001017252605" minWidth="7.333343505859375" prefWidth="7.333343505859375" />
+      <ColumnConstraints maxWidth="182.00002034505206" minWidth="0.0" prefWidth="155.3333536783854" />
+      <ColumnConstraints maxWidth="113.33337402343747" minWidth="0.0" prefWidth="26.666707356770843" />
+      <ColumnConstraints maxWidth="233.33333333333334" minWidth="25.333353678385407" prefWidth="34.00000000000003" />
+      <ColumnConstraints maxWidth="245.9999796549479" minWidth="27.33333333333337" prefWidth="111.33333333333331" />
+      <ColumnConstraints maxWidth="144.99995930989581" minWidth="10.0" prefWidth="11.333353678385436" />
+      <ColumnConstraints maxWidth="162.00004069010413" minWidth="10.0" prefWidth="70.66666666666669" />
+      <ColumnConstraints maxWidth="164.66664632161462" minWidth="0.0" prefWidth="132.66666666666663" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints maxHeight="43.99999364217122" minHeight="29.999989827473957" prefHeight="43.99999364217122" />
+      <RowConstraints maxHeight="53.99999618530273" minHeight="4.6666717529296875" prefHeight="35.33333969116211" />
+      <RowConstraints maxHeight="108.00001017252606" minHeight="30.000005086263023" prefHeight="90.0" />
+      <RowConstraints maxHeight="142.3333282470703" minHeight="29.999989827473954" prefHeight="64.000005086263" />
+      <RowConstraints maxHeight="183.33333841959637" minHeight="4.666656494140625" prefHeight="90.66666158040363" />
+      <RowConstraints maxHeight="293.3333435058594" minHeight="41.333343505859375" prefHeight="50.66668701171875" />
+   </rowConstraints>
+
+
+
+</GridPane>

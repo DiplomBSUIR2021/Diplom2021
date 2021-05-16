@@ -1,6 +1,5 @@
 package com.diploma.demo.core.rightofuse;
 
-import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.organization.Organization;
 import com.diploma.demo.core.owner.Owner;
 import com.diploma.demo.core.stateregistration.StateRegistration;
@@ -44,10 +43,6 @@ public class RightOfUse {
     @OneToMany(mappedBy = "rightOfUse",
             fetch = FetchType.LAZY)
     private List<StateRegistration> stateRegistrations;
-
-    @OneToOne
-    @JoinColumn(name="land_plot_id")
-    private LandPlot landPlot;
 
     //организации правообладатели
     @OneToMany(mappedBy = "rightOfUse",

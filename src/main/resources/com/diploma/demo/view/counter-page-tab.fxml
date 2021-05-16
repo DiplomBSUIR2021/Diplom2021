@@ -1,32 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 
-<?import javafx.scene.text.Text?>
-<?import javafx.collections.FXCollections?>
-<GridPane xmlns="http://javafx.com/javafx"
-          xmlns:fx="http://javafx.com/fxml"
-          fx:controller="com.diploma.demo.view.CounterController"
-          prefHeight="400.0" prefWidth="600.0">
-    <Button text="Рассылка уведомлений" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-    <Text GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-    <Text text="Фильтры карты" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-    <ChoiceBox GridPane.columnIndex="4" GridPane.rowIndex="0">
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="Пожарная система" />
-            </FXCollections>
-        </items>
-    </ChoiceBox>
-    <Button text="Счетчики" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-    <Button text="Установленные счетчики" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-    <Button text="Увеличить карту" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-    <TextArea  GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.columnSpan="3" GridPane.rowSpan="3"/>
-
-
-
-</GridPane>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/16">
+  <tabs>
+    <Tab fx:id="counterMainPageTab" text="Общее окно">
+    <fx:include source="equipment/counter-page-tab-main.fxml"/>
+    </Tab>
+    <Tab fx:id="installedEquipmentPageTab" text="Таблица установленного оборудования">
+      <fx:include source="equipment/installed-equipment-window.fxml"/>
+    </Tab>
+    <Tab fx:id="equipmentPageTab" text="Таблица оборудования">
+      <fx:include source="equipment/equipment-window.fxml"/>
+    </Tab>
+  </tabs>
+</TabPane>

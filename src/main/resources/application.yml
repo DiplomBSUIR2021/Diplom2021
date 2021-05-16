@@ -18,7 +18,7 @@ spring:
           schema-generation:
             scripts:
               action: update
-              create-target: update.sql
+              create-target: 05142021_create_equipment_tables.sql
               create-spurce: metadata
       hibernate:
         hbm2ddl:
