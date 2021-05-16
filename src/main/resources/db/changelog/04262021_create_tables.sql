@@ -11,7 +11,7 @@ create table land_plot_aud (id int8 not null, rev int4 not null, revtype int2, a
 create table organization (id  bigserial not null, apartmentn int8, city varchar(255), home_number varchar(255), region varchar(255), street varchar(255), name varchar(255), registration_date date, type varchar(255), unp varchar(255), right_of_use_id int8, primary key (id));
 create table organization_aud (id int8 not null, rev int4 not null, revtype int2, apartmentn int8, city varchar(255), home_number varchar(255), region varchar(255), street varchar(255), name varchar(255), registration_date date, type varchar(255), unp varchar(255), right_of_use_id int8, primary key (id, rev));
 create table owner (type varchar(31) not null, id  bigserial not null, name varchar(255), unp varchar(255), birth_date date, doc_n varchar(255), doc_type varchar(255), personal_number varchar(255), land_plot_id int8, ownership_id int8, right_of_use_id int8, owner_id int8, primary key (id));
-create table owner_aud (id int8 not null, rev int4 not null, type varchar(31) not null, revtype int2, name varchar(255), land_plot_id int8, ownership_id int8, right_of_use_id int8, primary key (id, rev));
+create table owner_aud (id int8 not null, rev int4 not null, type varchar(31), revtype int2, name varchar(255), land_plot_id int8, ownership_id int8, right_of_use_id int8, primary key (id, rev));
 create table ownership (id  bigserial not null, proportion float8, registration_date date, owner_id int8, primary key (id));
 create table ownership_aud (id int8 not null, rev int4 not null, revtype int2, proportion float8, registration_date date, owner_id int8, primary key (id, rev));
 create table restriction (id  bigserial not null, description varchar(255), land_plot_id int8, primary key (id));

@@ -20,6 +20,7 @@ alter table if exists owner add column telegram_number varchar(255);
 alter table if exists owner add column viber_number varchar(255);
 alter table if exists owner add column whatsapp_number varchar(255);
 alter table if exists owner_aud add column registration_date date;
+alter table if exists owner_aud add column birth_date date;
 alter table if exists owner_aud add column doc_n varchar(255);
 alter table if exists owner_aud add column doc_type varchar(255);
 alter table if exists owner_aud add column registration_number varchar(255);
