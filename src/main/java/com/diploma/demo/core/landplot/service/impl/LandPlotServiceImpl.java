@@ -1,6 +1,5 @@
 package com.diploma.demo.core.landplot.service.impl;
 
-import com.diploma.demo.core.MyCrudService;
 import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.repository.LandPlotRepository;
 import com.diploma.demo.core.landplot.service.LandPlotService;
@@ -10,6 +9,9 @@ import org.hibernate.envers.query.AuditQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,12 +40,24 @@ public class LandPlotServiceImpl implements LandPlotService {
         return landPlotRepository.findAll();
     }
 
-    public List getRevisions(Long id) {
+    private long localeDateToTimeStamp(LocalDate date) {
+        return date.atStartOfDay(ZoneId.systemDefault()).toInstant().getLong(ChronoField.INSTANT_SECONDS) * 1000;
+    }
+
+    public List getRevisions(Long id, LocalDate startDate, LocalDate endDate) {
         AuditQuery auditQuery;
         auditQuery = auditReader.createQuery()
                 .forRevisionsOfEntity(LandPlot.class, false,true);
 
         auditQuery.add(AuditEntity.id().eq(id));
+
+        if (startDate != null) {
+            auditQuery.add(AuditEntity.revisionProperty("timestamp").gt(localeDateToTimeStamp(startDate)));
+        }
+
+        if (endDate != null) {
+            auditQuery.add(AuditEntity.revisionProperty("timestamp").lt(localeDateToTimeStamp(endDate)));
+        }
 
         return auditQuery.getResultList();
     }

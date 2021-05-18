@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -191,10 +192,10 @@ public abstract class CrudController<T> {
         return result;
     }
 
-    protected void getEntityHistory(MyCrudService crudService) {
+    protected void getEntityHistory(MyCrudService crudService, LocalDate startDate, LocalDate endDate) {
         if (this.btnEntityHistory.getText().equals(btnEntityHistoryInactiveText)) {
             this.btnEntityHistory.setText(btnEntityHistoryActiveText);
-            List test =  crudService.getRevisions(activeRowID);
+            List test =  crudService.getRevisions(activeRowID, startDate, endDate);
             List<Object> resultOfSearch = getObjectsFromRevisions(test);
 
             refreshTableView(FXCollections.observableArrayList(resultOfSearch));
@@ -202,6 +203,10 @@ public abstract class CrudController<T> {
             this.btnEntityHistory.setText(btnEntityHistoryInactiveText);
             refreshTableView(crudService);
         }
+    }
+
+    protected void getEntityHistory(MyCrudService crudService) {
+        getEntityHistory(crudService, null, null);
     }
 
     protected void getFullHistory(MyCrudService crudService) {

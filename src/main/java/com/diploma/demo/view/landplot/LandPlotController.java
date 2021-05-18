@@ -131,7 +131,8 @@ public class LandPlotController extends CrudController<LandPlot> {
 
     @FXML
     void getEntityHistory() {
-        getEntityHistory(landPlotService);
+        // handle errors (right now DatePicker can contains a-Z symbols
+        getEntityHistory(landPlotService, startDate.getValue(), endDate.getValue());
     }
 
     @FXML
@@ -277,12 +278,7 @@ public class LandPlotController extends CrudController<LandPlot> {
 
         Button closeButton = new Button("Close");
         //Creating the mouse event handler
-        EventHandler<MouseEvent> eventHandler = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent e) {
-                setting();
-            }
-        };
+        EventHandler<MouseEvent> eventHandler = e -> setting();
         closeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
 
         VBox vBox = new VBox();

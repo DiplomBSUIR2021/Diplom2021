@@ -10,6 +10,7 @@ import org.hibernate.envers.query.AuditQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +53,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public List getRevisions(Long id) {
+    public List getRevisions(Long id, LocalDate startDate, LocalDate endDate) {
         AuditQuery auditQuery;
         auditQuery = auditReader.createQuery()
                 .forRevisionsOfEntity(Owner.class, false,true);
