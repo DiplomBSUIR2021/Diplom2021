@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
+<?import javafx.collections.FXCollections?>
 <VBox prefHeight="400.0" prefWidth="600.0"
       xmlns="http://javafx.com/javafx/11.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
@@ -13,11 +14,12 @@
          <tabs>
             <Tab fx:id="landPlotsTabView" text="landPlots">
                <VBox alignment="CENTER" spacing="10">
-                  <HBox alignment="CENTER">
+                  <HBox fx:id = "HboxSetting" alignment="CENTER">
                      <Button fx:id="refreshTableButton" onAction="#refresh">Refresh</Button>
                      <Button fx:id="btnEntityHistory" onAction="#getEntityHistory"> Get entity history</Button>
                      <Button fx:id="btnFullHistory" onAction="#getFullHistory"></Button>
                      <Button fx:id="btnDelete" onAction="#delete">Delete</Button>
+                     <Button onAction="#setting">Setting</Button>
                   </HBox>
                   <ScrollPane>
                      <TableView fx:id="tableView" prefHeight="336.0" prefWidth="1107.0">

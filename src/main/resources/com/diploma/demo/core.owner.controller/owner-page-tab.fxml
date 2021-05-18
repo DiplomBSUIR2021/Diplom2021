@@ -25,6 +25,7 @@
                                         <Button onAction="#delete">Delete</Button>
                                         <Button onAction="#getEntityHistory" fx:id="btnEntityHistory">Get entity history</Button>
                                         <Button fx:id="btnFullHistory" onAction="#getFullHistory"></Button>
+                                        <Button>Settings</Button>
                                     </HBox>
                                     <TableView fx:id="ownerTableView">
                                         <columns>
