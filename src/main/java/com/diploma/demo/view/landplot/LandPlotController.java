@@ -3,6 +3,7 @@ package com.diploma.demo.view.landplot;
 import com.diploma.demo.core.landplot.Address;
 import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
+import com.diploma.demo.core.restriction.Restriction;
 import com.diploma.demo.view.utils.CrudController;
 import com.diploma.demo.view.utils.DateRangePicker;
 import javafx.beans.property.SimpleLongProperty;
@@ -20,9 +21,14 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@FxmlView("land-plot.fxml")
+@FxmlView("land-plot-page-tab.fxml")
 public class LandPlotController extends CrudController<LandPlot> {
     LandPlotServiceImpl landPlotService;
+
+    // add
+    // ListView<Restriction> restrictionListView;
+    // ListView<Contract> contractListView;
+    // ListView<StateRegistration> registrationListView;
 
     @FXML
     private TabPane landPlotsTabPane;

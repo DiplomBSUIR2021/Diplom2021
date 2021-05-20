@@ -6,6 +6,8 @@ import com.diploma.demo.core.owner.service.impl.OwnerServiceImpl;
 import com.diploma.demo.view.utils.CrudController;
 import com.diploma.demo.view.utils.DateRangePicker;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -116,6 +118,10 @@ public class OwnerController extends CrudController<Owner> {
     private Button btnFullHistory;
 
     @FXML
+    private Label labelBirthRegistrationDate,
+            labelName;
+
+    @FXML
     private HBox HboxSetting;
     private DateRangePicker dateRangePicker;
 
@@ -131,6 +137,8 @@ public class OwnerController extends CrudController<Owner> {
         setTextFieldOnlyDigitsInput(tfApartment);
         setTextFieldOnlyDigitsInput(tfPostApartment);
 
+        tabPane.getTabs().remove(tabCreate);
+
         read();
         this.ownerTableView.setRowFactory(tv -> {
             TableRow<Owner> row = new TableRow<>();
@@ -140,6 +148,8 @@ public class OwnerController extends CrudController<Owner> {
                     activeRowID = row.getItem().getId();
                     if (event.getClickCount() == 2) {
                         feelTextFields(clickedRow);
+
+                        tabPane.getTabs().add(tabCreate);
                         selectTab(tabCreate);
                     }
                 }
@@ -148,6 +158,7 @@ public class OwnerController extends CrudController<Owner> {
         });
 
         dateRangePicker = new DateRangePicker(HboxSetting);
+        initCbType();
     }
     @FXML
     private void getEntityHistory() {
@@ -170,11 +181,13 @@ public class OwnerController extends CrudController<Owner> {
 
         refresh();
         selectTab(tabView);
+        tabPane.getTabs().remove(tabCreate);
     }
     @FXML
     private void update() {
         update(ownerService, getIdFromTextField(tfID));
         selectTab(tabView);
+        tabPane.getTabs().remove(tabCreate);
     }
     @FXML
     private void delete() {
@@ -184,6 +197,12 @@ public class OwnerController extends CrudController<Owner> {
     @FXML
     private void openSetting() {
         dateRangePicker.setting();
+    }
+
+    @FXML
+    private void openCreate() {
+        tabPane.getTabs().add(tabCreate);
+        selectTab(tabCreate);
     }
 
     protected void refresh() {
@@ -308,6 +327,19 @@ public class OwnerController extends CrudController<Owner> {
         List<Owner> owners = ownerService.getAll();
         this.ownerTableView.getItems().addAll(owners);
     }
+
+    private void initCbType() {
+       cbType.valueProperty().addListener((observable, oldValue, newValue) -> {
+           if (newValue.equals(individualOwnerCase)) {
+               labelName.setText("ФИО");
+               labelBirthRegistrationDate.setText("Дата рождения: ");
+           } else {
+               labelName.setText("Название");
+               labelBirthRegistrationDate.setText("Дата регистрации: ");
+           }
+       });
+    }
+
 
     @Autowired
     public OwnerController( OwnerServiceImpl ownerService) {

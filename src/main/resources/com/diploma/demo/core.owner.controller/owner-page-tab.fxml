@@ -20,11 +20,12 @@
                 <Tab fx:id="tabView" text="data">
                     <VBox>
                         <HBox fx:id="HboxSetting">
-                            <Button onAction="#delete">Delete</Button>
-                            <Button onAction="#getEntityHistory" fx:id="btnEntityHistory">Get entity history
+                            <Button onAction="#delete">Удалить</Button>
+                            <Button onAction="#getEntityHistory" fx:id="btnEntityHistory">
                             </Button>
                             <Button fx:id="btnFullHistory" onAction="#getFullHistory"/>
-                            <Button onAction="#openSetting">Settings</Button>
+                            <Button onAction="#openSetting">Настройки</Button>
+                            <Button onAction="#openCreate">Новый документ</Button>
                         </HBox>
                         <TableView fx:id="ownerTableView">
                             <columns>
@@ -50,87 +51,91 @@
                         </TableView>
                     </VBox>
                 </Tab>
-                <Tab fx:id="tabCreate" text="Create Owner">
+                <Tab fx:id="tabCreate" text="Создать документ" styleClass="hidden">
                     <ScrollPane>
                         <VBox alignment="CENTER" spacing="10">
                             <HBox>
-                                <Button onAction="#create">Create</Button>
+                                <Button onAction="#create">создать</Button>
                                 <Button onAction="#update">Update</Button>
                             </HBox>
                             <GridPane>
-                                <Label text="id: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                <TextField fx:id="tfID" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <TextField fx:id="tfID" visible ="false"/>
 
-                                <Label text="type: " GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                <ComboBox fx:id="cbType" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <Label text="Тип: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                                <ComboBox fx:id="cbType" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                     <items>
                                         <FXCollections fx:factory="observableArrayList">
-                                            <String fx:value="individual" fx:id="individualOwnerCase"/>
-                                            <String fx:value="legal_entity"/>
+                                            <String fx:value="физлицо" fx:id="individualOwnerCase"/>
+                                            <String fx:value="юрлицо"/>
                                         </FXCollections>
                                     </items>
                                     <value>
-                                        <String fx:value="individual"/>
+                                        <String fx:value="физлицо"/>
                                     </value>
                                 </ComboBox>
 
-                                <Label text="name: " GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                                <TextField fx:id="tfName" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                                <Label fx:id= "labelName" text="ФИО: "
+                                       GridPane.columnIndex="0"
+                                       GridPane.rowIndex="2"/>
+                                <TextField fx:id="tfName" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-                                <Label text="birth date: " GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                                <DatePicker fx:id="tfBirthDate" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                                <Label fx:id= "labelBirthRegistrationDate" text="Дата рождения: "
+                                       GridPane.columnIndex="0"
+                                       GridPane.rowIndex="3"/>
+                                <DatePicker fx:id="tfBirthDate" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-                                <Label text="doc type: " GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-                                <TextField fx:id="tfDocType" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                                <Label text="Тип документа: " GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                                <TextField fx:id="tfDocType" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
-                                <Label text="doc n: " GridPane.columnIndex="0" GridPane.rowIndex="6"/>
-                                <TextField fx:id="tfDocN" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                                <Label text="Номер документа: " GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                                <TextField fx:id="tfDocN" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
 
-                                <Text text="Address" GridPane.columnIndex="2" GridPane.columnSpan="2"
+                                <Text text="Адрес" GridPane.columnIndex="2" GridPane.columnSpan="2"
                                       GridPane.rowIndex="0"/>
 
-                                <Label text="Region: " GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                                <Label text="Область: " GridPane.columnIndex="2" GridPane.rowIndex="1"/>
                                 <TextField fx:id="tfRegion" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
 
-                                <Label text="City: " GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                                <Label text="Город: " GridPane.columnIndex="2" GridPane.rowIndex="2"/>
                                 <TextField fx:id="tfCity" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
 
-                                <Label text="Street: " GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                                <Label text="Улица: " GridPane.columnIndex="2" GridPane.rowIndex="3"/>
                                 <TextField fx:id="tfStreet" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
 
-                                <Label text="Home nubmer: " GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+                                <!--Номер дома???-->
+                                <Label text="Дом номер: " GridPane.columnIndex="2" GridPane.rowIndex="4"/>
                                 <TextField fx:id="tfHomeNumber" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
 
-                                <Label text="Apartment: " GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+                                <Label text="Квартира: " GridPane.columnIndex="2" GridPane.rowIndex="5"/>
                                 <TextField fx:id="tfApartment" GridPane.columnIndex="3" GridPane.rowIndex="5"/>
 
 
-                                <Text text="postAddress" GridPane.columnIndex="4" GridPane.columnSpan="2"
+                                <Text text="Почтовый адрес" GridPane.columnIndex="4" GridPane.columnSpan="2"
                                       GridPane.rowIndex="0"/>
 
-                                <Label text="Region: " GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                                <Label text="Область: " GridPane.columnIndex="4" GridPane.rowIndex="1"/>
                                 <TextField fx:id="tfPostRegion" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
 
-                                <Label text="City: " GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+                                <Label text="Город: " GridPane.columnIndex="4" GridPane.rowIndex="2"/>
                                 <TextField fx:id="tfPostCity" GridPane.columnIndex="5" GridPane.rowIndex="2"/>
 
-                                <Label text="Street: " GridPane.columnIndex="4" GridPane.rowIndex="3"/>
+                                <Label text="Улица: " GridPane.columnIndex="4" GridPane.rowIndex="3"/>
                                 <TextField fx:id="tfPostStreet" GridPane.columnIndex="5" GridPane.rowIndex="3"/>
 
-                                <Label text="Home nubmer: " GridPane.columnIndex="4" GridPane.rowIndex="4"/>
+                                <Label text="Дом номер: " GridPane.columnIndex="4" GridPane.rowIndex="4"/>
                                 <TextField fx:id="tfPostHomeNumber" GridPane.columnIndex="5"
                                            GridPane.rowIndex="4"/>
 
-                                <Label text="Apartment: " GridPane.columnIndex="4" GridPane.rowIndex="5"/>
+                                <Label text="Квартира: " GridPane.columnIndex="4" GridPane.rowIndex="5"/>
                                 <TextField fx:id="tfPostApartment" GridPane.columnIndex="5"
                                            GridPane.rowIndex="5"/>
 
 
-                                <Label text="ptn: " GridPane.columnIndex="6" GridPane.rowIndex="1"/>
+                                <Label text="птн: " GridPane.columnIndex="6" GridPane.rowIndex="1"/>
                                 <TextField fx:id="tfPtn" GridPane.columnIndex="7" GridPane.rowIndex="1"/>
 
-                                <Label text="Phone num: " GridPane.columnIndex="6" GridPane.rowIndex="2"/>
+                                <Label text="Номер телефона: " GridPane.columnIndex="6" GridPane.rowIndex="2"/>
                                 <TextField fx:id="tfPhoneNumber" GridPane.columnIndex="7"
                                            GridPane.rowIndex="2"/>
 
@@ -149,96 +154,6 @@
                             </GridPane>
                         </VBox>
                     </ScrollPane>
-                </Tab>
-                <Tab text="Физлица">
-                    <TableView fx:id="individualOwnerTableView">
-                        <columns>
-                            <TableColumn text="#"/>
-                            <TableColumn text="ФИО"/>
-                            <TableColumn text="Дата рождения"/>
-                            <TableColumn text="Документ"/>
-                            <TableColumn text="Номер документа"/>
-                            <TableColumn text="Дата регистрации"/>
-                            <TableColumn text="Орг. зарегист."/>
-                            <TableColumn text="Адрес"/>
-                            <TableColumn text="Почтовый адрес"/>
-                            <TableColumn text="Номер птн"/>
-                            <TableColumn text="Телефон"/>
-                            <TableColumn text="Номер помещения"/>
-                        </columns>
-                    </TableView>
-                    <!-- <fx:include source="individual-owner-page-tab.fxml" />-->
-                </Tab>
-                <Tab text="Юрлица">
-                    <AnchorPane>
-                        <VBox>
-                            <TableView fx:id="businessOwnerTableView" prefHeight="314.0" prefWidth="890.0">
-                                <columns>
-                                    <TableColumn text="#">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="id" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Название">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="name" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Дата регистрации">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="registrationDate" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Документ">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="docType" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Номер документа">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="docN" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Дата регистрации">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="docRegistration.date" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Орг. зарегист.">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="docRegistration.issueOrganization" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Адрес">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="address" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Почтовый адрес">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="postAddress" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Номер птн">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="ptnN" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Телефон">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="phoneNumber" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                    <TableColumn text="Доля">
-                                        <!--<cellValueFactory>
-                                                            <PropertyValueFactory property="ownership.proportion" />
-                                                        </cellValueFactory>-->
-                                    </TableColumn>
-                                </columns>
-                            </TableView>
-                            <!--<Button onAction="#openCreateBusiness" text="добавить" />-->
-                        </VBox>
-                    </AnchorPane>
                 </Tab>
             </TabPane>
         </ScrollPane>

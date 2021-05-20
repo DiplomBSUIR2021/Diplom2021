@@ -2,16 +2,14 @@ package com.diploma.demo.view.utils;
 
 import com.diploma.demo.core.MyCrudService;
 import com.diploma.demo.core.landplot.Address;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import org.hibernate.LazyInitializationException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -20,11 +18,11 @@ public abstract class CrudController<T> {
 
     protected Long activeRowID = null;
 
-    private final String btnEntityHistoryInactiveText = "Get entity history";
-    private final String btnEntityHistoryActiveText = "Back to all data";
+    private final String btnEntityHistoryInactiveText = "История документа";
+    private final String btnEntityHistoryActiveText = "Назад";
 
-    private final String btnFullHistoryInactiveTest = "Get full history";
-    private final String btnFullHistoryActiveText = "Back to current data";
+    private final String btnFullHistoryInactiveTest = "Вся история";
+    private final String btnFullHistoryActiveText = "Назад"; // к актуальной информации
 
     private TabPane tabPane;
     private TableView tableView;
@@ -173,7 +171,6 @@ public abstract class CrudController<T> {
         } catch (LazyInitializationException exception) {
 
         }
-
     }
 
     protected void refreshTableView(ObservableList newData ) {
@@ -234,17 +231,26 @@ public abstract class CrudController<T> {
     }
 
     protected void setTextFieldOnlyDigitsInput(TextField textField) {
-        textField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    textField.setText(newValue.replaceAll("[^\\d]", ""));
-                }
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
     }
 
     protected abstract  void updateObjectFromTextField(T object);
+
+    public static void hideNode(Node node) {
+        node.setVisible(false);
+        System.out.println("try hide node");
+        // node.setManaged(false);
+    }
+
+    public static void unhideNode(Node node) {
+        node.setVisible(true);
+        //node.setManaged(true);
+    }
+
 
     protected void update(MyCrudService crudService, Long id) {
         if (id == null) {
