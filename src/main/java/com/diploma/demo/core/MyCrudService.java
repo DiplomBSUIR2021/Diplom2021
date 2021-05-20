@@ -8,7 +8,7 @@ public interface MyCrudService<T> {
     void delete(Long id);
     List<T> getAll();
     List getRevisions(Long id, LocalDate startDate,LocalDate endDate);
-    List getAllRevisions();
+    List getAllRevisions(LocalDate startDate,LocalDate endDate);
     Optional<T> findById(Long id);
     void update(T object);
 }

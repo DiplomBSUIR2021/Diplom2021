@@ -4,11 +4,13 @@ import com.diploma.demo.core.landplot.Address;
 import com.diploma.demo.core.owner.Owner;
 import com.diploma.demo.core.owner.service.impl.OwnerServiceImpl;
 import com.diploma.demo.view.utils.CrudController;
+import com.diploma.demo.view.utils.DateRangePicker;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -114,6 +116,10 @@ public class OwnerController extends CrudController<Owner> {
     private Button btnFullHistory;
 
     @FXML
+    private HBox HboxSetting;
+    private DateRangePicker dateRangePicker;
+
+    @FXML
     void initialize() {
         setTabPane(tabPane);
         setTableView(ownerTableView);
@@ -140,14 +146,16 @@ public class OwnerController extends CrudController<Owner> {
             });
             return row;
         });
+
+        dateRangePicker = new DateRangePicker(HboxSetting);
     }
     @FXML
     private void getEntityHistory() {
-        getEntityHistory(ownerService);
+        getEntityHistory(ownerService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
     }
     @FXML
     private void getFullHistory() {
-        getFullHistory(ownerService);
+        getFullHistory(ownerService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
     }
 
     @FXML
@@ -171,6 +179,11 @@ public class OwnerController extends CrudController<Owner> {
     @FXML
     private void delete() {
         deleteEntity(ownerService);
+    }
+
+    @FXML
+    private void openSetting() {
+        dateRangePicker.setting();
     }
 
     protected void refresh() {

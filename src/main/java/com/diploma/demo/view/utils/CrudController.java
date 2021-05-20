@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import org.hibernate.LazyInitializationException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public abstract class CrudController<T> {
     }
 
     protected void setDatePicker(DatePicker datePicker,LocalDate date) {
-            datePicker.setValue(date);
+        datePicker.setValue(date);
     }
 
     protected boolean isNotEmptyField(TextField field) {
@@ -106,7 +107,7 @@ public abstract class CrudController<T> {
     protected void setStringValFromComboBox(Consumer<String> action, ComboBox<String> comboBox) {
         // errors
         if (comboBox.getValue() != null) {
-           action.accept(comboBox.getValue());
+            action.accept(comboBox.getValue());
         }
     }
 
@@ -164,9 +165,15 @@ public abstract class CrudController<T> {
 
     protected void refreshTableView(MyCrudService crudService) {
         // handle errors
-        ObservableList plots = FXCollections.observableArrayList(crudService.getAll());
+        List items = crudService.getAll();
+        ObservableList plots = FXCollections.observableArrayList(items);
         this.tableView.getItems().clear();
-        this.tableView.getItems().addAll(plots);
+        try {
+            this.tableView.getItems().addAll(plots);
+        } catch (LazyInitializationException exception) {
+
+        }
+
     }
 
     protected void refreshTableView(ObservableList newData ) {
@@ -209,10 +216,10 @@ public abstract class CrudController<T> {
         getEntityHistory(crudService, null, null);
     }
 
-    protected void getFullHistory(MyCrudService crudService) {
+    protected void getFullHistory(MyCrudService crudService, LocalDate startDate, LocalDate endDate) {
         if (this.btnFullHistory.getText().equals(btnFullHistoryInactiveTest)) {
             this.btnFullHistory.setText(btnFullHistoryActiveText);
-            List revisions = crudService.getAllRevisions();
+            List revisions = crudService.getAllRevisions(startDate, endDate);
             List <Object> resultOfSearch = getObjectsFromRevisions(revisions);
             refreshTableView(FXCollections.observableArrayList(resultOfSearch));
 
@@ -220,6 +227,10 @@ public abstract class CrudController<T> {
             this.btnFullHistory.setText(btnFullHistoryInactiveTest);
             refreshTableView(crudService);
         }
+    }
+
+    protected void getFullHistory(MyCrudService crudService) {
+        getFullHistory(crudService, null, null);
     }
 
     protected void setTextFieldOnlyDigitsInput(TextField textField) {

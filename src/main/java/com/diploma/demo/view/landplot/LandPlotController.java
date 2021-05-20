@@ -4,19 +4,15 @@ import com.diploma.demo.core.landplot.Address;
 import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
 import com.diploma.demo.view.utils.CrudController;
+import com.diploma.demo.view.utils.DateRangePicker;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Popup;
-import javafx.stage.Screen;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -97,9 +93,7 @@ public class LandPlotController extends CrudController<LandPlot> {
     @FXML
     private Button btnFullHistory;
 
-    private Popup popup;
-    private DatePicker startDate;
-    private DatePicker endDate;
+    private DateRangePicker dateRangePicker;
 
     @FXML
     private HBox HboxSetting;
@@ -113,11 +107,11 @@ public class LandPlotController extends CrudController<LandPlot> {
         idTextField.setText("");
         updateObjectFromTextField(landPlot);
         landPlotService.addLandPlot(landPlot);
-        
+
         refresh();
         selectTab(landPlotsTabView);
     }
-    
+
     @FXML
     private void updateLandPlot() {
         update(landPlotService, getIdFromTextField(idTextField) );
@@ -132,12 +126,13 @@ public class LandPlotController extends CrudController<LandPlot> {
     @FXML
     void getEntityHistory() {
         // handle errors (right now DatePicker can contains a-Z symbols
-        getEntityHistory(landPlotService, startDate.getValue(), endDate.getValue());
+        getEntityHistory(landPlotService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
     }
 
     @FXML
     private void getFullHistory() {
-        getFullHistory(landPlotService);
+        // handle errors (right now DatePicker can contains a-Z symbols
+        getFullHistory(landPlotService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
     }
 
     @FXML
@@ -167,7 +162,7 @@ public class LandPlotController extends CrudController<LandPlot> {
             return row ;
         });
 
-        initSettingsPopup();
+        dateRangePicker = new DateRangePicker(HboxSetting);
     }
 
     @FXML
@@ -267,52 +262,8 @@ public class LandPlotController extends CrudController<LandPlot> {
         this.landPlotService = landPlotService;
     }
 
-
-    private void initSettingsPopup() {
-        popup = new Popup();
-        startDate = new DatePicker();
-        endDate = new DatePicker();
-
-        Label startLabel = new Label("start date");
-        Label endLabel = new Label("end date");
-
-        Button closeButton = new Button("Close");
-        //Creating the mouse event handler
-        EventHandler<MouseEvent> eventHandler = e -> setting();
-        closeButton.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
-
-        VBox vBox = new VBox();
-
-        GridPane gridPane = new GridPane();
-
-        gridPane.add(startLabel,0,0);
-        gridPane.add(startDate, 1,0);
-
-        gridPane.add(endLabel,0,1);
-        gridPane.add(endDate, 1,1);
-
-        gridPane.add(closeButton, 3,2);
-
-        vBox.setStyle(" -fx-background-color: white");
-        vBox.getChildren().add(gridPane);
-        vBox.setPrefWidth(500);
-        vBox.setPrefHeight(300);
-        vBox.setBorder(new Border(new BorderStroke(Color.BLACK,
-                BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
-        popup.getContent().add(vBox);
-
-
-    }
-
-
     @FXML
     private void setting() {
-        if (!popup.isShowing())
-            popup.show(HboxSetting,
-                    Screen.getPrimary().getBounds().getWidth() / 2 - 100,
-                    Screen.getPrimary().getBounds().getHeight() / 2 - 100);
-        else
-            popup.hide();
+        dateRangePicker.setting();
     }
 }
