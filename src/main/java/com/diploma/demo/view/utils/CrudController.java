@@ -1,112 +1,54 @@
 package com.diploma.demo.view.utils;
 
 import com.diploma.demo.core.MyCrudService;
-import com.diploma.demo.core.landplot.Address;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import org.hibernate.LazyInitializationException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
-public abstract class CrudController<T> {
 
+public abstract class CrudController<T> extends CrudUtils {
     protected Long activeRowID = null;
 
-    private final String btnEntityHistoryInactiveText = "Get entity history";
-    private final String btnEntityHistoryActiveText = "Back to all data";
+    private final String btnEntityHistoryInactiveText = "История документа";
+    private final String btnEntityHistoryActiveText = "Назад";
 
-    private final String btnFullHistoryInactiveTest = "Get full history";
-    private final String btnFullHistoryActiveText = "Back to current data";
+    private final String btnFullHistoryInactiveTest = "Вся история";
+    private final String btnFullHistoryActiveText = "Назад"; // к актуальной информации
 
     private TabPane tabPane;
+    private Tab tabView;
+    private Tab tabCreate;
+
+    private Button buttonCreate;
+    private Button buttonUpdate;
+
+
     private TableView tableView;
     private Button btnEntityHistory;
     private Button btnFullHistory;
 
-    private String getStringValue(String str) {
-        if (str == null || str.isEmpty()) {
-            return "";
-        }
-        return str;
+    public void setButtonCreate(Button buttonCreate) {
+        this.buttonCreate = buttonCreate;
+        this.buttonCreate.setText("Создать");
     }
 
-    protected Long getIdFromTextField(TextField tfID) {
-        String idText = getStringValue(tfID.getText());
-        if (idText.equals("")) {
-            return null;
-        }
-        return Long.parseLong(idText);
+    public void setButtonUpdate(Button buttonUpdate) {
+        this.buttonUpdate = buttonUpdate;
+        this.buttonUpdate.setText("Обновить");
     }
 
-    protected void setTextFieldValue(TextField textField, String value) {
-        textField.setText(getStringValue(value));
+    public void setTabView(Tab tabView) {
+        this.tabView = tabView;
     }
 
-    protected void setTextFieldValue(TextField textField, Double value) {
-        if (value == null || value.isNaN()) {
-            textField.setText("");
-        } else {
-            textField.setText(value.toString());
-        }
-    }
-
-    protected void setComboBoxValue(ComboBox<String> comboBox, String value) {
-        if (value != null) {
-            comboBox.setValue(value);
-        }
-    }
-
-    protected void setDatePicker(DatePicker datePicker,LocalDate date) {
-            datePicker.setValue(date);
-    }
-
-    protected boolean isNotEmptyField(TextField field) {
-        return !field.getText().isEmpty() && !field.getText().equals("");
-    }
-
-    protected void setLongValFromTextField(Consumer<Long> action, TextField textField) {
-        // handle errors
-        if (isNotEmptyField(textField)) {
-            action.accept(Long.parseLong(textField.getText()));
-            textField.setText("");
-        }
-    }
-
-    protected void setDateFromDatePicker(Consumer<LocalDate> action, DatePicker datePicker) {
-        if (datePicker != null) {
-            action.accept(datePicker.getValue());
-        }
-    }
-
-    protected void eraseDate(Consumer<LocalDate> action) {
-        action.accept(null);
-    }
-
-    protected void setStringValFromTextField(Consumer<String> action, TextField textField) {
-        if (isNotEmptyField(textField)) {
-            action.accept(textField.getText());
-            textField.setText("");
-        }
-    }
-
-    protected void setDoubleValFromTextField(Consumer<Double> action, TextField textField) {
-        if (isNotEmptyField(textField)) {
-            action.accept(Double.parseDouble(textField.getText()));
-            textField.setText("");
-        }
-    }
-
-    protected void setStringValFromComboBox(Consumer<String> action, ComboBox<String> comboBox) {
-        // errors
-        if (comboBox.getValue() != null) {
-           action.accept(comboBox.getValue());
-        }
+    public void setTabCreate(Tab tabCreate) {
+        this.tabCreate = tabCreate;
     }
 
     protected void setTabPane(TabPane newTabPane) {
@@ -139,36 +81,90 @@ public abstract class CrudController<T> {
         }
     }
 
-    protected String getFullAddress(Address address) {
-        if (address == null) {
-            return "";
+    protected void selectTabView() {
+        if (tabView == null) {
+            try {
+                throw new Exception("you can't use selectTabView function before you set tabView");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        selectTab(tabView);
+        cleanForm();
 
-        String region = getStringValue(address.getRegion());
-        String city = getStringValue(address.getCity());
-        String street = getStringValue(address.getStreet());
-        String homeNumber = getStringValue(address.getHomeNumber());
-
-        Long apartmentL = address.getApartmentn();
-        String apartment;
-        if (apartmentL == null) {
-            apartment = "";
+        if (tabCreate != null) {
+            tabPane.getTabs().remove(tabCreate);
         } else {
-            apartment = address.getApartmentn().toString();
+            try {
+                throw new Exception("selectTabView: you should set tabCreate");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    protected void selectTabCreate() {
+        if (tabCreate == null) {
+            try {
+                throw new Exception("you can't use selectTabCreate function before you set tabCreate");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }  else if (buttonCreate == null || buttonUpdate == null) {
+            try {
+                throw new Exception("you can't use selectTabUpdate function before you set buttons for update and create");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        tabCreate.setText("Создание документа");
+        cleanForm();
+
+        hideNode(buttonUpdate);
+        unhideNode(buttonCreate);
+
+        tabPane.getTabs().add(tabCreate);
+        selectTab(tabCreate);
+    }
+
+    protected void selectTabUpdate(T object) {
+        if (tabCreate == null) {
+            try {
+                throw new Exception("you can't use selectTabUpdate function before you set tabCreate");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if (buttonCreate == null || buttonUpdate == null) {
+            try {
+                throw new Exception("you can't use selectTabUpdate function before you set buttons for update and create");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
-        return "Region: " + region + "\nCity: " + city + "\nStreet: " + street + "\nHome number: " +
-                homeNumber + "\nApartment: " + apartment;
+        feelForm(object);
+        tabCreate.setText("Обновление документа");
+
+        unhideNode(buttonUpdate);
+        hideNode(buttonCreate);
+
+        tabPane.getTabs().add(tabCreate);
+        selectTab(tabCreate);
     }
 
     protected void refreshTableView(MyCrudService crudService) {
         // handle errors
-        ObservableList plots = FXCollections.observableArrayList(crudService.getAll());
+        List items = crudService.getAll();
+        ObservableList plots = FXCollections.observableArrayList(items);
         this.tableView.getItems().clear();
-        this.tableView.getItems().addAll(plots);
+        try {
+            this.tableView.getItems().addAll(plots);
+        } catch (LazyInitializationException exception) {
+
+        }
     }
 
-    protected void refreshTableView(ObservableList newData ) {
+    protected void refreshTableView(ObservableList newData) {
         // handle errors
         this.tableView.getItems().clear();
         this.tableView.getItems().addAll(newData);
@@ -182,19 +178,10 @@ public abstract class CrudController<T> {
         refreshTableView(crudService);
     }
 
-    private List<Object> getObjectsFromRevisions(List revisions) {
-        List<Object> result = new ArrayList<>();
-        revisions.forEach(audObj -> {
-            Object[] audit = (Object[]) audObj;
-            result.add(audit[0]);
-        });
-        return result;
-    }
-
-    protected void getEntityHistory(MyCrudService crudService) {
+    protected void getEntityHistory(MyCrudService crudService, LocalDate startDate, LocalDate endDate) {
         if (this.btnEntityHistory.getText().equals(btnEntityHistoryInactiveText)) {
             this.btnEntityHistory.setText(btnEntityHistoryActiveText);
-            List test =  crudService.getRevisions(activeRowID);
+            List test = crudService.getRevisions(activeRowID, startDate, endDate);
             List<Object> resultOfSearch = getObjectsFromRevisions(test);
 
             refreshTableView(FXCollections.observableArrayList(resultOfSearch));
@@ -204,11 +191,15 @@ public abstract class CrudController<T> {
         }
     }
 
-    protected void getFullHistory(MyCrudService crudService) {
+    protected void getEntityHistory(MyCrudService crudService) {
+        getEntityHistory(crudService, null, null);
+    }
+
+    protected void getFullHistory(MyCrudService crudService, LocalDate startDate, LocalDate endDate) {
         if (this.btnFullHistory.getText().equals(btnFullHistoryInactiveTest)) {
             this.btnFullHistory.setText(btnFullHistoryActiveText);
-            List revisions = crudService.getAllRevisions();
-            List <Object> resultOfSearch = getObjectsFromRevisions(revisions);
+            List revisions = crudService.getAllRevisions(startDate, endDate);
+            List<Object> resultOfSearch = getObjectsFromRevisions(revisions);
             refreshTableView(FXCollections.observableArrayList(resultOfSearch));
 
         } else {
@@ -217,18 +208,16 @@ public abstract class CrudController<T> {
         }
     }
 
-    protected void setTextFieldOnlyDigitsInput(TextField textField) {
-        textField.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    textField.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
-        });
+    protected void getFullHistory(MyCrudService crudService) {
+        getFullHistory(crudService, null, null);
     }
 
-    protected abstract  void updateObjectFromTextField(T object);
+    protected abstract void cleanForm();
+
+    protected abstract void feelForm(T object);
+
+    protected abstract void updateObjectFromForm(T object);
+
 
     protected void update(MyCrudService crudService, Long id) {
         if (id == null) {
@@ -236,7 +225,7 @@ public abstract class CrudController<T> {
         }
         Optional<T> object = crudService.findById(id);
         object.ifPresent(val -> {
-            updateObjectFromTextField(val);
+            updateObjectFromForm(val);
             crudService.update(val);
 
             refreshTableView(crudService);

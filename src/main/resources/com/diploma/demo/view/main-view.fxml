@@ -3,8 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="400.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.diploma.demo.view.MainController">
-    <TabPane prefHeight="400.0" prefWidth="1100.0" tabClosingPolicy="UNAVAILABLE">
+<VBox xmlns="http://javafx.com/javafx/11.0.1"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.diploma.demo.view.MainController">
+    <TabPane tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab fx:id="mainPageTab" text="Главная">
                 <fx:include source="maintab/main-page-tab.fxml" />
@@ -14,6 +16,9 @@
             </Tab>
             <Tab fx:id="counterPageTab" text="Контроль датчиков">
                 <fx:include source="counter-page-tab.fxml" />
+            </Tab>
+            <Tab text ="Архив">
+                <fx:include source="../archive/archive-tab.fxml"></fx:include>
             </Tab>
         </tabs>
 

@@ -4,11 +4,14 @@ import com.diploma.demo.core.landplot.Address;
 import com.diploma.demo.core.owner.Owner;
 import com.diploma.demo.core.owner.service.impl.OwnerServiceImpl;
 import com.diploma.demo.view.utils.CrudController;
+import com.diploma.demo.view.utils.DateRangePicker;
 import javafx.beans.property.SimpleStringProperty;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,109 +24,83 @@ import java.util.List;
 public class OwnerController extends CrudController<Owner> {
     OwnerServiceImpl ownerService;
 
-    @FXML
-    private TableView<Owner> ownerTableView;
-    @FXML
-    private TabPane tabPane;
-    @FXML
-    private Tab tabView;
-    @FXML
-    private Tab tabCreate;
 
-    @FXML
-    private TableColumn<Owner, Long> tcID;
-    @FXML
-    private TableColumn<Owner, String> tcType;
-    @FXML
-    private TableColumn<Owner, String> tcName;
-    @FXML
-    private TableColumn<Owner, Date> tcBirthDate;
-    @FXML
-    private TableColumn<Owner, String> tcDocType;
-    @FXML
-    private TableColumn<Owner, String> tcDocN;
-    @FXML
-    private TableColumn<Owner, String> tcRegistrationDate;
-    @FXML
-    private TableColumn<Owner, String> tcAddress;
-    @FXML
-    private TableColumn<Owner, String> tcPostAddress;
-    @FXML
-    private TableColumn<Owner, String> tcPtn;
-    @FXML
-    private TableColumn<Owner, String> tcPhoneNumber;
-    @FXML
-    private TableColumn<Owner, String> tcTelegramNumber;
-    @FXML
-    private TableColumn<Owner, String> tcViberNumber;
-    @FXML
-    private TableColumn<Owner, String> tcWhatsappNumber;
+    @FXML private TableView<Owner> ownerTableView;
+    @FXML private TabPane tabPane;
+    @FXML private Tab tabView;
+    @FXML private Tab tabCreate;
 
+    @FXML private TableColumn<Owner, Long> tcID;
+    @FXML private TableColumn<Owner, String> tcType;
+    @FXML private TableColumn<Owner, String> tcName;
+    @FXML private TableColumn<Owner, Date> tcBirthDate;
+    @FXML private TableColumn<Owner, String> tcDocType;
+    @FXML private TableColumn<Owner, String> tcDocN;
+    @FXML private TableColumn<Owner, String> tcRegistrationDate;
+    @FXML private TableColumn<Owner, String> tcAddress;
+    @FXML private TableColumn<Owner, String> tcPostAddress;
+    @FXML private TableColumn<Owner, String> tcPtn;
+    @FXML private TableColumn<Owner, String> tcPhoneNumber;
+    @FXML private TableColumn<Owner, String> tcTelegramNumber;
+    @FXML private TableColumn<Owner, String> tcViberNumber;
+    @FXML private TableColumn<Owner, String> tcWhatsappNumber;
 
-    @FXML
-    private TextField tfID;
-    @FXML
-    private ComboBox<String> cbType;
-    @FXML
-    private String individualOwnerCase;
-    @FXML
-    private TextField tfName;
-    @FXML
-    private DatePicker tfBirthDate;
-    @FXML
-    private TextField tfDocType;
-    @FXML
-    private TextField tfDocN;
+    @FXML private TextField tfId;
+    @FXML private ComboBox<String> cbType;
+    @FXML private String individualOwnerCase;
+    @FXML private TextField tfName;
+    @FXML private DatePicker tfBirthDate;
+    @FXML private TextField tfDocType;
+    @FXML private TextField tfDocN;
 
-    @FXML
-    private TextField tfRegion;
-    @FXML
-    private TextField tfCity;
-    @FXML
-    private TextField tfStreet;
-    @FXML
-    private TextField tfHomeNumber;
-    @FXML
-    private TextField tfApartment;
+    @FXML private TextField tfRegion;
+    @FXML private TextField tfCity;
+    @FXML private TextField tfStreet;
+    @FXML private TextField tfHomeNumber;
+    @FXML private TextField tfApartment;
 
-    @FXML
-    private TextField tfPostRegion;
-    @FXML
-    private TextField tfPostCity;
-    @FXML
-    private TextField tfPostStreet;
-    @FXML
-    private TextField tfPostHomeNumber;
-    @FXML
-    private TextField tfPostApartment;
+    @FXML private TextField tfPostRegion;
+    @FXML private TextField tfPostCity;
+    @FXML private TextField tfPostStreet;
+    @FXML private TextField tfPostHomeNumber;
+    @FXML private TextField tfPostApartment;
 
-    @FXML
-    private TextField tfPtn;
-    @FXML
-    private TextField tfPhoneNumber;
-    @FXML
-    private TextField tfTelegramNumber;
-    @FXML
-    private TextField tfViberNumber;
-    @FXML
-    private TextField tfWhatsappNumber;
+    @FXML private TextField tfPtn;
+    @FXML private TextField tfPhoneNumber;
+    @FXML private TextField tfTelegramNumber;
+    @FXML private TextField tfViberNumber;
+    @FXML private TextField tfWhatsappNumber;
 
-    @FXML
-    private Button btnEntityHistory;
-    @FXML
-    private Button btnFullHistory;
+    @FXML private Button btnEntityHistory;
+    @FXML private Button btnFullHistory;
+    @FXML private Button buttonCreate;
+    @FXML private Button buttonUpdate;
+
+    @FXML private Label labelBirthRegistrationDate,
+            labelName;
+
+    @FXML private HBox HboxSetting;
+    private DateRangePicker dateRangePicker;
 
     @FXML
     void initialize() {
         setTabPane(tabPane);
         setTableView(ownerTableView);
 
+        setTabView(tabView);
+        setTabCreate(tabCreate);
+
+        setButtonCreate(buttonCreate);
+        setButtonUpdate(buttonUpdate);
+
         setBtnEntityHistory(btnEntityHistory);
         setBtnFullHistory(btnFullHistory);
 
-        setTextFieldOnlyDigitsInput(tfID);
+        setTextFieldOnlyDigitsInput(tfId);
         setTextFieldOnlyDigitsInput(tfApartment);
         setTextFieldOnlyDigitsInput(tfPostApartment);
+
+        tabPane.getTabs().remove(tabCreate);
 
         read();
         this.ownerTableView.setRowFactory(tv -> {
@@ -133,21 +110,23 @@ public class OwnerController extends CrudController<Owner> {
                     Owner clickedRow = row.getItem();
                     activeRowID = row.getItem().getId();
                     if (event.getClickCount() == 2) {
-                        feelTextFields(clickedRow);
-                        selectTab(tabCreate);
+                        selectTabUpdate(clickedRow);
                     }
                 }
             });
             return row;
         });
+
+        dateRangePicker = new DateRangePicker(HboxSetting);
+        initCbType();
     }
     @FXML
     private void getEntityHistory() {
-        getEntityHistory(ownerService);
+        getEntityHistory(ownerService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
     }
     @FXML
     private void getFullHistory() {
-        getFullHistory(ownerService);
+        getFullHistory(ownerService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
     }
 
     @FXML
@@ -156,21 +135,30 @@ public class OwnerController extends CrudController<Owner> {
         Address address = new Address();
         owner.setRegistrationAddress(address);
 
-        tfID.setText("");
-        updateObjectFromTextField(owner);
+        updateObjectFromForm(owner);
         ownerService.addOwner(owner);
 
         refresh();
-        selectTab(tabView);
+        selectTabView();
     }
     @FXML
     private void update() {
-        update(ownerService, getIdFromTextField(tfID));
-        selectTab(tabView);
+        update(ownerService, getIdFromTextField(tfId));
+        selectTabView();
     }
     @FXML
     private void delete() {
         deleteEntity(ownerService);
+    }
+
+    @FXML
+    private void openSetting() {
+        dateRangePicker.setting();
+    }
+
+    @FXML
+    private void openCreate() {
+        selectTabCreate();
     }
 
     protected void refresh() {
@@ -178,7 +166,7 @@ public class OwnerController extends CrudController<Owner> {
     }
 
     @Override
-    protected void updateObjectFromTextField(Owner owner) {
+    protected void updateObjectFromForm(Owner owner) {
         setStringValFromComboBox(owner::setType, cbType);
 
         setStringValFromTextField(owner::setName, tfName);
@@ -229,8 +217,40 @@ public class OwnerController extends CrudController<Owner> {
         setStringValFromTextField(owner::setWhatsappNumber, tfWhatsappNumber);
     }
 
-    void feelTextFields(Owner owner) {
-        setTextFieldValue(tfID, owner.getId().toString());
+    @Override
+    protected void cleanForm() {
+        setTextFieldValue(tfId, "");
+        setTextFieldValue(tfName, "");
+        setTextFieldValue(tfDocType, "");
+        setTextFieldValue(tfDocN, "");
+
+        setTextFieldValue(tfRegion, "");
+        setTextFieldValue(tfCity, "");
+        setTextFieldValue(tfStreet, "");
+        setTextFieldValue(tfHomeNumber, "");
+        setTextFieldValue(tfApartment, "");
+
+        setTextFieldValue(tfPostRegion, "");
+        setTextFieldValue(tfPostCity, "");
+        setTextFieldValue(tfPostStreet, "");
+        setTextFieldValue(tfPostHomeNumber, "");
+        setTextFieldValue(tfPostApartment, "");
+
+        setTextFieldValue(tfPtn,"");
+        setTextFieldValue(tfPhoneNumber, "");
+        setTextFieldValue(tfTelegramNumber, "");
+        setTextFieldValue(tfViberNumber, "");
+        setTextFieldValue(tfWhatsappNumber, "");
+
+        setDatePicker(tfBirthDate, null);
+
+        String cbTypeDefault = "физлицо";
+        setComboBoxValue(cbType, cbTypeDefault);
+    }
+
+    @Override
+    protected void feelForm(Owner owner) {
+        setTextFieldValue(tfId, owner.getId().toString());
         setComboBoxValue(cbType, owner.getType());
         setTextFieldValue(tfName, owner.getName());
 
@@ -295,6 +315,19 @@ public class OwnerController extends CrudController<Owner> {
         List<Owner> owners = ownerService.getAll();
         this.ownerTableView.getItems().addAll(owners);
     }
+
+    private void initCbType() {
+       cbType.valueProperty().addListener((observable, oldValue, newValue) -> {
+           if (newValue.equals(individualOwnerCase)) {
+               labelName.setText("ФИО");
+               labelBirthRegistrationDate.setText("Дата рождения: ");
+           } else {
+               labelName.setText("Название");
+               labelBirthRegistrationDate.setText("Дата регистрации: ");
+           }
+       });
+    }
+
 
     @Autowired
     public OwnerController( OwnerServiceImpl ownerService) {
