@@ -7,11 +7,22 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class CrudUtils {
 
     public CrudUtils(){}
+
+    protected List<Object> getObjectsFromRevisions(List revisions) {
+        List<Object> result = new ArrayList<>();
+        revisions.forEach(audObj -> {
+            Object[] audit = (Object[]) audObj;
+            result.add(audit[0]);
+        });
+        return result;
+    }
 
     public static String getStringValue(String str) {
         if (str == null || str.isEmpty()) {

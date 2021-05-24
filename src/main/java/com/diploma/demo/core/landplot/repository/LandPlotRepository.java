@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Table("land_plot")
-public interface LandPlotRepository extends JpaRepository<LandPlot, Long>, LandPlotRepositoryCustom {
+public interface LandPlotRepository extends JpaRepository<LandPlot, Long> {
 
 }

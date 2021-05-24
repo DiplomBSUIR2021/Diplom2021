@@ -19,6 +19,10 @@ public class LandPlotServiceImpl implements LandPlotService {
     @Autowired
     LandPlotRepository landPlotRepository;
 
+    public AuditReader getAuditReader() {
+        return auditReader;
+    }
+
     @Autowired
     AuditReader auditReader;
 

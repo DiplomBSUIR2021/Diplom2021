@@ -178,15 +178,6 @@ public abstract class CrudController<T> extends CrudUtils {
         refreshTableView(crudService);
     }
 
-    private List<Object> getObjectsFromRevisions(List revisions) {
-        List<Object> result = new ArrayList<>();
-        revisions.forEach(audObj -> {
-            Object[] audit = (Object[]) audObj;
-            result.add(audit[0]);
-        });
-        return result;
-    }
-
     protected void getEntityHistory(MyCrudService crudService, LocalDate startDate, LocalDate endDate) {
         if (this.btnEntityHistory.getText().equals(btnEntityHistoryInactiveText)) {
             this.btnEntityHistory.setText(btnEntityHistoryActiveText);
