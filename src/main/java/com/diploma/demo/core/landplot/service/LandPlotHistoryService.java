@@ -1,4 +1,4 @@
-package com.diploma.demo.core.landplot.repository;
+package com.diploma.demo.core.landplot.service;
 
 import com.diploma.demo.core.landplot.LandPlotHistory;
 

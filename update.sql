@@ -53,3 +53,11 @@ alter table if exists land_plot add column revtype int2
 alter table if exists land_plot_aud add column dtype varchar(31) not null
 alter table if exists land_plot add column dtype varchar(31) not null
 alter table if exists land_plot_aud add column dtype varchar(31) not null
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp

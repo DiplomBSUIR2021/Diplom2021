@@ -1,31 +1,64 @@
 package com.diploma.demo.core.landplot;
 
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.hibernate.envers.DefaultRevisionEntity;
 import org.springframework.data.annotation.Transient;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+
 import java.util.Date;
 
 @Data
-/*@Table(name = "land_plot_aud")
-@RevisionEntity()*/
-public class LandPlotHistory extends LandPlot {
+@Entity
+@Table(name = "land_plot_aud")
+@NoArgsConstructor
+public class LandPlotHistory {
 
-    private final int rev;
-
-    private final short revtype;
-
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "rev")
+    private int rev;
+    @NonNull
+    @NotEmpty
+    @Column(name = "revtype")
+    private short revtype;
     @Transient
     @NotEmpty
     private Date revisionDate;
+
+    @Column(name = "id")
+    private Long id;
+
+    @Embedded
+    private Address address;
+
+    @Column(name = "cadastral_number")
+    private String cadastralNumber;
+
+    @Column(name="category")
+    private String category;
+
+    @Column(name="current_marks")
+    private String currentMarks;
+
+    @Column(name="intended_use")
+    private String intendedUse;
+
+    @Column(name="land_plot_purpose")
+    private String landPlotPurpose;
+
+    @Column(name="notes")
+    private String notes;
+
+    @Column(name = "surface")
+    private Double surface;
+
     // private final LandPlot landPlot;
 
-    public LandPlotHistory(DefaultRevisionEntity entity, short revtype) {
-        this.rev = entity.getId();
-        this.revtype = revtype;
-        this.revisionDate = entity.getRevisionDate();
-    }
 
     public LandPlotHistory(LandPlot landPlot, DefaultRevisionEntity entity, short revtype) {
         this.rev = entity.getId();
