@@ -1,8 +1,6 @@
 package com.diploma.demo.view.landplot;
 
 import com.diploma.demo.core.landplot.LandPlotHistory;
-import com.diploma.demo.core.landplot.repository.LandPlotHistoryRepository;
-import com.diploma.demo.core.landplot.service.LandPlotHistoryService;
 import com.diploma.demo.core.landplot.service.impl.LandPlotHistoryServiceImpl;
 import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
 import com.diploma.demo.view.utils.ArchiveContoller;
@@ -17,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import liquibase.pro.packaged.B;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +37,8 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
     @FXML
     private Button buttonUpdate;
+
+    private Button btnEntityHistory;
 
     private TableView<LandPlotHistory> tableView = new TableView<>();
 
@@ -75,15 +76,21 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
         read();
     }
 
+    private void refresh() {
+        List<LandPlotHistory> plots = landPlotHistoryService.getLandPlotHistory();
+        refreshTableView(FXCollections.observableArrayList(plots));
+    }
+
     private void configureControlPanel() {
         HBox hbox = new HBox();
 
         Button refresh = new Button("Обновить");
-        Button getEntityHistory = new Button("История записи");
         Button settings = new Button("Настройки");
         Button updateEntity = new Button("Обновить запись");
 
-        hbox.getChildren().addAll(refresh, getEntityHistory, settings, updateEntity);
+        btnEntityHistory = new Button();
+
+        hbox.getChildren().addAll(refresh, settings, updateEntity,btnEntityHistory);
         archiveVBox.getChildren().add(hbox);
 
         DateRangePicker dateRangePicker = new DateRangePicker(hbox);
@@ -93,16 +100,28 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
         });
 
         refresh.setOnAction(event -> {
-            List<LandPlotHistory> plots = landPlotHistoryService.getLandPlotHistory();
-            refreshTableView(FXCollections.observableArrayList(plots));
+            refresh();
         });
 
-        getEntityHistory.setOnAction(event -> {
-
-        });
 
         updateEntity.setOnAction(event -> {
             System.out.println(activeRowID);
+        });
+
+        tabPane.getTabs().remove(tabUpdate);
+
+        btnEntityHistory.setOnAction(event -> {
+            this.tableView.getItems().clear();
+            if (btnEntityHistory.getText().equals("История документа")) {
+                System.out.println("тест");
+                System.out.println(activeRowID);
+                List<LandPlotHistory> history = landPlotHistoryService.getLandPlotHistory(activeRowID, dateRangePicker.getStartDate(),dateRangePicker.getEndDate());
+                btnEntityHistory.setText("Назад");
+                refreshTableView(FXCollections.observableArrayList(history));
+            } else {
+                btnEntityHistory.setText("История документа");
+                refresh();
+            }
         });
     }
 
@@ -117,12 +136,14 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
         configureControlPanel();
         configureTableView();
 
+        setBtnEntityHistory(btnEntityHistory);
+
         tableView.setRowFactory(tv -> {
             TableRow<LandPlotHistory> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
                     LandPlotHistory clickedRow = row.getItem();
-                    activeRowID = new Long(row.getItem().getRev());
+                    activeRowID = new Long(row.getItem().getId());
                     if (event.getClickCount() == 2) {
                         System.out.println(clickedRow);
                         selectTabUpdate(clickedRow);

@@ -7,6 +7,7 @@ import com.diploma.demo.core.landplot.repository.LandPlotHistoryRepository;
 import com.diploma.demo.core.landplot.repository.LandPlotRepository;
 import com.diploma.demo.core.landplot.service.LandPlotHistoryService;
 import com.diploma.demo.view.utils.CrudUtils;
+import com.diploma.demo.view.utils.TimeUtils;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.query.AuditEntity;
@@ -14,6 +15,7 @@ import org.hibernate.envers.query.AuditQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,10 @@ public class LandPlotHistoryServiceImpl extends CrudUtils implements LandPlotHis
 
     @Override
     public List<LandPlotHistory> getLandPlotHistory(Long id) {
+        return getLandPlotHistory(id, null,null);
+    }
+
+    public List<LandPlotHistory> getLandPlotHistory(Long id, LocalDate startDate, LocalDate endDate) {
         AuditReader auditReader = ServiceController.getLandPlotService().getAuditReader();
 
         AuditQuery auditQuery;
@@ -41,9 +47,19 @@ public class LandPlotHistoryServiceImpl extends CrudUtils implements LandPlotHis
                 .forRevisionsOfEntity(LandPlot.class, false,true);
 
         if (id != null) {
+            System.out.println("Проверяем id");
             auditQuery.add(AuditEntity.id().eq(id));
         }
 
+        if (startDate != null) {
+            auditQuery.add(AuditEntity.revisionProperty("timestamp").gt(TimeUtils.localeDateToTimeStamp(startDate)));
+        }
+
+        if (endDate != null) {
+            auditQuery.add(AuditEntity.revisionProperty("timestamp").lt(TimeUtils.localeDateToTimeStamp(endDate)));
+        }
+
+        System.out.println("Тут" + id);
         List resultList = auditQuery.getResultList();
         List<LandPlotHistory> result = new ArrayList<>();
 
@@ -55,8 +71,8 @@ public class LandPlotHistoryServiceImpl extends CrudUtils implements LandPlotHis
             //MOD  / DEL / ADD
             LandPlot landPlot = (LandPlot) obj[0];
             DefaultRevisionEntity entity = (DefaultRevisionEntity) obj[1];
-            System.out.println("чекает время");
-            System.out.println(entity.getRevisionDate().getClass());
+            /*System.out.println("чекает время");
+            System.out.println(entity.getRevisionDate().getClass());*/
 
             result.add(new LandPlotHistory(landPlot, entity, obj[2].toString()));
         }

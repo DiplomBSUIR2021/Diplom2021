@@ -10,4 +10,5 @@
     <Tab text = "Архив земельных участков">
         <fx:include source="./landPlot/land-plot-archive.fxml"/>
     </Tab>
+    <Tab text = "Архив владельцев"></Tab>
 </TabPane>

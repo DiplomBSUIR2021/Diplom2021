@@ -12,26 +12,26 @@
             <VBox alignment="CENTER" spacing="10">
                <HBox fx:id="HBoxSetting" alignment="CENTER">
                   <Button onAction="#refresh">Обновить</Button>
-                  <Button fx:id="btnEntityHistory" onAction="#getEntityHistory"/>
-                  <Button fx:id="btnFullHistory" onAction="#getFullHistory"/>
                   <Button onAction="#delete">Удалить</Button>
                   <Button onAction="#setting">Настройки</Button>
                   <Button onAction="#openCreate">Новый документ</Button>
+                  <Button fx:id="btnEntityHistory" onAction="#getEntityHistory" visible="false"/>
+                  <Button fx:id="btnFullHistory" onAction="#getFullHistory" visible="false"/>
                </HBox>
                <ScrollPane>
                   <TableView fx:id="tableView" prefHeight="336.0" prefWidth="1107.0">
                      <columns>
                         <TableColumn fx:id="tcID" text="#">
                         </TableColumn>
-                        <TableColumn fx:id="tcAppartamentn" text="Квартира">
+                        <TableColumn fx:id="tcRegion" text="Область">
                         </TableColumn>
                         <TableColumn fx:id="tcCity" text="Город">
                         </TableColumn>
+                        <TableColumn fx:id="tcStreet" text="Улица">
+                        </TableColumn>
                         <TableColumn fx:id="tcHomeNumber" text="Дом">
                         </TableColumn>
-                        <TableColumn fx:id="tcRegion" text="Область">
-                        </TableColumn>
-                        <TableColumn fx:id="tcStreet" text="Улица">
+                        <TableColumn fx:id="tcAppartamentn" text="Квартира">
                         </TableColumn>
                         <TableColumn fx:id="tcCadastralNumber" text="Кадастровый №">
                         </TableColumn>

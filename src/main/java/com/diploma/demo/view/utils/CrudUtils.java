@@ -140,7 +140,7 @@ public class CrudUtils {
             apartment = address.getApartmentn().toString();
         }
 
-        return "Region: " + region + "\nCity: " + city + "\nStreet: " + street + "\nHome number: " +
-                homeNumber + "\nApartment: " + apartment;
+        return "Область: " + region + "\nГород: " + city + "\nУлица: " + street + "\nДом: " +
+                homeNumber + "\nКв.: " + apartment;
     }
 }

@@ -24,7 +24,6 @@ import java.util.List;
 public class OwnerController extends CrudController<Owner> {
     OwnerServiceImpl ownerService;
 
-
     @FXML private TableView<Owner> ownerTableView;
     @FXML private TabPane tabPane;
     @FXML private Tab tabView;
