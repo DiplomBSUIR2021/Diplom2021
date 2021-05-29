@@ -8,7 +8,7 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.diploma.demo.view.landplot.LandPlotArchiveController">
     <TabPane tabClosingPolicy="UNAVAILABLE" fx:id="tabPane">
-        <Tab text = "Просмотр архива">
+        <Tab fx:id="tabView" text = "Просмотр архива">
             <VBox fx:id="archiveVBox"></VBox>
         </Tab>
         <Tab text = "Редактирование архивного документа"

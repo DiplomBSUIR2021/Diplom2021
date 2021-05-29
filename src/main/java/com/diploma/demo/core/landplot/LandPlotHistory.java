@@ -1,16 +1,15 @@
 package com.diploma.demo.core.landplot;
 
 
+import com.diploma.demo.core.revinfo.RevisionEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.hibernate.envers.DefaultRevisionEntity;
-import org.springframework.data.annotation.Transient;
+import	javax.persistence.Transient;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-
-import java.util.Date;
 
 @Data
 @Entity
@@ -26,9 +25,10 @@ public class LandPlotHistory {
     @NotEmpty
     @Column(name = "revtype")
     private short revtype;
-    @Transient
-    @NotEmpty
-    private Date revisionDate;
+
+    @OneToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="rev")
+    private RevisionEntity revisionEntity;
 
     @Column(name = "id")
     private Long id;
@@ -57,13 +57,10 @@ public class LandPlotHistory {
     @Column(name = "surface")
     private Double surface;
 
-    // private final LandPlot landPlot;
-
-
-    public LandPlotHistory(LandPlot landPlot, DefaultRevisionEntity entity, short revtype) {
+    public LandPlotHistory(LandPlot landPlot, RevisionEntity entity, short revtype) {
         this.rev = entity.getId();
         this.revtype = revtype;
-        this.revisionDate = entity.getRevisionDate();
+        this.revisionEntity =  entity;
 
         setId(landPlot.getId());
         setAddress(landPlot.getAddress());
@@ -76,29 +73,29 @@ public class LandPlotHistory {
         setSurface(landPlot.getSurface());
     }
 
-    public LandPlotHistory(LandPlot landPlot, DefaultRevisionEntity entity, String revtype) {
+    public LandPlotHistory(LandPlot landPlot, RevisionEntity entity, String revtype) {
         this(landPlot, entity, getRevtypeNumb(revtype));
     }
 
     public static String getRevtypeString(short revtypeShort) {
-        if (revtypeShort == 1) {
+        if (revtypeShort == 0) {
             return "Создание";//"ADD";
         }
-        if (revtypeShort == 2) {
+        if (revtypeShort == 1) {
             return "Изменение";//"MOD";
         }
-        return "Удаление";//"DEL";
+        return "Удаление";//"DEL"; 2
     }
 
     public static short getRevtypeNumb(String revtypeString) {
         if (revtypeString.equals("ADD")) {
-            return 1;
+            return 0;
         }
         if (revtypeString.equals("MOD")) {
-            return 2;
+            return 1;
         }
         // (obj[2].equals("DEL"))
-        return 3;
+        return 2;
     }
 
 }

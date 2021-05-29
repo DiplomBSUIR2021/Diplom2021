@@ -2,7 +2,6 @@ package com.diploma.demo.view.landplot;
 
 import com.diploma.demo.core.landplot.LandPlotHistory;
 import com.diploma.demo.core.landplot.service.impl.LandPlotHistoryServiceImpl;
-import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
 import com.diploma.demo.view.utils.ArchiveContoller;
 import com.diploma.demo.view.utils.DateRangePicker;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -15,7 +14,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import liquibase.pro.packaged.B;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,13 +25,15 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
     LandPlotHistoryServiceImpl landPlotHistoryService;
 
+    private Integer revId;
+
     @FXML
     private VBox archiveVBox;
 
     @FXML
     private TabPane tabPane;
-    @FXML
-    private Tab tabUpdate;
+    @FXML private Tab tabUpdate;
+    @FXML private Tab tabView;
 
     @FXML
     private Button buttonUpdate;
@@ -86,11 +86,11 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
         Button refresh = new Button("Обновить");
         Button settings = new Button("Настройки");
-        Button updateEntity = new Button("Обновить запись");
+        // Button updateEntity = new Button("Обновить запись");
 
         btnEntityHistory = new Button();
 
-        hbox.getChildren().addAll(refresh, settings, updateEntity,btnEntityHistory);
+        hbox.getChildren().addAll(refresh, settings/*, updateEntity*/,btnEntityHistory);
         archiveVBox.getChildren().add(hbox);
 
         DateRangePicker dateRangePicker = new DateRangePicker(hbox);
@@ -104,9 +104,9 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
         });
 
 
-        updateEntity.setOnAction(event -> {
+        /*updateEntity.setOnAction(event -> {
             System.out.println(activeRowID);
-        });
+        });*/
 
         tabPane.getTabs().remove(tabUpdate);
 
@@ -128,8 +128,11 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
     @FXML
     void initialize() {
         setTableView(tableView);
+
         setTabPane(tabPane);
+
         setTabUpdate(tabUpdate);
+        setTabView(tabView);
 
         setButtonUpdate(buttonUpdate);
 
@@ -143,7 +146,8 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
                     LandPlotHistory clickedRow = row.getItem();
-                    activeRowID = new Long(row.getItem().getId());
+                    activeRowID = new Long(clickedRow.getId());
+                    revId = new Integer(row.getItem().getRev());
                     if (event.getClickCount() == 2) {
                         System.out.println(clickedRow);
                         selectTabUpdate(clickedRow);
@@ -163,7 +167,7 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
         );
 
         tcActionDate.setCellValueFactory(cellData ->
-                new SimpleStringProperty(cellData.getValue().getRevisionDate().toString())
+                new SimpleStringProperty(cellData.getValue().getRevisionEntity().getRevisionDate().toString())
         );
 
         tcID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -208,23 +212,14 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
         tcNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
         tcSurface.setCellValueFactory(new PropertyValueFactory<>("surface"));
 
-        List<LandPlotHistory> plots = landPlotHistoryService.getLandPlotHistory();
+        List<LandPlotHistory> plots = landPlotHistoryService.getAll();
         this.tableView.getItems().addAll(plots);
     }
 
     @FXML
     private void update() {
-        System.out.println("update button pressed");
-        if (activeRowID == null) {
-            return;
-        }
-        System.out.println("here");
-        LandPlotHistory landPlotRevision = landPlotHistoryService.getLandPlotRevision((int) (long)activeRowID);
-        System.out.println(landPlotRevision);
-        System.out.println("here2");
-        updateObjectFromForm(landPlotRevision);
-        // update(landPlotHistoryService, getIdFromTextField());
-
+        update(landPlotHistoryService, revId);
+        selectTabView();
     }
 
     @Autowired
@@ -274,8 +269,6 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
     protected void updateObjectFromForm(LandPlotHistory object) {
         setStringValFromTextField(i -> object.getAddress().setRegion(i), tfRegion);
-
-
         setLongValFromTextField(i -> object.getAddress().setApartmentn(i), tfAppart);
     }
 }
