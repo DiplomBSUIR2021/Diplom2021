@@ -5,8 +5,6 @@ import com.diploma.demo.core.revinfo.RevisionEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import org.hibernate.envers.DefaultRevisionEntity;
-import	javax.persistence.Transient;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;

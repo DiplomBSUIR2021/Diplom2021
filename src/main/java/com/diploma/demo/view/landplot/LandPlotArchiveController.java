@@ -77,7 +77,7 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
     }
 
     private void refresh() {
-        List<LandPlotHistory> plots = landPlotHistoryService.getLandPlotHistory();
+        List<LandPlotHistory> plots = landPlotHistoryService.getAll();
         refreshTableView(FXCollections.observableArrayList(plots));
     }
 
@@ -86,11 +86,10 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
         Button refresh = new Button("Обновить");
         Button settings = new Button("Настройки");
-        // Button updateEntity = new Button("Обновить запись");
 
         btnEntityHistory = new Button();
 
-        hbox.getChildren().addAll(refresh, settings/*, updateEntity*/,btnEntityHistory);
+        hbox.getChildren().addAll(refresh, settings, btnEntityHistory);
         archiveVBox.getChildren().add(hbox);
 
         DateRangePicker dateRangePicker = new DateRangePicker(hbox);
@@ -103,18 +102,11 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
             refresh();
         });
 
-
-        /*updateEntity.setOnAction(event -> {
-            System.out.println(activeRowID);
-        });*/
-
         tabPane.getTabs().remove(tabUpdate);
 
         btnEntityHistory.setOnAction(event -> {
             this.tableView.getItems().clear();
             if (btnEntityHistory.getText().equals("История документа")) {
-                System.out.println("тест");
-                System.out.println(activeRowID);
                 List<LandPlotHistory> history = landPlotHistoryService.getLandPlotHistory(activeRowID, dateRangePicker.getStartDate(),dateRangePicker.getEndDate());
                 btnEntityHistory.setText("Назад");
                 refreshTableView(FXCollections.observableArrayList(history));
