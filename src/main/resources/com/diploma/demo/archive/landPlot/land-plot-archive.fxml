@@ -8,12 +8,61 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.diploma.demo.view.landplot.LandPlotArchiveController">
     <TabPane tabClosingPolicy="UNAVAILABLE" fx:id="tabPane">
-        <Tab text = "Просмотр архива">
+        <Tab fx:id="tabView" text = "Просмотр архива">
             <VBox fx:id="archiveVBox"></VBox>
         </Tab>
-        <!--<Tab text = "Редактирование архивного документа">
+        <Tab text = "Редактирование архивного документа"
+             fx:id="tabUpdate">
+            <ScrollPane>
+                <VBox>
+                    <GridPane>
+                        <Button fx:id="buttonUpdate" onAction="#update" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    </GridPane>
+                    <GridPane alignment="center" hgap="10" vgap="10">
 
-        </Tab>-->
+                        <TextField fx:id="idTextField" visible ="false"/>
+
+                        <Label text="Область:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <TextField fx:id="tfRegion" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                        <Label text="Город:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <TextField fx:id="tfCity" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                        <Label text="Улица:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <TextField fx:id="tfStreet" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                        <Label text="Дом:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                        <TextField fx:id="tfHome" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                        <Label text="Квартира:" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                        <TextField fx:id="tfAppart" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                        <Label text="Кадастр. №:" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                        <TextField fx:id="tfCadastralNumber" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+                        <Label text="Категория:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                        <TextField fx:id="tfCategory" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                        <Label text="Текущие оценки:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <TextField fx:id="tfCurrentMarks" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                        <Label text="Целевое назначение:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                        <TextField fx:id="tfIntendenUse" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+
+                        <Label text="Назначение:" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                        <TextField fx:id="tfPurpose" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+
+                        <Label text="Примечания:" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+                        <TextField fx:id="tfNotes" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+
+                        <!-- surface - поверхность?-->
+                        <Label text="Поверхность:" GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+                        <TextField fx:id="tfSurface" GridPane.columnIndex="3" GridPane.rowIndex="5"/>
+
+                    </GridPane>
+                </VBox>
+            </ScrollPane>
+        </Tab>
     </TabPane>
 
 

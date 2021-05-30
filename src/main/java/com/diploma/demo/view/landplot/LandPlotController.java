@@ -1,6 +1,5 @@
 package com.diploma.demo.view.landplot;
 
-import com.diploma.demo.core.ServiceController;
 import com.diploma.demo.core.landplot.Address;
 import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
@@ -17,7 +16,6 @@ import javafx.scene.layout.*;
 import net.rgielen.fxweaver.core.FxmlView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -262,7 +260,6 @@ public class LandPlotController extends CrudController<LandPlot> {
     @Autowired
     public LandPlotController(LandPlotServiceImpl landPlotService) {
         this.landPlotService = landPlotService;
-        ServiceController.setLandPlotService(this.landPlotService);
     }
 
     @FXML

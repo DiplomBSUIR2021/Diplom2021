@@ -1,34 +1,46 @@
 package com.diploma.demo.view.landplot;
 
-import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.LandPlotHistory;
-import com.diploma.demo.core.landplot.repository.impl.LandPlotHistoryServiceImpl;
+import com.diploma.demo.core.landplot.service.impl.LandPlotHistoryServiceImpl;
+import com.diploma.demo.view.utils.ArchiveContoller;
+import com.diploma.demo.view.utils.DateRangePicker;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Table;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 
 @Component
-public class LandPlotArchiveController {
+public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory> {
 
     LandPlotHistoryServiceImpl landPlotHistoryService;
+
+    private Integer revId;
 
     @FXML
     private VBox archiveVBox;
 
+    @FXML
+    private TabPane tabPane;
+    @FXML private Tab tabUpdate;
+    @FXML private Tab tabView;
+
+    @FXML
+    private Button buttonUpdate;
+
+    private Button btnEntityHistory;
+
     private TableView<LandPlotHistory> tableView = new TableView<>();
-    ;
 
     private TableColumn<LandPlotHistory, Long> tcID = new TableColumn<>("#");
     private TableColumn<LandPlotHistory, String> tcRegion = new TableColumn<>("Область");
@@ -47,28 +59,107 @@ public class LandPlotArchiveController {
 
     private TableColumn<LandPlotHistory, String> tcActionType = new TableColumn<>("Тип действия");
     private TableColumn<LandPlotHistory, String> tcActionDate = new TableColumn<>("Время действия");
+    private TableColumn<LandPlotHistory, Integer> tcActionRev = new TableColumn<>("id");
+
+    @FXML
+    private TextField tfRegion, tfCity, tfStreet, tfHome, tfAppart,
+            tfCadastralNumber, tfCategory, tfCurrentMarks, tfIntendenUse,
+            tfPurpose, tfNotes, tfSurface;
 
 
-    private void configurateTableView() {
-        tableView.getColumns().addAll(tcActionType,tcActionDate, tcID, tcRegion, tcCity, tcStreet, tcHomeNumber, tcAppartamentn,
-                tcCadastralNumber, tcCategory, tcCurrentMarks, tcIntendedUse, tcPurpose, tcNotes, tcSurface);
+    private void configureTableView() {
+        tableView.getColumns().addAll(tcActionRev, tcActionType, tcActionDate, tcID, tcRegion, tcCity, tcStreet,
+                tcHomeNumber, tcAppartamentn, tcCadastralNumber, tcCategory, tcCurrentMarks,
+                tcIntendedUse, tcPurpose, tcNotes, tcSurface);
 
         archiveVBox.getChildren().add(tableView);
         read();
     }
 
+    private void refresh() {
+        List<LandPlotHistory> plots = landPlotHistoryService.getAll();
+        refreshTableView(FXCollections.observableArrayList(plots));
+    }
+
+    private void configureControlPanel() {
+        HBox hbox = new HBox();
+
+        Button refresh = new Button("Обновить");
+        Button settings = new Button("Настройки");
+
+        btnEntityHistory = new Button();
+
+        hbox.getChildren().addAll(refresh, settings, btnEntityHistory);
+        archiveVBox.getChildren().add(hbox);
+
+        DateRangePicker dateRangePicker = new DateRangePicker(hbox);
+
+        settings.setOnAction(event -> {
+            dateRangePicker.setting();
+        });
+
+        refresh.setOnAction(event -> {
+            refresh();
+        });
+
+        tabPane.getTabs().remove(tabUpdate);
+
+        btnEntityHistory.setOnAction(event -> {
+            this.tableView.getItems().clear();
+            if (btnEntityHistory.getText().equals("История документа")) {
+                List<LandPlotHistory> history = landPlotHistoryService.getLandPlotHistory(activeRowID, dateRangePicker.getStartDate(),dateRangePicker.getEndDate());
+                btnEntityHistory.setText("Назад");
+                refreshTableView(FXCollections.observableArrayList(history));
+            } else {
+                btnEntityHistory.setText("История документа");
+                refresh();
+            }
+        });
+    }
+
     @FXML
     void initialize() {
-        configurateTableView();
+        setTableView(tableView);
+
+        setTabPane(tabPane);
+
+        setTabUpdate(tabUpdate);
+        setTabView(tabView);
+
+        setButtonUpdate(buttonUpdate);
+
+        configureControlPanel();
+        configureTableView();
+
+        setBtnEntityHistory(btnEntityHistory);
+
+        tableView.setRowFactory(tv -> {
+            TableRow<LandPlotHistory> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+                    LandPlotHistory clickedRow = row.getItem();
+                    activeRowID = new Long(clickedRow.getId());
+                    revId = new Integer(row.getItem().getRev());
+                    if (event.getClickCount() == 2) {
+                        System.out.println(clickedRow);
+                        selectTabUpdate(clickedRow);
+                    }
+                }
+            });
+            return row;
+        });
     }
-    
+
     void read() {
+        tcActionRev.setCellValueFactory(cellData ->
+                new SimpleIntegerProperty(cellData.getValue().getRev()).asObject());
+
         tcActionType.setCellValueFactory(cellData ->
                 new SimpleStringProperty(LandPlotHistory.getRevtypeString(cellData.getValue().getRevtype()))
         );
 
         tcActionDate.setCellValueFactory(cellData ->
-            new SimpleStringProperty(cellData.getValue().getRevisionDate().toString())
+                new SimpleStringProperty(cellData.getValue().getRevisionEntity().getRevisionDate().toString())
         );
 
         tcID.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -113,13 +204,63 @@ public class LandPlotArchiveController {
         tcNotes.setCellValueFactory(new PropertyValueFactory<>("notes"));
         tcSurface.setCellValueFactory(new PropertyValueFactory<>("surface"));
 
-        List<LandPlotHistory> plots = landPlotHistoryService.getLandPlotHistory();
+        List<LandPlotHistory> plots = landPlotHistoryService.getAll();
         this.tableView.getItems().addAll(plots);
     }
 
+    @FXML
+    private void update() {
+        update(landPlotHistoryService, revId);
+        selectTabView();
+    }
 
     @Autowired
-    public LandPlotArchiveController() {
-        landPlotHistoryService = new LandPlotHistoryServiceImpl();
+    public LandPlotArchiveController(LandPlotHistoryServiceImpl landPlotService) {
+        this.landPlotHistoryService = landPlotService;
+    }
+
+    @Override
+    protected void cleanForm() {
+        tfRegion.setText("");
+        tfCity.setText("");
+        tfStreet.setText("");
+        tfHome.setText("");
+        tfAppart.setText("");
+
+        tfCadastralNumber.setText("");
+        tfCategory.setText("");
+        tfCurrentMarks.setText("");
+        tfIntendenUse.setText("");
+        tfPurpose.setText("");
+        tfNotes.setText("");
+        tfSurface.setText("");
+    }
+
+    protected void feelForm(LandPlotHistory object) {
+        if (object.getAddress() != null) {
+            tfRegion.setText(object.getAddress().getRegion());
+            tfStreet.setText(object.getAddress().getStreet());
+            tfHome.setText(object.getAddress().getHomeNumber());
+
+            if (object.getAddress().getApartmentn() != null) {
+                tfAppart.setText(object.getAddress().getApartmentn().toString());
+            }
+        }
+
+        tfCadastralNumber.setText(object.getCadastralNumber());
+        tfCategory.setText(object.getCategory());
+        tfCurrentMarks.setText(object.getCurrentMarks());
+        tfIntendenUse.setText(object.getIntendedUse());
+        tfPurpose.setText(object.getLandPlotPurpose());
+        tfNotes.setText(object.getNotes());
+        if (object.getSurface() != null) {
+            tfSurface.setText(object.getSurface().toString());
+        }
+
+    }
+
+    protected void updateObjectFromForm(LandPlotHistory object) {
+        setStringValFromTextField(i -> object.getAddress().setRegion(i), tfRegion);
+        setLongValFromTextField(i -> object.getAddress().setApartmentn(i), tfAppart);
     }
 }

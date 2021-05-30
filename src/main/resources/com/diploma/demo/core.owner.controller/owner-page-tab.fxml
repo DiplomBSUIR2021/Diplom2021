@@ -23,7 +23,7 @@
                     <Button onAction="#openSetting">Настройки</Button>
                     <Button onAction="#openCreate">Новый документ</Button>
                 </HBox>
-                <TableView fx:id="ownerTableView">
+                <TableView fx:id="ownerTableView" prefWidth="1300">
                     <columns>
                         <TableColumn fx:id="tcID" text="#"/>
                         <TableColumn fx:id="tcType" text="Тип"/>

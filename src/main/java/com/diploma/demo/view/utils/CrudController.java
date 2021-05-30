@@ -152,9 +152,7 @@ public abstract class CrudController<T> extends CrudUtils {
         selectTab(tabCreate);
     }
 
-    protected void refreshTableView(MyCrudService crudService) {
-        // handle errors
-        List items = crudService.getAll();
+    protected void updateTableView(List items) {
         ObservableList plots = FXCollections.observableArrayList(items);
         this.tableView.getItems().clear();
         try {
@@ -162,6 +160,12 @@ public abstract class CrudController<T> extends CrudUtils {
         } catch (LazyInitializationException exception) {
 
         }
+    }
+
+    protected void refreshTableView(MyCrudService crudService) {
+        // handle errors
+        List items = crudService.getAll();
+        updateTableView(items);
     }
 
     protected void refreshTableView(ObservableList newData) {

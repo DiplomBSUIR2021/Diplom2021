@@ -53,3 +53,115 @@ alter table if exists land_plot add column revtype int2
 alter table if exists land_plot_aud add column dtype varchar(31) not null
 alter table if exists land_plot add column dtype varchar(31) not null
 alter table if exists land_plot_aud add column dtype varchar(31) not null
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists owner add column apartmentn int8
+alter table if exists owner_aud add column apartmentn int8
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists revinfo add column timestamp int8 not null
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists revinfo add column timestamp int8 not null
+alter table if exists land_plot_aud add column revision_date timestamp
+create table rev_info (id int4 not null, timestamp int8 not null, username varchar(255), primary key (id))
+alter table if exists act_aud add constraint FKsiu4s1if1h616drvgll8stgwm foreign key (rev) references rev_info
+alter table if exists building_aud add constraint FKtg3q5iif8ouhdio810osn5rh3 foreign key (rev) references rev_info
+alter table if exists contract_aud add constraint FK7fb0opfd61t61vhl7md9bnvhp foreign key (rev) references rev_info
+alter table if exists isolated_room_aud add constraint FKit6trbbcnduv14wdcxfm8ytjg foreign key (rev) references rev_info
+alter table if exists land_plot_aud add constraint FKcwdrqjai0m80f26t63vax1ras foreign key (rev) references rev_info
+alter table if exists organization_aud add constraint FKh8rcc81w4v4bwg5t5j5n1ws6a foreign key (rev) references rev_info
+alter table if exists owner_aud add constraint FKqdsk5cbqt81t3y1kw9umianty foreign key (rev) references rev_info
+alter table if exists ownership_aud add constraint FKruo7wucl72xdmx0dtwqtuql7o foreign key (rev) references rev_info
+alter table if exists restriction_aud add constraint FK5ytjxu03cuhpff8rgont9frkp foreign key (rev) references rev_info
+alter table if exists right_of_use_aud add constraint FK2w1hdbbiq4km465ehcmyhmojr foreign key (rev) references rev_info
+alter table if exists state_registration_aud add constraint FKbelxk8t8d9x8182kjee6sja28 foreign key (rev) references rev_info
+alter table if exists uninsulated_room_aud add constraint FK2gfgwg0bo7gm4in6vecyjmkof foreign key (rev) references rev_info
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+alter table if exists land_plot_aud add column revision_date timestamp
+create table audit.revinfo (rev int4 not null, revtstmp int8, username varchar(255) not null, primary key (rev))
+create table audit.revinfo (rev int4 not null, revtstmp int8, username varchar(255) not null, primary key (rev))
+alter table if exists revinfo add column username varchar(255) not null
+alter table if exists revinfo add column id int4 not null
+alter table if exists revinfo add column timestamp int8 not null
+alter table if exists revinfo add column id int4 not null
+alter table if exists revinfo add column timestamp int8 not null
+alter table if exists land_plot_aud add column revision_entity bytea
+alter table if exists land_plot_aud add column revision_entity bytea
+alter table if exists land_plot_aud add column revision_entity bytea
+alter table if exists land_plot_aud add column revision_entity bytea
+alter table if exists land_plot_aud add column revision_entity bytea
+alter table if exists land_plot_aud add column revision_entity bytea
+alter table if exists revinfo add column id int4 not null
+alter table if exists revinfo add column timestamp int8 not null
+alter table if exists revinfo add column id int4 not null
+alter table if exists revinfo add column timestamp int8 not null

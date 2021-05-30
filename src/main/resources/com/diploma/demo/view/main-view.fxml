@@ -20,6 +20,8 @@
             <Tab text ="Архив">
                 <fx:include source="../archive/archive-tab.fxml"></fx:include>
             </Tab>
+            <Tab text ="Профиль">
+            </Tab>
         </tabs>
 
     </TabPane>
