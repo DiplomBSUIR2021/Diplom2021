@@ -8,13 +8,13 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.diploma.demo.view.auth.profileController">
 
-    <Label> test</Label>
     <Label fx:id ="role_label"></Label>
     <Label>User Name</Label>
     <TextField fx:id ="tfLogin"></TextField>
     <Label>password</Label>
     <PasswordField fx:id="pfPassword"></PasswordField>
-    <Button onAction="#login">LOGIN</Button>
+    <Button fx:id="btnLogin" onAction="#login">LOGIN</Button>
+    <Button fx:id="btnLogout" onAction="#logout">LOGOUT</Button>
 
 
 </VBox>
