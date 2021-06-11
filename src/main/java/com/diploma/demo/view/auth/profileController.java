@@ -7,6 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Popup;
+import javafx.stage.Screen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.Collection;
 
 @Component
@@ -28,6 +32,9 @@ public class profileController {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @FXML private AnchorPane ap1;
+    @FXML CreationPopupController creationPopupController;
+
     @FXML Label role_label;
 
     @FXML TextField tfLogin;
@@ -37,8 +44,14 @@ public class profileController {
     @FXML Button btnLogin;
     @FXML Button btnLogout;
 
-    @FXML void initialize() {
+    @FXML void initialize() throws IOException {
         updateInfo();
+
+        // src/main/resources/com/diploma/demo/profile/creationPopup.fxml
+        // com/diploma/demo/profile/creationPopup.fxml
+        // loader.setController(creationPopupController);
+        // popup.getContent().add(loader.load());
+        //popup.getContent().add(creationPopupController.getAnchorPane());
     }
 
     @FXML void login() {
@@ -83,6 +96,12 @@ public class profileController {
         }  catch (AuthenticationException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML private void openCreatePopup() {
+        creationPopupController.showPopup(ap1,
+                Screen.getPrimary().getBounds().getWidth() / 2 - 100,
+                Screen.getPrimary().getBounds().getHeight() / 2 - 100);
     }
 
 

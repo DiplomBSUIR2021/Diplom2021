@@ -22,3 +22,4 @@ alter table if exists auth_users_roles add constraint FKptxbe0rfpj7wffab0089q0eg
 
 INSERT INTO  auth_roles  (id, name)  VALUES  (1, 'ROLE_ADMIN');
 INSERT INTO  auth_roles  (id, name)  VALUES  (2, 'ROLE_SUPERVISOR');
+INSERT INTO  auth_roles  (id, name)  VALUES  (3, 'ROLE_WORKER');
