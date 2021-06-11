@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 
 @Entity
@@ -87,6 +88,21 @@ public class User implements UserDetails {
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public String getRolesAsString() {
+        if (roles != null) {
+            String resultString = "";
+            Iterator<Role> iterator = roles.iterator();
+            while (iterator.hasNext()) {
+                resultString += iterator.next().getName();
+                if (iterator.hasNext()) {
+                    resultString += ", ";
+                }
+            }
+            return resultString;
+        }
+        return "";
     }
 
     public void setRoles(Set<Role> roles) {

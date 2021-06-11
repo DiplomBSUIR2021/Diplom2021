@@ -1,6 +1,7 @@
 package com.diploma.demo.view.auth;
 
 import com.diploma.demo.auth.Role;
+import com.diploma.demo.view.auth.adminPanel.AdminPanelController;
 import com.diploma.demo.view.utils.CrudUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Popup;
 import javafx.stage.Screen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,11 +20,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.Collection;
 
 @Component
-public class profileController {
+public class ProfileController {
 
     @Autowired
     private AuthenticationManager authManager;
@@ -34,6 +33,8 @@ public class profileController {
 
     @FXML private AnchorPane ap1;
     @FXML CreationPopupController creationPopupController;
+    @FXML
+    AdminPanelController adminPanelController;
 
     @FXML Label role_label;
 
@@ -44,14 +45,8 @@ public class profileController {
     @FXML Button btnLogin;
     @FXML Button btnLogout;
 
-    @FXML void initialize() throws IOException {
+    @FXML void initialize() {
         updateInfo();
-
-        // src/main/resources/com/diploma/demo/profile/creationPopup.fxml
-        // com/diploma/demo/profile/creationPopup.fxml
-        // loader.setController(creationPopupController);
-        // popup.getContent().add(loader.load());
-        //popup.getContent().add(creationPopupController.getAnchorPane());
     }
 
     @FXML void login() {
@@ -129,6 +124,6 @@ public class profileController {
     }
 
     @Autowired
-    public profileController() {
+    public ProfileController() {
     }
 }

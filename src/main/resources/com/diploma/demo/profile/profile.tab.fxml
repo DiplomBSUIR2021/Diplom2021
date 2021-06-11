@@ -6,7 +6,7 @@
 <VBox prefHeight="400.0" prefWidth="600.0"
       xmlns="http://javafx.com/javafx/11.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.diploma.demo.view.auth.profileController">
+      fx:controller="com.diploma.demo.view.auth.ProfileController">
 
     <AnchorPane>
         <Button fx:id="btnLogout" onAction="#logout" visible = "false"
@@ -26,5 +26,6 @@
     </AnchorPane>
 
     <fx:include fx:id="creationPopup" source="creationPopup.fxml" visible = "false" managed="false"/>
+    <fx:include fx:id="adminPanel" source="adminPanel.fxml" />
 
 </VBox>
