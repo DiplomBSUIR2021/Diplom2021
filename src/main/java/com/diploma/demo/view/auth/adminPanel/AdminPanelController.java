@@ -6,12 +6,13 @@ import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.view.utils.CrudController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,10 +22,13 @@ import java.util.List;
 public class AdminPanelController extends CrudController<User> {
     UserService userService;
 
+    @FXML private VBox VBox;
     @FXML private TableView<User> tableView;
     @FXML private TableColumn<User, Long> tcId;
     @FXML private TableColumn<User, String> tclUsers;
     @FXML private TableColumn<User, String> tcRoles;
+
+    @FXML private UserRolesController userRolesPopupController;
 
     @Autowired
     public AdminPanelController(UserService userService) {
@@ -54,7 +58,7 @@ public class AdminPanelController extends CrudController<User> {
         if (activeRowID == null) {
             return;
         }
-        boolean isUserDelete = userService.deleteUser(activeRowID);
+        boolean isUserDelete = userService.delete(activeRowID);
         if (isUserDelete) {
             updateTableData();
         } else {
@@ -73,11 +77,19 @@ public class AdminPanelController extends CrudController<User> {
     }
 
     private void initTableView() {
-        this.tableView.setRowFactory(tv -> {
+        tableView.setRowFactory(tv -> {
             TableRow<User> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton()== MouseButton.PRIMARY) {
                     activeRowID = row.getItem().getId();
+                    if (event.getClickCount() == 2) {
+                        User clickedRow = row.getItem();
+                        System.out.println(userRolesPopupController);
+                        userRolesPopupController.showPopup(VBox,
+                                Screen.getPrimary().getBounds().getWidth() / 2 - 100,
+                                Screen.getPrimary().getBounds().getHeight() / 2 - 100,
+                                clickedRow);
+                    }
                 }
             });
             return row ;

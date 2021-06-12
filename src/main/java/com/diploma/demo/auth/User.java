@@ -15,9 +15,9 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min=2, message = "Не меньше 2 знаков")
+    @Size(min = 2, message = "Не меньше 2 знаков")
     private String username;
-    @Size(min=2, message = "Не меньше 2 знаков")
+    @Size(min = 2, message = "Не меньше 2 знаков")
     private String password;
     @Transient
     private String passwordConfirm;
@@ -92,15 +92,15 @@ public class User implements UserDetails {
 
     public String getRolesAsString() {
         if (roles != null) {
-            String resultString = "";
+            StringBuilder resultString = new StringBuilder();
             Iterator<Role> iterator = roles.iterator();
             while (iterator.hasNext()) {
-                resultString += iterator.next().getName();
+                resultString.append(iterator.next().getName());
                 if (iterator.hasNext()) {
-                    resultString += ", ";
+                    resultString.append(", ");
                 }
             }
-            return resultString;
+            return resultString.toString();
         }
         return "";
     }
@@ -113,5 +113,31 @@ public class User implements UserDetails {
         if (this.roles != null) {
             this.roles.add(role);
         }
+    }
+
+    public boolean removeRole(Role role) {
+        if (this.roles != null) {
+            Iterator<Role> iterator = roles.iterator();
+            while (iterator.hasNext()) {
+                Role curRole = iterator.next();
+                if (curRole.equals(role)) {
+                    iterator.remove();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean hasRole(String roleName) {
+        if (roles == null) {
+            return false;
+        }
+        for (Role role : roles) {
+            if (role.getName().equals(roleName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

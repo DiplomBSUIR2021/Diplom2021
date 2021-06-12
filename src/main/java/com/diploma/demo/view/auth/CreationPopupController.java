@@ -1,6 +1,5 @@
 package com.diploma.demo.view.auth;
 
-import com.diploma.demo.auth.Role;
 import com.diploma.demo.auth.User;
 import com.diploma.demo.auth.service.UserService;
 import javafx.fxml.FXML;
@@ -11,8 +10,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Popup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 
 @Component
 public class CreationPopupController {
@@ -74,7 +71,7 @@ public class CreationPopupController {
             user.setPassword(pfPass.getText());
             user.setPasswordConfirm(pfPassConfirm.getText());
 
-            userService.saveUser(user, "ROLE_WORKER");
+            userService.save(user, "ROLE_WORKER");
 
             closePopup();
         } else {

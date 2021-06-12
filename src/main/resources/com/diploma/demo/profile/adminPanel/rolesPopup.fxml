@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="350.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.diploma.demo.view.auth.adminPanel.UserRolesController">
+
+    <TableView fx:id="tableView" prefHeight="200.0" prefWidth="335.0" AnchorPane.leftAnchor="7.0" AnchorPane.topAnchor="42.0">
+        <columns>
+            <TableColumn fx:id="tcRoles" prefWidth="335.0" text="Роли" />
+        </columns>
+    </TableView>
+    <Button mnemonicParsing="false" onAction="#closePopup" text="X" AnchorPane.leftAnchor="320.0" AnchorPane.topAnchor="5.0" />
+    <Button onAction="#deleteRole" mnemonicParsing="false" text="Удалить роль" AnchorPane.leftAnchor="124.0" AnchorPane.topAnchor="250.0" />
+   <Button onAction="#addRole" layoutX="134.0" layoutY="260.0" mnemonicParsing="false" text="Добавить роль" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="251.0" />
+</AnchorPane>
