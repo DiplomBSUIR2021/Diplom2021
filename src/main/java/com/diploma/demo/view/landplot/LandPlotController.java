@@ -172,15 +172,23 @@ public class LandPlotController extends CrudController<LandPlot> {
 
     protected void feelForm(LandPlot landPlot) {
         setTextFieldValue(idTextField, landPlot.getId().toString());
-        if (landPlot.getAddress().getApartmentn() != null) {
-            setTextFieldValue(apartmentTextField, landPlot.getAddress().getApartmentn().toString());
+        if (landPlot.getAddress() != null) {
+            if (landPlot.getAddress().getApartmentn() != null) {
+                setTextFieldValue(apartmentTextField, landPlot.getAddress().getApartmentn().toString());
+            } else {
+                setTextFieldValue(apartmentTextField,"");
+            }
+            setTextFieldValue(cityTextField, landPlot.getAddress().getCity());
+            setTextFieldValue(homeNumberTextField, landPlot.getAddress().getHomeNumber());
+            setTextFieldValue(regionTextField,landPlot.getAddress().getRegion());
+            setTextFieldValue(streetTextField, landPlot.getAddress().getStreet());
         } else {
             setTextFieldValue(apartmentTextField,"");
+            setTextFieldValue(cityTextField, "");
+            setTextFieldValue(homeNumberTextField, "");
+            setTextFieldValue(regionTextField,"");
+            setTextFieldValue(streetTextField, "");
         }
-        setTextFieldValue(cityTextField, landPlot.getAddress().getCity());
-        setTextFieldValue(homeNumberTextField, landPlot.getAddress().getHomeNumber());
-        setTextFieldValue(regionTextField,landPlot.getAddress().getRegion());
-        setTextFieldValue(streetTextField, landPlot.getAddress().getStreet());
 
         setTextFieldValue(cadastralNumberTextField, landPlot.getCadastralNumber());
         setTextFieldValue(categoryTextField, landPlot.getCategory());

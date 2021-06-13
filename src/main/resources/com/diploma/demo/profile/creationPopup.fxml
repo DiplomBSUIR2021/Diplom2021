@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="229.0" prefWidth="600.0" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.diploma.demo.view.auth.CreationPopupController">
+    <Label layoutX="47.0" layoutY="39.0" text="Введите логин:" />
+    <Label layoutX="47.0" layoutY="92.0" text="Введите пароль" />
+    <Label layoutX="47.0" layoutY="141.0" text="Повторите пароль" />
+    <TextField fx:id="tfLogin" layoutX="212.0" layoutY="35.0" />
+    <PasswordField fx:id="pfPass" layoutX="212.0" layoutY="88.0" />
+    <PasswordField fx:id="pfPassConfirm" layoutX="212.0" layoutY="137.0" />
+
+    <Button onAction="#register" AnchorPane.leftAnchor="43.0" AnchorPane.topAnchor="175.0">Зарегестрироваться</Button>
+    <Button layoutX="53.0" layoutY="185.0" onAction="#closePopup" text="X" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+</AnchorPane>

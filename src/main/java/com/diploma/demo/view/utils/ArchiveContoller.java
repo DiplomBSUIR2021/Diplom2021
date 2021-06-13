@@ -1,14 +1,11 @@
 package com.diploma.demo.view.utils;
 
+import com.diploma.demo.auth.AuthUtils;
 import com.diploma.demo.core.ArchiveService;
 import com.diploma.demo.core.MyCrudService;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import org.hibernate.LazyInitializationException;
-import org.reflections.vfs.SystemDir;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -136,6 +133,9 @@ public abstract class ArchiveContoller<T> extends CrudController<T>{
 
 
     protected void update(ArchiveService<T> archiveService, Integer revId) {
+        if (!AuthUtils.authorizeRole("ROLE_SUPERVISOR")) {
+            return;
+        }
         if (revId == null) {
             return;
         }

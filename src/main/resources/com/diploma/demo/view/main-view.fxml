@@ -21,6 +21,7 @@
                 <fx:include source="../archive/archive-tab.fxml"></fx:include>
             </Tab>
             <Tab text ="Профиль">
+                <fx:include source="../profile/profile.tab.fxml"></fx:include>
             </Tab>
         </tabs>
 

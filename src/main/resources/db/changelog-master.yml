@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/04262021_create_tables.sql
   - include:
       file: db/changelog/03052021_upd_owners.sql
+  - include:
+      file: db/changelog/update_auth.sql

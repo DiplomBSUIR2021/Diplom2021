@@ -165,3 +165,8 @@ alter table if exists revinfo add column id int4 not null
 alter table if exists revinfo add column timestamp int8 not null
 alter table if exists revinfo add column id int4 not null
 alter table if exists revinfo add column timestamp int8 not null
+create table auth_roles (id int8 not null, name varchar(255), primary key (id))
+create table auth_users (id  bigserial not null, password varchar(255), username varchar(255), primary key (id))
+create table auth_users_roles (user_id int8 not null, roles_id int8 not null, primary key (user_id, roles_id))
+alter table if exists auth_users_roles add constraint FKc0icxqyw4g0a4r7aot5rrcbi1 foreign key (roles_id) references auth_roles
+alter table if exists auth_users_roles add constraint FKptxbe0rfpj7wffab0089q0egl foreign key (user_id) references auth_users
