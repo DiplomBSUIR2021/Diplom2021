@@ -33,8 +33,7 @@ public class ProfileController {
 
     @FXML private AnchorPane ap1;
     @FXML CreationPopupController creationPopupController;
-    @FXML
-    AdminPanelController adminPanelController;
+    @FXML AdminPanelController adminPanelController;
 
     @FXML Label role_label;
 
@@ -75,6 +74,8 @@ public class ProfileController {
             CrudUtils.hideNode(btnLogin);
             CrudUtils.hideNode(tfLogin);
             CrudUtils.hideNode(pfPassword);
+
+            adminPanelController.tryShowAdminPanel();
         } catch (AuthenticationException e) {
             e.printStackTrace();
         }
@@ -88,6 +89,8 @@ public class ProfileController {
             CrudUtils.unhideNode(tfLogin);
             CrudUtils.unhideNode(pfPassword);
             CrudUtils.hideNode(btnLogout);
+
+            adminPanelController.hideAdminPanel();
         }  catch (AuthenticationException e) {
             e.printStackTrace();
         }

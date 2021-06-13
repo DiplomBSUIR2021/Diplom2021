@@ -7,10 +7,6 @@ spring:
     active: dev
   liquibase:
     change-log: classpath:/db/changelog-master.yml
-  security:
-    user:
-      name: user
-      password: password
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     database: POSTGRESQL

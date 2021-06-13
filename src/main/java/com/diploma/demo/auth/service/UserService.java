@@ -1,10 +1,13 @@
 package com.diploma.demo.auth.service;
 
+import com.diploma.demo.auth.AuthUtils;
 import com.diploma.demo.auth.Role;
 import com.diploma.demo.auth.User;
 import com.diploma.demo.auth.repository.RoleRepository;
 import com.diploma.demo.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -72,6 +75,9 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean delete(Long userId) {
+        if (!AuthUtils.authorizeRole("ROLE_ADMIN")) {
+            return false;
+        }
         if (userRepository.findById(userId).isPresent()) {
             userRepository.deleteById(userId);
             return true;

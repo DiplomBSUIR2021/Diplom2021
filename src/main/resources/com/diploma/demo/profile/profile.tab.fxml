@@ -26,6 +26,6 @@
     </AnchorPane>
 
     <fx:include fx:id="creationPopup" source="creationPopup.fxml" visible = "false" managed="false"/>
-    <fx:include fx:id="adminPanel" source="adminPanel/adminPanel.fxml" />
+    <fx:include fx:id="adminPanel" source="adminPanel/adminPanel.fxml" visible = "false" />
 
 </VBox>

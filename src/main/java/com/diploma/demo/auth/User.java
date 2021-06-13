@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "auth_users")
@@ -87,7 +88,9 @@ public class User implements UserDetails {
     }
 
     public Set<Role> getRoles() {
-        return roles;
+        Set<Role> copy = roles.stream()
+                .collect(Collectors.toSet());
+        return copy;
     }
 
     public String getRolesAsString() {
@@ -106,17 +109,19 @@ public class User implements UserDetails {
     }
 
     public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+        if (this.roles == null) {
+            this.roles = roles;
+        }
     }
 
     public void addRole(Role role) {
-        if (this.roles != null) {
+        if (this.roles != null && AuthUtils.authorizeRole("ROLE_ADMIN")) {
             this.roles.add(role);
         }
     }
 
     public boolean removeRole(Role role) {
-        if (this.roles != null) {
+        if (this.roles != null && AuthUtils.authorizeRole("ROLE_ADMIN")) {
             Iterator<Role> iterator = roles.iterator();
             while (iterator.hasNext()) {
                 Role curRole = iterator.next();

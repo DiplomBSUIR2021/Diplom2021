@@ -1,5 +1,6 @@
 package com.diploma.demo.view.auth.adminPanel;
 
+import com.diploma.demo.auth.AuthUtils;
 import com.diploma.demo.auth.User;
 import com.diploma.demo.auth.service.UserService;
 import com.diploma.demo.core.landplot.LandPlot;
@@ -94,6 +95,17 @@ public class AdminPanelController extends CrudController<User> {
             });
             return row ;
         });
+    }
+
+    public void tryShowAdminPanel() {
+        if (!AuthUtils.authorizeRole("ROLE_ADMIN")) {
+            return;
+        }
+        VBox.setVisible(true);
+    }
+
+    public void hideAdminPanel() {
+        VBox.setVisible(false);
     }
 
     @Override
