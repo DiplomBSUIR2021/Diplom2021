@@ -3,7 +3,7 @@ package com.diploma.demo.view.owner;
 import com.diploma.demo.core.landplot.Address;
 import com.diploma.demo.core.owner.Owner;
 import com.diploma.demo.core.owner.service.impl.OwnerServiceImpl;
-import com.diploma.demo.view.utils.CrudController;
+import com.diploma.demo.view.utils.CoreCrudController;
 import com.diploma.demo.view.utils.DateRangePicker;
 import javafx.beans.property.SimpleStringProperty;
 
@@ -21,7 +21,7 @@ import java.util.List;
 
 @Component
 @FxmlView("owner-page-tab.fxml")
-public class OwnerController extends CrudController<Owner> {
+public class OwnerController extends CoreCrudController<Owner> {
     OwnerServiceImpl ownerService;
 
     @FXML private TableView<Owner> ownerTableView;
@@ -81,6 +81,11 @@ public class OwnerController extends CrudController<Owner> {
 
     @FXML
     void initialize() {
+        initializeController();
+    }
+
+    @Override
+    protected void configurateControllerElements() {
         setTabPane(tabPane);
         setTableView(ownerTableView);
 
@@ -97,7 +102,14 @@ public class OwnerController extends CrudController<Owner> {
         tabPane.getTabs().remove(tabCreate);
 
         read();
-        this.ownerTableView.setRowFactory(tv -> {
+
+        dateRangePicker = new DateRangePicker(HboxSetting);
+        initCbType();
+    }
+
+    @Override
+    protected void initTableView() {
+        ownerTableView.setRowFactory(tv -> {
             TableRow<Owner> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY) {
@@ -110,27 +122,25 @@ public class OwnerController extends CrudController<Owner> {
             });
             return row;
         });
-
-        dateRangePicker = new DateRangePicker(HboxSetting);
-        initCbType();
     }
 
     @FXML
     private void create() {
+        create(ownerService);
+    }
+
+    @Override
+    protected Owner createEntity() {
         Owner owner = new Owner();
         Address address = new Address();
         owner.setRegistrationAddress(address);
 
-        updateObjectFromForm(owner);
-        ownerService.addOwner(owner);
-
-        refresh();
-        selectTabView();
+        return owner;
     }
+
     @FXML
     private void update() {
         update(ownerService, getIdFromTextField(tfId));
-        selectTabView();
     }
     @FXML
     private void delete() {

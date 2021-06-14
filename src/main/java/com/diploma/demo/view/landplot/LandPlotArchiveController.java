@@ -108,8 +108,12 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
     @FXML
     void initialize() {
-        setTableView(tableView);
+        initializeController();
+    }
 
+    @Override
+    protected void configurateControllerElements() {
+        setTableView(tableView);
         setTabPane(tabPane);
 
         setTabUpdate(tabUpdate);
@@ -121,7 +125,10 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
         configureTableView();
 
         setBtnEntityHistory(btnEntityHistory);
+    }
 
+    @Override
+    protected void initTableView() {
         tableView.setRowFactory(tv -> {
             TableRow<LandPlotHistory> row = new TableRow<>();
             row.setOnMouseClicked(event -> {

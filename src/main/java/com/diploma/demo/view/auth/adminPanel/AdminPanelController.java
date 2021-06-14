@@ -37,10 +37,14 @@ public class AdminPanelController extends CrudController<User> {
     }
 
     @FXML void initialize() {
+        initializeController();
+    }
+
+    @Override
+    protected void configurateControllerElements() {
         System.out.println("hello we here");
         setTableView(tableView);
         read();
-        initTableView();
     }
 
     @FXML private void updateTableData() {
@@ -77,7 +81,7 @@ public class AdminPanelController extends CrudController<User> {
         tableView.getItems().addAll(users);
     }
 
-    private void initTableView() {
+    protected void initTableView() {
         tableView.setRowFactory(tv -> {
             TableRow<User> row = new TableRow<>();
             row.setOnMouseClicked(event -> {

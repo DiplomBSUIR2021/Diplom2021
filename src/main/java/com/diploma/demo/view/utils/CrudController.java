@@ -179,5 +179,13 @@ public abstract class CrudController<T> extends CrudUtils {
 
             refreshTableView(crudService);
         });
+        selectTabView();
     }
+    protected void initializeController() {
+        configurateControllerElements();
+        initTableView();
+    }
+
+    protected abstract void configurateControllerElements();
+    protected abstract void initTableView();
 }
