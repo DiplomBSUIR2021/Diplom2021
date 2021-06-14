@@ -1,8 +1,8 @@
-package com.diploma.demo.view.utils;
+package com.diploma.demo.view.controllers;
 
 import com.diploma.demo.core.MyCrudService;
 
-public abstract class CoreCrudController<T> extends CrudController<T>{
+public abstract class CoreCrudController<T> extends CrudController<T> {
     protected void create(MyCrudService<T> crudService) {
         T entity = createEntity();
 

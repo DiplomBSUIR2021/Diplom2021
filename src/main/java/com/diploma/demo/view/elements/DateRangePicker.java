@@ -1,4 +1,4 @@
-package com.diploma.demo.view.utils;
+package com.diploma.demo.view.elements;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;

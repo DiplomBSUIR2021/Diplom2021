@@ -8,7 +8,7 @@
 <?import java.lang.String?>
 <VBox xmlns="http://javafx.com/javafx/11.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.diploma.demo.view.owner.OwnerController">
+      fx:controller="com.diploma.demo.view.controllers.core.owner.OwnerController">
     <TabPane prefHeight="369.0"
 
              tabClosingPolicy="UNAVAILABLE"

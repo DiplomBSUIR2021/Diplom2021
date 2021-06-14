@@ -1,10 +1,10 @@
-package com.diploma.demo.view.landplot;
+package com.diploma.demo.view.controllers.core.landplot;
 
 import com.diploma.demo.core.landplot.Address;
 import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
-import com.diploma.demo.view.utils.CoreCrudController;
-import com.diploma.demo.view.utils.DateRangePicker;
+import com.diploma.demo.view.controllers.CoreCrudController;
+import com.diploma.demo.view.elements.DateRangePicker;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;

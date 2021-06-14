@@ -1,6 +1,7 @@
-package com.diploma.demo.view.utils;
+package com.diploma.demo.view.controllers;
 
 import com.diploma.demo.core.MyCrudService;
+import com.diploma.demo.view.utils.CrudUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;

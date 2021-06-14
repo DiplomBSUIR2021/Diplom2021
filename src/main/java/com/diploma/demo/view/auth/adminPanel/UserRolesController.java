@@ -4,7 +4,7 @@ import com.diploma.demo.auth.Role;
 import com.diploma.demo.auth.User;
 import com.diploma.demo.auth.service.RoleService;
 import com.diploma.demo.auth.service.UserService;
-import com.diploma.demo.view.utils.CrudController;
+import com.diploma.demo.view.controllers.CrudController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
