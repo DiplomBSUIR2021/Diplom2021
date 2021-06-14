@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.diploma.demo.view.mail.registration.RegistrationIncomingMails">
+   <children>
+      <TextField layoutX="14.0" layoutY="82.0" prefHeight="27.0" prefWidth="133.0" />
+      <Label layoutX="52.0" layoutY="59.0" text="Префикс" />
+      <Label layoutX="224.0" layoutY="59.0" text="Номер письма" />
+      <TextField layoutX="187.0" layoutY="82.0" prefHeight="27.0" prefWidth="167.0" />
+      <TextField layoutX="14.0" layoutY="164.0" prefHeight="27.0" prefWidth="175.0" />
+      <Label layoutX="30.0" layoutY="137.0" text="Корреспондент" />
+      <CheckBox layoutX="205.0" layoutY="145.0" mnemonicParsing="false" text="Член ТС" />
+      <CheckBox layoutX="205.0" layoutY="163.0" mnemonicParsing="false" text="Индивидуальный" />
+      <CheckBox layoutX="205.0" layoutY="182.0" mnemonicParsing="false" text="Коллективный" />
+      <Label layoutX="453.0" layoutY="169.0" text="Срок рассмотрения" />
+      <RadioButton layoutX="468.0" layoutY="198.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="92.0" text="до 5 дней" />
+      <RadioButton layoutX="468.0" layoutY="225.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="92.0" text="до 14 дней" />
+      <RadioButton layoutX="468.0" layoutY="253.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="101.0" text="до 30 дней" />
+      <Label layoutX="481.0" layoutY="59.0" text="вид письма" />
+      <RadioButton layoutX="450.0" layoutY="87.0" mnemonicParsing="false" text="информационное" />
+      <RadioButton layoutX="450.0" layoutY="119.0" mnemonicParsing="false" text="обращение" />
+      <Button layoutX="16.0" layoutY="207.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="189.0" text="карточка корреспондента" />
+      <Button layoutX="399.0" layoutY="300.0" mnemonicParsing="false" text="Зарегестрировать письмо" />
+   </children>
+</AnchorPane>
