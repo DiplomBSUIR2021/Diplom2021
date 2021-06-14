@@ -63,9 +63,6 @@ public class LandPlotController extends CrudController<LandPlot> {
     @FXML private TextField notesTextField;
     @FXML private TextField surfaceTextField;
 
-    @FXML private Button btnEntityHistory;
-    @FXML private Button btnFullHistory;
-
     @FXML private Button buttonCreate;
     @FXML private Button buttonUpdate;
 
@@ -84,9 +81,6 @@ public class LandPlotController extends CrudController<LandPlot> {
 
         setButtonCreate(buttonCreate);
         setButtonUpdate(buttonUpdate);
-
-        setBtnEntityHistory(btnEntityHistory);
-        setBtnFullHistory(btnFullHistory);
 
         setTextFieldOnlyDigitsInput(idTextField);
         setTextFieldOnlyDigitsInput(apartmentTextField);
@@ -133,18 +127,6 @@ public class LandPlotController extends CrudController<LandPlot> {
     @FXML
     protected void refresh() {
         refreshTableView(landPlotService);
-    }
-
-    @FXML
-    void getEntityHistory() {
-        // handle errors (right now DatePicker can contains a-Z symbols
-        getEntityHistory(landPlotService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
-    }
-
-    @FXML
-    private void getFullHistory() {
-        // handle errors (right now DatePicker can contains a-Z symbols
-        getFullHistory(landPlotService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
     }
 
     @FXML

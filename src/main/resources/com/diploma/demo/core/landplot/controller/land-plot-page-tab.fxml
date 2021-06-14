@@ -15,8 +15,6 @@
                   <Button onAction="#delete">Удалить</Button>
                   <Button onAction="#setting">Настройки</Button>
                   <Button onAction="#openCreate">Новый документ</Button>
-                  <Button fx:id="btnEntityHistory" onAction="#getEntityHistory" visible="false"/>
-                  <Button fx:id="btnFullHistory" onAction="#getFullHistory" visible="false"/>
                </HBox>
                <ScrollPane>
                   <TableView fx:id="tableView" prefHeight="336.0" prefWidth="1107.0">

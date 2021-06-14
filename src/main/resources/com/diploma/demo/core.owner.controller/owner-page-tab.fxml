@@ -17,9 +17,6 @@
             <VBox>
                 <HBox fx:id="HboxSetting">
                     <Button onAction="#delete">Удалить</Button>
-                    <Button onAction="#getEntityHistory" fx:id="btnEntityHistory">
-                    </Button>
-                    <Button fx:id="btnFullHistory" onAction="#getFullHistory"/>
                     <Button onAction="#openSetting">Настройки</Button>
                     <Button onAction="#openCreate">Новый документ</Button>
                 </HBox>

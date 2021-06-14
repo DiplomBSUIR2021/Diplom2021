@@ -70,8 +70,6 @@ public class OwnerController extends CrudController<Owner> {
     @FXML private TextField tfViberNumber;
     @FXML private TextField tfWhatsappNumber;
 
-    @FXML private Button btnEntityHistory;
-    @FXML private Button btnFullHistory;
     @FXML private Button buttonCreate;
     @FXML private Button buttonUpdate;
 
@@ -91,9 +89,6 @@ public class OwnerController extends CrudController<Owner> {
 
         setButtonCreate(buttonCreate);
         setButtonUpdate(buttonUpdate);
-
-        setBtnEntityHistory(btnEntityHistory);
-        setBtnFullHistory(btnFullHistory);
 
         setTextFieldOnlyDigitsInput(tfId);
         setTextFieldOnlyDigitsInput(tfApartment);
@@ -118,14 +113,6 @@ public class OwnerController extends CrudController<Owner> {
 
         dateRangePicker = new DateRangePicker(HboxSetting);
         initCbType();
-    }
-    @FXML
-    private void getEntityHistory() {
-        getEntityHistory(ownerService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
-    }
-    @FXML
-    private void getFullHistory() {
-        getFullHistory(ownerService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
     }
 
     @FXML

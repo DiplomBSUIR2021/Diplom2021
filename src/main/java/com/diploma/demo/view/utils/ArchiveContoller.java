@@ -3,6 +3,7 @@ package com.diploma.demo.view.utils;
 import com.diploma.demo.auth.AuthUtils;
 import com.diploma.demo.core.ArchiveService;
 import com.diploma.demo.core.MyCrudService;
+import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -13,29 +14,34 @@ import java.util.Optional;
 
 public abstract class ArchiveContoller<T> extends CrudController<T>{
 
+    private final static String btnEntityHistoryInactiveText = "История документа";
+    private final static String btnEntityHistoryActiveText = "Назад";
+
+    private Button btnEntityHistory;
+
     private TabPane tabPane;
     private Tab tabUpdate;
     private Tab tabView;
     private Button buttonUpdate;
 
     @Override
-    public void setBtnFullHistory(Button btnFullHistory) {
-        return;
+    protected void deleteEntity(MyCrudService<T> crudService) {}
+
+
+    protected void setBtnEntityHistory(Button btnEntityHistory) {
+        this.btnEntityHistory = btnEntityHistory;
+        this.btnEntityHistory.setText(btnEntityHistoryInactiveText);
     }
 
-    @Override
-    protected void deleteEntity(MyCrudService crudService) {
-        return;
-    }
-
-    @Override
-    protected void getFullHistory(MyCrudService crudService) {
-        return;
-    }
-
-    @Override
-    protected void getFullHistory(MyCrudService crudService, LocalDate startDate, LocalDate endDate) {
-        return;
+    protected void getEntityHistory(ArchiveService<T> archiveService, LocalDate startDate, LocalDate endDate) {
+        if (btnEntityHistory.getText().equals(btnEntityHistoryInactiveText)) {
+            btnEntityHistory.setText(btnEntityHistoryActiveText);
+            List test = archiveService.getEntityHistory(activeRowID, startDate, endDate);
+            refreshTableView(FXCollections.observableArrayList(test));
+        } else {
+            btnEntityHistory.setText(btnEntityHistoryInactiveText);
+            refreshTableView(archiveService);
+        }
     }
 
     protected void selectTab(Tab tab) {
@@ -139,19 +145,12 @@ public abstract class ArchiveContoller<T> extends CrudController<T>{
         if (revId == null) {
             return;
         }
-
-        System.out.println("HERE"  + revId);
         Optional<T> object = archiveService.findById(revId);
-        System.out.println("FIND");
-        System.out.println(object);
         object.ifPresent(val -> {
-            System.out.println("hoho");
             updateObjectFromForm(val);
             archiveService.update(val);
 
             refreshTableView(archiveService);
         });
-
-
     }
 }

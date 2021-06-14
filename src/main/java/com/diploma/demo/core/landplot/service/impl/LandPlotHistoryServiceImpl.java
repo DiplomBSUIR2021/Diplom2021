@@ -21,49 +21,8 @@ public class LandPlotHistoryServiceImpl implements LandPlotHistoryService  {
     @Autowired
     AuditReader auditReader;
 
-    public List<LandPlotHistory> getLandPlotHistory() {
-        return landPlotHistoryRepository.findAll();
-    }
-
-    @Override
-    public List<LandPlotHistory> getLandPlotHistory(@NotNull Long id) {
-        return landPlotHistoryRepository.findAllById((long) id);
-    }
-
     public java.sql.Date convertToDateViaSqlDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
-    }
-
-    public List<LandPlotHistory> getLandPlotHistory(long id, LocalDate startDate, LocalDate endDate) {
-        if (startDate != null) {
-            long timeStart = convertToDateViaSqlDate(startDate).getTime();
-            if (endDate != null) {
-                long timeEnd = convertToDateViaSqlDate(endDate).getTime();
-                return landPlotHistoryRepository.findAllBetweenById(id, timeStart, timeEnd);
-            }
-            return landPlotHistoryRepository.findAllFromById(id, timeStart);
-        }
-        if (endDate != null) {
-            long timeEnd = convertToDateViaSqlDate(endDate).getTime();
-            return landPlotHistoryRepository.findAllToById(id, timeEnd);
-        }
-        return getLandPlotHistory(new Long(id));
-    }
-
-    public List<LandPlotHistory> getLandPlotHistory(LocalDate startDate, LocalDate endDate) {
-        if (startDate != null) {
-            long timeStart = convertToDateViaSqlDate(startDate).getTime();
-            if (endDate != null) {
-                long timeEnd = convertToDateViaSqlDate(endDate).getTime();
-                return landPlotHistoryRepository.findAllBetween(timeStart, timeEnd);
-            }
-            return landPlotHistoryRepository.findAllFrom(timeStart);
-        }
-        if (endDate != null) {
-            long timeEnd = convertToDateViaSqlDate(endDate).getTime();
-            return landPlotHistoryRepository.findAllTo(timeEnd);
-        }
-        return landPlotHistoryRepository.findAll();
     }
 
     @Override
@@ -78,14 +37,45 @@ public class LandPlotHistoryServiceImpl implements LandPlotHistoryService  {
         return landPlotHistoryRepository.findAll();
     }
 
-    @Override
-    public List getEntityHistory(Long id, LocalDate startDate, LocalDate endDate) {
-        return getLandPlotHistory(id, startDate, endDate);
+    public List<LandPlotHistory> getEntityHistory(@NotNull Long id) {
+        return landPlotHistoryRepository.findAllById((long) id);
     }
 
     @Override
-    public List getFullHistory(LocalDate startDate, LocalDate endDate) {
-        return getLandPlotHistory( startDate, endDate);
+    public List<LandPlotHistory> getEntityHistory(Long id, LocalDate startDate, LocalDate endDate) {
+        if (startDate != null) {
+            long timeStart = convertToDateViaSqlDate(startDate).getTime();
+            if (endDate != null) {
+                long timeEnd = convertToDateViaSqlDate(endDate).getTime();
+                return landPlotHistoryRepository.findAllBetweenById(id, timeStart, timeEnd);
+            }
+            return landPlotHistoryRepository.findAllFromById(id, timeStart);
+        }
+        if (endDate != null) {
+            long timeEnd = convertToDateViaSqlDate(endDate).getTime();
+            return landPlotHistoryRepository.findAllToById(id, timeEnd);
+        }
+        return getEntityHistory(new Long(id));
+    }
+
+    public List<LandPlotHistory> getFullHistory() {
+        return landPlotHistoryRepository.findAll();
+    }
+
+    public List<LandPlotHistory> getFullHistory(LocalDate startDate, LocalDate endDate) {
+        if (startDate != null) {
+            long timeStart = convertToDateViaSqlDate(startDate).getTime();
+            if (endDate != null) {
+                long timeEnd = convertToDateViaSqlDate(endDate).getTime();
+                return landPlotHistoryRepository.findAllBetween(timeStart, timeEnd);
+            }
+            return landPlotHistoryRepository.findAllFrom(timeStart);
+        }
+        if (endDate != null) {
+            long timeEnd = convertToDateViaSqlDate(endDate).getTime();
+            return landPlotHistoryRepository.findAllTo(timeEnd);
+        }
+        return landPlotHistoryRepository.findAll();
     }
 
     @Override
