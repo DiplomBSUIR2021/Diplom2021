@@ -1,6 +1,6 @@
-package com.diploma.demo.core.landplot.repository;
+package com.diploma.demo.archive.landplot.repository;
 
-import com.diploma.demo.core.landplot.LandPlotHistory;
+import com.diploma.demo.archive.landplot.LandPlotHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.relational.core.mapping.Table;

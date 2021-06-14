@@ -1,8 +1,8 @@
-package com.diploma.demo.core.landplot.service;
+package com.diploma.demo.archive.landplot.service;
 
 
 import com.diploma.demo.core.ArchiveService;
-import com.diploma.demo.core.landplot.LandPlotHistory;
+import com.diploma.demo.archive.landplot.LandPlotHistory;
 
 import java.time.LocalDate;
 import java.util.List;

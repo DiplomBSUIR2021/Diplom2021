@@ -1,6 +1,8 @@
-package com.diploma.demo.core.landplot;
+package com.diploma.demo.archive.landplot;
 
 
+import com.diploma.demo.core.landplot.Address;
+import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.revinfo.RevisionEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -54,26 +56,6 @@ public class LandPlotHistory {
 
     @Column(name = "surface")
     private Double surface;
-
-    public LandPlotHistory(LandPlot landPlot, RevisionEntity entity, short revtype) {
-        this.rev = entity.getId();
-        this.revtype = revtype;
-        this.revisionEntity =  entity;
-
-        setId(landPlot.getId());
-        setAddress(landPlot.getAddress());
-        setCadastralNumber(landPlot.getCadastralNumber());
-        setCategory(landPlot.getCategory());
-        setCurrentMarks(landPlot.getCurrentMarks());
-        setIntendedUse(landPlot.getIntendedUse());
-        setLandPlotPurpose(landPlot.getLandPlotPurpose());
-        setNotes(landPlot.getNotes());
-        setSurface(landPlot.getSurface());
-    }
-
-    public LandPlotHistory(LandPlot landPlot, RevisionEntity entity, String revtype) {
-        this(landPlot, entity, getRevtypeNumb(revtype));
-    }
 
     public static String getRevtypeString(short revtypeShort) {
         if (revtypeShort == 0) {

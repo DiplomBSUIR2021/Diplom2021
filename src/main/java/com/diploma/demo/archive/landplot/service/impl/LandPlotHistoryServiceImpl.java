@@ -1,9 +1,8 @@
-package com.diploma.demo.core.landplot.service.impl;
+package com.diploma.demo.archive.landplot.service.impl;
 
-import com.diploma.demo.core.landplot.LandPlotHistory;
-import com.diploma.demo.core.landplot.repository.LandPlotHistoryRepository;
-import com.diploma.demo.core.landplot.service.LandPlotHistoryService;
-import org.hibernate.envers.AuditReader;
+import com.diploma.demo.archive.landplot.LandPlotHistory;
+import com.diploma.demo.archive.landplot.repository.LandPlotHistoryRepository;
+import com.diploma.demo.archive.landplot.service.LandPlotHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,6 @@ public class LandPlotHistoryServiceImpl implements LandPlotHistoryService  {
 
     @Autowired
     LandPlotHistoryRepository landPlotHistoryRepository;
-
-    @Autowired
-    AuditReader auditReader;
 
     public java.sql.Date convertToDateViaSqlDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
@@ -43,6 +39,9 @@ public class LandPlotHistoryServiceImpl implements LandPlotHistoryService  {
 
     @Override
     public List<LandPlotHistory> getEntityHistory(Long id, LocalDate startDate, LocalDate endDate) {
+        if (id == null) {
+            return getFullHistory(startDate, endDate);
+        }
         if (startDate != null) {
             long timeStart = convertToDateViaSqlDate(startDate).getTime();
             if (endDate != null) {

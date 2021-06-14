@@ -170,3 +170,23 @@ create table auth_users (id  bigserial not null, password varchar(255), username
 create table auth_users_roles (user_id int8 not null, roles_id int8 not null, primary key (user_id, roles_id))
 alter table if exists auth_users_roles add constraint FKc0icxqyw4g0a4r7aot5rrcbi1 foreign key (roles_id) references auth_roles
 alter table if exists auth_users_roles add constraint FKptxbe0rfpj7wffab0089q0egl foreign key (user_id) references auth_users
+alter table if exists land_plot_aud add column birth_date date
+alter table if exists land_plot_aud add column doc_n varchar(255)
+alter table if exists land_plot_aud add column doc_type varchar(255)
+alter table if exists land_plot_aud add column name varchar(255)
+alter table if exists land_plot_aud add column phone_number varchar(255)
+alter table if exists land_plot_aud add column post_apartment_n int8
+alter table if exists land_plot_aud add column post_city varchar(255)
+alter table if exists land_plot_aud add column post_home_number varchar(255)
+alter table if exists land_plot_aud add column post_region varchar(255)
+alter table if exists land_plot_aud add column post_street varchar(255)
+alter table if exists land_plot_aud add column ptn_n varchar(255)
+alter table if exists land_plot_aud add column registration_date date
+alter table if exists land_plot_aud add column registration_number varchar(255)
+alter table if exists land_plot_aud add column telegram_number varchar(255)
+alter table if exists land_plot_aud add column type varchar(255)
+alter table if exists land_plot_aud add column viber_number varchar(255)
+alter table if exists land_plot_aud add column whatsapp_number varchar(255)
+alter table if exists land_plot_aud add column owner_id int8
+alter table if exists land_plot_aud add constraint FKcfyylfx5s55y9xamk9nxk76nl foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration

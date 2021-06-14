@@ -1,7 +1,7 @@
 package com.diploma.demo.view.controllers.archive.landplot;
 
-import com.diploma.demo.core.landplot.LandPlotHistory;
-import com.diploma.demo.core.landplot.service.impl.LandPlotHistoryServiceImpl;
+import com.diploma.demo.archive.landplot.LandPlotHistory;
+import com.diploma.demo.archive.landplot.service.impl.LandPlotHistoryServiceImpl;
 import com.diploma.demo.view.controllers.ArchiveContoller;
 import com.diploma.demo.view.elements.DateRangePicker;
 import javafx.beans.property.SimpleIntegerProperty;
