@@ -1,6 +1,5 @@
 package com.diploma.demo.archive.owner.service.impl;
 
-import com.diploma.demo.archive.landplot.LandPlotHistory;
 import com.diploma.demo.archive.owner.OwnerArchive;
 import com.diploma.demo.archive.owner.repository.OwnerArchiveRepository;
 import com.diploma.demo.archive.owner.service.OwnerArchiveService;

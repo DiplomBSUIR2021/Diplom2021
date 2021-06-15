@@ -1,14 +1,12 @@
 package com.diploma.demo.archive.owner;
 
+import com.diploma.demo.archive.abstraction.AbstractRevEntity;
 import com.diploma.demo.core.landplot.Address;
-import com.diploma.demo.core.revinfo.RevisionEntity;
 import com.diploma.demo.core.stateregistration.StateRegistration;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
 
@@ -16,22 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "owner_aud")
 @NoArgsConstructor
-public class OwnerArchive {
-    @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "rev")
-    private int rev;
-
-    @NonNull
-    @NotEmpty
-    @Column(name = "revtype")
-    private short revtype;
-
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="rev")
-    private RevisionEntity revisionEntity;
-
-
+public class OwnerArchive extends AbstractRevEntity {
     @Column(name = "id")
     private Long id;
 

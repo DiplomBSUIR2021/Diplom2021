@@ -1,35 +1,17 @@
 package com.diploma.demo.archive.landplot;
 
-
+import com.diploma.demo.archive.abstraction.AbstractRevEntity;
 import com.diploma.demo.core.landplot.Address;
-import com.diploma.demo.core.landplot.LandPlot;
-import com.diploma.demo.core.revinfo.RevisionEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 
 @Data
 @Entity
 @Table(name = "land_plot_aud")
 @NoArgsConstructor
-public class LandPlotHistory {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "rev")
-    private int rev;
-    @NonNull
-    @NotEmpty
-    @Column(name = "revtype")
-    private short revtype;
-
-    @OneToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="rev")
-    private RevisionEntity revisionEntity;
-
+public class LandPlotHistory extends AbstractRevEntity {
     @Column(name = "id")
     private Long id;
 
