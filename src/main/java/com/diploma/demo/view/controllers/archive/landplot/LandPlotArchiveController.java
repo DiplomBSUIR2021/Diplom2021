@@ -25,8 +25,6 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
     LandPlotHistoryServiceImpl landPlotHistoryService;
 
-    private Integer revId;
-
     @FXML
     private VBox archiveVBox;
 
@@ -206,8 +204,7 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
     @FXML
     private void update() {
-        update(landPlotHistoryService, revId);
-        selectTabView();
+        update(landPlotHistoryService);
     }
 
     @Autowired

@@ -3,10 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <VBox prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.diploma.demo.view.controllers.archive.owner.OwnerArchiveController">
-    <TabPane tabClosingPolicy="UNAVAILABLE">
-        <Tab text="Просмотр">
+    <TabPane tabClosingPolicy="UNAVAILABLE" fx:id="tabPane">
+        <Tab text="Просмотр" fx:id="tabView">
             <VBox prefHeight="200.0" prefWidth="1000.0">
                 <HBox fx:id="HBoxSetting" alignment="CENTER">
                     <Button onAction="#refresh">Обновить</Button>
@@ -36,10 +39,109 @@
                 </TableView>
             </VBox>
         </Tab>
-        <Tab text="Редактирование архивного документа">
+        <Tab text="Редактирование архивного документа" fx:id="tabUpdate">
+            <ScrollPane>
+                <VBox alignment="CENTER" spacing="10">
+                    <GridPane>
+                        <Button fx:id="btnUpdateEntity" onAction="#update"
+                                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    </GridPane>
+                    <GridPane>
+                        <TextField fx:id="tfId" visible="false"/>
 
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <Label text="Тип: " GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <ComboBox fx:id="cbType" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="физлицо" fx:id="individualOwnerCase"/>
+                                    <String fx:value="юрлицо"/>
+                                </FXCollections>
+                            </items>
+                            <value>
+                                <String fx:value="физлицо"/>
+                            </value>
+                        </ComboBox>
 
+                        <Label fx:id="labelName" text="ФИО: "
+                               GridPane.columnIndex="0"
+                               GridPane.rowIndex="2"/>
+                        <TextField fx:id="tfName" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                        <Label fx:id="labelBirthRegistrationDate" text="Дата рождения: "
+                               GridPane.columnIndex="0"
+                               GridPane.rowIndex="3"/>
+                        <DatePicker fx:id="tfBirthDate" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+                        <Label text="Тип документа: " GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                        <TextField fx:id="tfDocType" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+                        <Label text="Номер документа: " GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                        <TextField fx:id="tfDocN" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+
+
+                        <Text text="Адрес" GridPane.columnIndex="2" GridPane.columnSpan="2"
+                              GridPane.rowIndex="0"/>
+
+                        <Label text="Область: " GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <TextField fx:id="tfRegion" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+                        <Label text="Город: " GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+                        <TextField fx:id="tfCity" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+
+                        <Label text="Улица: " GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                        <TextField fx:id="tfStreet" GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+
+                        <!--Номер дома???-->
+                        <Label text="Дом номер: " GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+                        <TextField fx:id="tfHomeNumber" GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+
+                        <Label text="Квартира: " GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+                        <TextField fx:id="tfApartment" GridPane.columnIndex="3" GridPane.rowIndex="5"/>
+
+
+                        <Text text="Почтовый адрес" GridPane.columnIndex="4" GridPane.columnSpan="2"
+                              GridPane.rowIndex="0"/>
+
+                        <Label text="Область: " GridPane.columnIndex="4" GridPane.rowIndex="1"/>
+                        <TextField fx:id="tfPostRegion" GridPane.columnIndex="5" GridPane.rowIndex="1"/>
+
+                        <Label text="Город: " GridPane.columnIndex="4" GridPane.rowIndex="2"/>
+                        <TextField fx:id="tfPostCity" GridPane.columnIndex="5" GridPane.rowIndex="2"/>
+
+                        <Label text="Улица: " GridPane.columnIndex="4" GridPane.rowIndex="3"/>
+                        <TextField fx:id="tfPostStreet" GridPane.columnIndex="5" GridPane.rowIndex="3"/>
+
+                        <Label text="Дом номер: " GridPane.columnIndex="4" GridPane.rowIndex="4"/>
+                        <TextField fx:id="tfPostHomeNumber" GridPane.columnIndex="5"
+                                   GridPane.rowIndex="4"/>
+
+                        <Label text="Квартира: " GridPane.columnIndex="4" GridPane.rowIndex="5"/>
+                        <TextField fx:id="tfPostApartment" GridPane.columnIndex="5"
+                                   GridPane.rowIndex="5"/>
+
+
+                        <Label text="птн: " GridPane.columnIndex="6" GridPane.rowIndex="1"/>
+                        <TextField fx:id="tfPtn" GridPane.columnIndex="7" GridPane.rowIndex="1"/>
+
+                        <Label text="Номер телефона: " GridPane.columnIndex="6" GridPane.rowIndex="2"/>
+                        <TextField fx:id="tfPhoneNumber" GridPane.columnIndex="7"
+                                   GridPane.rowIndex="2"/>
+
+                        <Label text="Telegram: " GridPane.columnIndex="6" GridPane.rowIndex="3"/>
+                        <TextField fx:id="tfTelegramNumber" GridPane.columnIndex="7"
+                                   GridPane.rowIndex="3"/>
+
+                        <Label text="Viber: " GridPane.columnIndex="6" GridPane.rowIndex="4"/>
+                        <TextField fx:id="tfViberNumber" GridPane.columnIndex="7"
+                                   GridPane.rowIndex="4"/>
+
+                        <Label text="Whatsapp: " GridPane.columnIndex="6" GridPane.rowIndex="5"/>
+                        <TextField fx:id="tfWhatsappNumber" GridPane.columnIndex="7"
+                                   GridPane.rowIndex="5"/>
+
+                    </GridPane>
+                </VBox>
+            </ScrollPane>
         </Tab>
     </TabPane>
 </VBox>

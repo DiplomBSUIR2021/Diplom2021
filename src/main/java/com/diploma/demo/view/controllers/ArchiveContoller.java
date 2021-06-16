@@ -15,6 +15,8 @@ import java.util.Optional;
 
 public abstract class ArchiveContoller<T extends AbstractRevEntity> extends CrudController<T> {
 
+    protected Integer revId;
+
     private final static String btnEntityHistoryInactiveText = "История документа";
     private final static String btnEntityHistoryActiveText = "Назад";
 
@@ -59,6 +61,13 @@ public abstract class ArchiveContoller<T extends AbstractRevEntity> extends Crud
 
     @Override
     protected void selectTabUpdate(T object) {
+        if (tabPane == null) {
+            try {
+                throw new Exception("you can't use selectTabUpdate function before you set tabPane");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         if (tabUpdate == null) {
             try {
                 throw new Exception("you can't use selectTabUpdate function before you set tabUpdate");
@@ -139,7 +148,7 @@ public abstract class ArchiveContoller<T extends AbstractRevEntity> extends Crud
     }
 
 
-    protected void update(ArchiveService<T> archiveService, Integer revId) {
+    protected void update(ArchiveService<T> archiveService) {
         if (!AuthUtils.authorizeRole("ROLE_SUPERVISOR")) {
             return;
         }
@@ -153,5 +162,6 @@ public abstract class ArchiveContoller<T extends AbstractRevEntity> extends Crud
 
             refreshTableView(archiveService);
         });
+        selectTabView();
     }
 }
