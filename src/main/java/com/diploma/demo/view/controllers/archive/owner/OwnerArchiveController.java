@@ -2,7 +2,7 @@ package com.diploma.demo.view.controllers.archive.owner;
 
 import com.diploma.demo.archive.landplot.LandPlotHistory;
 import com.diploma.demo.archive.owner.OwnerArchive;
-import com.diploma.demo.archive.owner.service.impl.OwnerArchiveServiceImpl;
+import com.diploma.demo.archive.owner.service.OwnerArchiveServiceImpl;
 import com.diploma.demo.view.controllers.ArchiveContoller;
 import com.diploma.demo.view.elements.DateRangePicker;
 import javafx.beans.property.SimpleIntegerProperty;

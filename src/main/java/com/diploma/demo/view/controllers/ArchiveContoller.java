@@ -1,7 +1,8 @@
 package com.diploma.demo.view.controllers;
 
+import com.diploma.demo.archive.abstraction.AbstractRevEntity;
 import com.diploma.demo.auth.AuthUtils;
-import com.diploma.demo.core.ArchiveService;
+import com.diploma.demo.archive.abstraction.service.ArchiveService;
 import com.diploma.demo.core.MyCrudService;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class ArchiveContoller<T> extends CrudController<T> {
+public abstract class ArchiveContoller<T extends AbstractRevEntity> extends CrudController<T> {
 
     private final static String btnEntityHistoryInactiveText = "История документа";
     private final static String btnEntityHistoryActiveText = "Назад";

@@ -190,3 +190,15 @@ alter table if exists land_plot_aud add column whatsapp_number varchar(255)
 alter table if exists land_plot_aud add column owner_id int8
 alter table if exists land_plot_aud add constraint FKcfyylfx5s55y9xamk9nxk76nl foreign key (owner_id) references state_registration
 alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
+alter table if exists owner_aud add constraint FK6aab244qaais02hbuop5k42tc foreign key (owner_id) references state_registration
