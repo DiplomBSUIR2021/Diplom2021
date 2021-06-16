@@ -28,7 +28,7 @@ public class OwnerServiceImpl implements OwnerService {
     }
 
     @Override
-    public Owner addOwner(Owner owner) {
+    public Owner add(Owner owner) {
         return ownerRepository.saveAndFlush(owner);
     }
 

@@ -6,7 +6,7 @@
 <VBox prefHeight="400.0" prefWidth="600.0"
       xmlns="http://javafx.com/javafx/11.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.diploma.demo.view.landplot.LandPlotController">
+      fx:controller="com.diploma.demo.view.controllers.core.landplot.LandPlotController">
    <TabPane tabClosingPolicy="UNAVAILABLE" fx:id="tabPane">
          <Tab fx:id="landPlotsTabView" text="Участки">
             <VBox alignment="CENTER" spacing="10">
@@ -15,8 +15,6 @@
                   <Button onAction="#delete">Удалить</Button>
                   <Button onAction="#setting">Настройки</Button>
                   <Button onAction="#openCreate">Новый документ</Button>
-                  <Button fx:id="btnEntityHistory" onAction="#getEntityHistory" visible="false"/>
-                  <Button fx:id="btnFullHistory" onAction="#getFullHistory" visible="false"/>
                </HBox>
                <ScrollPane>
                   <TableView fx:id="tableView" prefHeight="336.0" prefWidth="1107.0">
@@ -60,7 +58,7 @@
                <VBox>
                   <GridPane>
                      <Button fx:id="buttonCreate" onAction="#create" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                     <Button fx:id="buttonUpdate" onAction="#updateLandPlot" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                     <Button fx:id="buttonUpdate" onAction="#update" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                   </GridPane>
                   <GridPane alignment="center" hgap="10" vgap="10">
 

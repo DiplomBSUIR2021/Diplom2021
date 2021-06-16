@@ -23,7 +23,7 @@ public class LandPlotServiceImpl implements LandPlotService {
     AuditReader auditReader;
 
     @Override
-    public LandPlot addLandPlot(LandPlot landPlot) {
+    public LandPlot add(LandPlot landPlot) {
         return landPlotRepository.saveAndFlush(landPlot);
     }
 

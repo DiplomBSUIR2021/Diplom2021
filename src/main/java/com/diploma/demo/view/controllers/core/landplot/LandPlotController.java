@@ -1,10 +1,10 @@
-package com.diploma.demo.view.landplot;
+package com.diploma.demo.view.controllers.core.landplot;
 
 import com.diploma.demo.core.landplot.Address;
 import com.diploma.demo.core.landplot.LandPlot;
 import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
-import com.diploma.demo.view.utils.CrudController;
-import com.diploma.demo.view.utils.DateRangePicker;
+import com.diploma.demo.view.controllers.CoreCrudController;
+import com.diploma.demo.view.elements.DateRangePicker;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @Component
 @FxmlView("land-plot-page-tab.fxml")
-public class LandPlotController extends CrudController<LandPlot> {
+public class LandPlotController extends CoreCrudController<LandPlot> {
     LandPlotServiceImpl landPlotService;
 
     // add
@@ -63,9 +63,6 @@ public class LandPlotController extends CrudController<LandPlot> {
     @FXML private TextField notesTextField;
     @FXML private TextField surfaceTextField;
 
-    @FXML private Button btnEntityHistory;
-    @FXML private Button btnFullHistory;
-
     @FXML private Button buttonCreate;
     @FXML private Button buttonUpdate;
 
@@ -76,6 +73,11 @@ public class LandPlotController extends CrudController<LandPlot> {
 
     @FXML
     void initialize() {
+        initializeController();
+    }
+
+    @Override
+    protected void configurateControllerElements() {
         setTabPane(tabPane);
         setTableView(tableView);
 
@@ -85,15 +87,15 @@ public class LandPlotController extends CrudController<LandPlot> {
         setButtonCreate(buttonCreate);
         setButtonUpdate(buttonUpdate);
 
-        setBtnEntityHistory(btnEntityHistory);
-        setBtnFullHistory(btnFullHistory);
-
         setTextFieldOnlyDigitsInput(idTextField);
         setTextFieldOnlyDigitsInput(apartmentTextField);
 
         read();
         tabPane.getTabs().remove(landPlotsTabCreate);
+    }
 
+    @Override
+    protected void initTableView() {
         this.tableView.setRowFactory(tv -> {
             TableRow<LandPlot> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -113,38 +115,26 @@ public class LandPlotController extends CrudController<LandPlot> {
 
     @FXML
     private void create() {
+        create(landPlotService);
+    }
+
+    @Override
+    protected LandPlot createEntity() {
         LandPlot landPlot = new LandPlot();
         Address address = new Address();
         landPlot.setAddress(address);
 
-        updateObjectFromForm(landPlot);
-        landPlotService.addLandPlot(landPlot);
-
-        refresh();
-        selectTabView();
+        return landPlot;
     }
 
     @FXML
-    private void updateLandPlot() {
+    private void update() {
         update(landPlotService, getIdFromTextField(idTextField));
-        selectTabView();
     }
 
     @FXML
     protected void refresh() {
         refreshTableView(landPlotService);
-    }
-
-    @FXML
-    void getEntityHistory() {
-        // handle errors (right now DatePicker can contains a-Z symbols
-        getEntityHistory(landPlotService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
-    }
-
-    @FXML
-    private void getFullHistory() {
-        // handle errors (right now DatePicker can contains a-Z symbols
-        getFullHistory(landPlotService, dateRangePicker.getStartDate(), dateRangePicker.getEndDate());
     }
 
     @FXML

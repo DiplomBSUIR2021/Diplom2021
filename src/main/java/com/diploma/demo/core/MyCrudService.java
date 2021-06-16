@@ -11,4 +11,5 @@ public interface MyCrudService<T> {
     List getAllRevisions(LocalDate startDate,LocalDate endDate);
     Optional<T> findById(Long id);
     void update(T object);
+    T add(T object);
 }

@@ -3,8 +3,7 @@ package com.diploma.demo.view.auth.adminPanel;
 import com.diploma.demo.auth.AuthUtils;
 import com.diploma.demo.auth.User;
 import com.diploma.demo.auth.service.UserService;
-import com.diploma.demo.core.landplot.LandPlot;
-import com.diploma.demo.view.utils.CrudController;
+import com.diploma.demo.view.controllers.CrudController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -37,10 +36,14 @@ public class AdminPanelController extends CrudController<User> {
     }
 
     @FXML void initialize() {
+        initializeController();
+    }
+
+    @Override
+    protected void configurateControllerElements() {
         System.out.println("hello we here");
         setTableView(tableView);
         read();
-        initTableView();
     }
 
     @FXML private void updateTableData() {
@@ -77,7 +80,7 @@ public class AdminPanelController extends CrudController<User> {
         tableView.getItems().addAll(users);
     }
 
-    private void initTableView() {
+    protected void initTableView() {
         tableView.setRowFactory(tv -> {
             TableRow<User> row = new TableRow<>();
             row.setOnMouseClicked(event -> {

@@ -4,9 +4,8 @@ import com.diploma.demo.auth.Role;
 import com.diploma.demo.auth.User;
 import com.diploma.demo.auth.service.RoleService;
 import com.diploma.demo.auth.service.UserService;
-import com.diploma.demo.view.utils.CrudController;
+import com.diploma.demo.view.controllers.CrudController;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TableCell;
@@ -17,7 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Popup;
-import javafx.stage.Screen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -44,9 +42,13 @@ public class UserRolesController extends CrudController<User> {
 
     @FXML
     void initialize() {
+        initializeController();
+    }
+
+    @Override
+    protected void configurateControllerElements() {
         setTableView(tableView);
         System.out.println("hello we here");
-        initTableView();
         read();
     }
 
@@ -73,7 +75,7 @@ public class UserRolesController extends CrudController<User> {
         tableView.getItems().addAll(roles);
     }
     
-    private void initTableView() {
+    protected void initTableView() {
         tableView.setRowFactory(tv -> {
             TableRow<Role> row = new TableRow<>();
             row.setOnMouseClicked(event -> {

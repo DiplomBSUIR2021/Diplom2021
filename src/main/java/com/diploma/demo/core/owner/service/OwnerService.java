@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface OwnerService extends MyCrudService<Owner> {
     List<Owner> getAll();
-    Owner addOwner(Owner owner);
+    Owner add(Owner owner);
     Optional<Owner> findById(Long id);
     @Override
     void update(Owner owner);

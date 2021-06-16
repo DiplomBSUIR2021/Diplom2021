@@ -1,25 +1,18 @@
-package com.diploma.demo.view.utils;
+package com.diploma.demo.view.controllers;
 
 import com.diploma.demo.core.MyCrudService;
+import com.diploma.demo.view.utils.CrudUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import org.hibernate.LazyInitializationException;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 
 public abstract class CrudController<T> extends CrudUtils {
     protected Long activeRowID = null;
-
-    private final String btnEntityHistoryInactiveText = "История документа";
-    private final String btnEntityHistoryActiveText = "Назад";
-
-    private final String btnFullHistoryInactiveTest = "Вся история";
-    private final String btnFullHistoryActiveText = "Назад"; // к актуальной информации
 
     private TabPane tabPane;
     private Tab tabView;
@@ -28,10 +21,7 @@ public abstract class CrudController<T> extends CrudUtils {
     private Button buttonCreate;
     private Button buttonUpdate;
 
-
     private TableView tableView;
-    private Button btnEntityHistory;
-    private Button btnFullHistory;
 
     public void setButtonCreate(Button buttonCreate) {
         this.buttonCreate = buttonCreate;
@@ -57,16 +47,6 @@ public abstract class CrudController<T> extends CrudUtils {
 
     protected void setTableView(TableView tableView) {
         this.tableView = tableView;
-    }
-
-    protected void setBtnEntityHistory(Button btnEntityHistory) {
-        this.btnEntityHistory = btnEntityHistory;
-        this.btnEntityHistory.setText(btnEntityHistoryInactiveText);
-    }
-
-    public void setBtnFullHistory(Button btnFullHistory) {
-        this.btnFullHistory = btnFullHistory;
-        this.btnFullHistory.setText(btnFullHistoryInactiveTest);
     }
 
     protected void selectTab(Tab tab) {
@@ -152,17 +132,17 @@ public abstract class CrudController<T> extends CrudUtils {
         selectTab(tabCreate);
     }
 
-    protected void updateTableView(List items) {
-        ObservableList plots = FXCollections.observableArrayList(items);
+    protected void updateTableView(List<T> items) {
+        ObservableList<T> plots = FXCollections.observableArrayList(items);
         this.tableView.getItems().clear();
         try {
             this.tableView.getItems().addAll(plots);
         } catch (LazyInitializationException exception) {
-
+            exception.printStackTrace();
         }
     }
 
-    protected void refreshTableView(MyCrudService crudService) {
+    protected void refreshTableView(MyCrudService<T> crudService) {
         // handle errors
         List items = crudService.getAll();
         updateTableView(items);
@@ -174,46 +154,12 @@ public abstract class CrudController<T> extends CrudUtils {
         this.tableView.getItems().addAll(newData);
     }
 
-    protected void deleteEntity(MyCrudService crudService) {
+    protected void deleteEntity(MyCrudService<T> crudService) {
         if (activeRowID == null) {
             return;
         }
         crudService.delete(activeRowID);
         refreshTableView(crudService);
-    }
-
-    protected void getEntityHistory(MyCrudService crudService, LocalDate startDate, LocalDate endDate) {
-        if (this.btnEntityHistory.getText().equals(btnEntityHistoryInactiveText)) {
-            this.btnEntityHistory.setText(btnEntityHistoryActiveText);
-            List test = crudService.getRevisions(activeRowID, startDate, endDate);
-            List<Object> resultOfSearch = getObjectsFromRevisions(test);
-
-            refreshTableView(FXCollections.observableArrayList(resultOfSearch));
-        } else {
-            this.btnEntityHistory.setText(btnEntityHistoryInactiveText);
-            refreshTableView(crudService);
-        }
-    }
-
-    protected void getEntityHistory(MyCrudService crudService) {
-        getEntityHistory(crudService, null, null);
-    }
-
-    protected void getFullHistory(MyCrudService crudService, LocalDate startDate, LocalDate endDate) {
-        if (this.btnFullHistory.getText().equals(btnFullHistoryInactiveTest)) {
-            this.btnFullHistory.setText(btnFullHistoryActiveText);
-            List revisions = crudService.getAllRevisions(startDate, endDate);
-            List<Object> resultOfSearch = getObjectsFromRevisions(revisions);
-            refreshTableView(FXCollections.observableArrayList(resultOfSearch));
-
-        } else {
-            this.btnFullHistory.setText(btnFullHistoryInactiveTest);
-            refreshTableView(crudService);
-        }
-    }
-
-    protected void getFullHistory(MyCrudService crudService) {
-        getFullHistory(crudService, null, null);
     }
 
     protected abstract void cleanForm();
@@ -223,7 +169,7 @@ public abstract class CrudController<T> extends CrudUtils {
     protected abstract void updateObjectFromForm(T object);
 
 
-    protected void update(MyCrudService crudService, Long id) {
+    protected void update(MyCrudService<T> crudService, Long id) {
         if (id == null) {
             return;
         }
@@ -234,5 +180,13 @@ public abstract class CrudController<T> extends CrudUtils {
 
             refreshTableView(crudService);
         });
+        selectTabView();
     }
+    protected void initializeController() {
+        configurateControllerElements();
+        initTableView();
+    }
+
+    protected abstract void configurateControllerElements();
+    protected abstract void initTableView();
 }

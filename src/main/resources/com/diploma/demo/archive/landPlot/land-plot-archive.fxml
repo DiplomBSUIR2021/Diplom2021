@@ -6,7 +6,7 @@
 <VBox prefHeight="400.0" prefWidth="600.0"
       xmlns="http://javafx.com/javafx/11.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.diploma.demo.view.landplot.LandPlotArchiveController">
+      fx:controller="com.diploma.demo.view.controllers.archive.landplot.LandPlotArchiveController">
     <TabPane tabClosingPolicy="UNAVAILABLE" fx:id="tabPane">
         <Tab fx:id="tabView" text = "Просмотр архива">
             <VBox fx:id="archiveVBox"></VBox>

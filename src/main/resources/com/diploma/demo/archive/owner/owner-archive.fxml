@@ -2,59 +2,49 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
+<?import javafx.scene.text.Text?>
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<VBox xmlns="http://javafx.com/javafx/11.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.diploma.demo.view.owner.OwnerController">
-    <TabPane prefHeight="369.0"
-
-             tabClosingPolicy="UNAVAILABLE"
-             fx:id="tabPane">
-        <Tab fx:id="tabView" text="Информация">
-            <VBox>
-                <HBox fx:id="HboxSetting">
-                    <Button onAction="#delete">Удалить</Button>
-                    <Button onAction="#getEntityHistory" fx:id="btnEntityHistory">
-                    </Button>
-                    <Button fx:id="btnFullHistory" onAction="#getFullHistory"/>
-                    <Button onAction="#openSetting">Настройки</Button>
-                    <Button onAction="#openCreate">Новый документ</Button>
+<VBox prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.diploma.demo.view.controllers.archive.owner.OwnerArchiveController">
+    <TabPane tabClosingPolicy="UNAVAILABLE" fx:id="tabPane">
+        <Tab text="Просмотр" fx:id="tabView">
+            <VBox prefHeight="200.0" prefWidth="1000.0">
+                <HBox fx:id="HBoxSetting" alignment="CENTER">
+                    <Button onAction="#refresh">Обновить</Button>
+                    <Button onAction="#setting">Настройки</Button>
+                    <Button fx:id="btnEntityHistory" onAction="#getEntityHistory">История документа</Button>
                 </HBox>
-                <TableView fx:id="ownerTableView" prefWidth="1300">
+                <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0">
                     <columns>
-                        <TableColumn fx:id="tcID" text="#"/>
-                        <TableColumn fx:id="tcType" text="Тип"/>
-                        <TableColumn fx:id="tcName" text="ФИО"/>
-                        <TableColumn fx:id="tcBirthDate" text="Дата рождения"/>
+                        <TableColumn fx:id="tcRevId" prefWidth="33.0" text="рев."/>
+                        <TableColumn fx:id="tcActionType" prefWidth="86.0" text="Тип действия"/>
+                        <TableColumn fx:id="tcActionDate" prefWidth="188.0" text="Время"/>
+                        <TableColumn fx:id="tcId" prefWidth="33" text="#"/>
+                        <TableColumn fx:id="tcType" prefWidth="136.0" text="Тип"/>
+                        <TableColumn fx:id="tcName" prefWidth="136.0" text="ФИО/название"/>
+                        <TableColumn fx:id="tcBirthDate" prefWidth="136.0" text="Дата рождения"/>
+                        <TableColumn fx:id="tcRegistrationDate" prefWidth="136.0" text="Дата регистрации"/>
                         <TableColumn fx:id="tcDocType" text="Документ"/>
                         <TableColumn fx:id="tcDocN" text="Номер документа"/>
-                        <TableColumn fx:id="tcRegistrationDate" text="Дата регистрации"/>
-                        <!--<TableColumn text="Орг. зарегист." />-->
                         <TableColumn fx:id="tcAddress" text="Адрес"/>
                         <TableColumn fx:id="tcPostAddress" text="Почтовый адрес"/>
                         <TableColumn fx:id="tcPtn" text="Номер птн"/>
-
                         <TableColumn fx:id="tcPhoneNumber" text="Телефон"/>
                         <TableColumn fx:id="tcTelegramNumber" text="Telegram"/>
                         <TableColumn fx:id="tcViberNumber" text="Viber"/>
                         <TableColumn fx:id="tcWhatsappNumber" text="Whatsapp"/>
-                        <!--Что такое номер помещения в бд? home_number? apartment_n?-->
-                        <!--<TableColumn text="Номер помещения" />-->
                     </columns>
                 </TableView>
             </VBox>
         </Tab>
-        <Tab fx:id="tabCreate">
+        <Tab text="Редактирование архивного документа" fx:id="tabUpdate">
             <ScrollPane>
                 <VBox alignment="CENTER" spacing="10">
                     <GridPane>
-                        <Button fx:id="buttonCreate" onAction="#create"
-                                GridPane.columnIndex="0" GridPane.rowIndex="0" visible="false"/>
-                        <Button fx:id="buttonUpdate" onAction="#update"
-                                GridPane.columnIndex="0" GridPane.rowIndex="0" visible="false"/>
+                        <Button fx:id="btnUpdateEntity" onAction="#update"
+                                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                     </GridPane>
                     <GridPane>
                         <TextField fx:id="tfId" visible="false"/>

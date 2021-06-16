@@ -1,9 +1,9 @@
-package com.diploma.demo.view.landplot;
+package com.diploma.demo.view.controllers.archive.landplot;
 
-import com.diploma.demo.core.landplot.LandPlotHistory;
-import com.diploma.demo.core.landplot.service.impl.LandPlotHistoryServiceImpl;
-import com.diploma.demo.view.utils.ArchiveContoller;
-import com.diploma.demo.view.utils.DateRangePicker;
+import com.diploma.demo.archive.landplot.LandPlotHistory;
+import com.diploma.demo.archive.landplot.service.LandPlotHistoryServiceImpl;
+import com.diploma.demo.view.controllers.ArchiveContoller;
+import com.diploma.demo.view.elements.DateRangePicker;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -25,8 +25,6 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
     LandPlotHistoryServiceImpl landPlotHistoryService;
 
-    private Integer revId;
-
     @FXML
     private VBox archiveVBox;
 
@@ -40,26 +38,26 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
     private Button btnEntityHistory;
 
-    private TableView<LandPlotHistory> tableView = new TableView<>();
+    private final TableView<LandPlotHistory> tableView = new TableView<>();
 
-    private TableColumn<LandPlotHistory, Long> tcID = new TableColumn<>("#");
-    private TableColumn<LandPlotHistory, String> tcRegion = new TableColumn<>("Область");
-    private TableColumn<LandPlotHistory, String> tcCity = new TableColumn<>("Город");
-    private TableColumn<LandPlotHistory, String> tcStreet = new TableColumn<>("Улица");
-    private TableColumn<LandPlotHistory, String> tcHomeNumber = new TableColumn<>("Дом");
-    private TableColumn<LandPlotHistory, Long> tcAppartamentn = new TableColumn<>("Кв.");
+    private final TableColumn<LandPlotHistory, Long> tcID = new TableColumn<>("#");
+    private final TableColumn<LandPlotHistory, String> tcRegion = new TableColumn<>("Область");
+    private final TableColumn<LandPlotHistory, String> tcCity = new TableColumn<>("Город");
+    private final TableColumn<LandPlotHistory, String> tcStreet = new TableColumn<>("Улица");
+    private final TableColumn<LandPlotHistory, String> tcHomeNumber = new TableColumn<>("Дом");
+    private final TableColumn<LandPlotHistory, Long> tcAppartamentn = new TableColumn<>("Кв.");
 
-    private TableColumn<LandPlotHistory, String> tcCadastralNumber = new TableColumn<>("Кадастровый номер");
-    private TableColumn<LandPlotHistory, String> tcCategory = new TableColumn<>("Категория");
-    private TableColumn<LandPlotHistory, String> tcCurrentMarks = new TableColumn<>("тек. оценки");
-    private TableColumn<LandPlotHistory, String> tcIntendedUse = new TableColumn<>("Целевое назначение");
-    private TableColumn<LandPlotHistory, String> tcPurpose = new TableColumn<>("Назначение");
-    private TableColumn<LandPlotHistory, String> tcNotes = new TableColumn<>("Примечания");
-    private TableColumn<LandPlotHistory, Double> tcSurface = new TableColumn<>("Поверхность");
+    private final TableColumn<LandPlotHistory, String> tcCadastralNumber = new TableColumn<>("Кадастровый номер");
+    private final TableColumn<LandPlotHistory, String> tcCategory = new TableColumn<>("Категория");
+    private final TableColumn<LandPlotHistory, String> tcCurrentMarks = new TableColumn<>("тек. оценки");
+    private final TableColumn<LandPlotHistory, String> tcIntendedUse = new TableColumn<>("Целевое назначение");
+    private final TableColumn<LandPlotHistory, String> tcPurpose = new TableColumn<>("Назначение");
+    private final TableColumn<LandPlotHistory, String> tcNotes = new TableColumn<>("Примечания");
+    private final TableColumn<LandPlotHistory, Double> tcSurface = new TableColumn<>("Поверхность");
 
-    private TableColumn<LandPlotHistory, String> tcActionType = new TableColumn<>("Тип действия");
-    private TableColumn<LandPlotHistory, String> tcActionDate = new TableColumn<>("Время действия");
-    private TableColumn<LandPlotHistory, Integer> tcActionRev = new TableColumn<>("id");
+    private final TableColumn<LandPlotHistory, String> tcActionType = new TableColumn<>("Тип действия");
+    private final TableColumn<LandPlotHistory, String> tcActionDate = new TableColumn<>("Время действия");
+    private final TableColumn<LandPlotHistory, Integer> tcActionRev = new TableColumn<>("id");
 
     @FXML
     private TextField tfRegion, tfCity, tfStreet, tfHome, tfAppart,
@@ -94,33 +92,26 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
         DateRangePicker dateRangePicker = new DateRangePicker(hbox);
 
-        settings.setOnAction(event -> {
-            dateRangePicker.setting();
-        });
+        settings.setOnAction(event -> dateRangePicker.setting());
 
-        refresh.setOnAction(event -> {
-            refresh();
-        });
+        refresh.setOnAction(event -> refresh());
 
         tabPane.getTabs().remove(tabUpdate);
 
         btnEntityHistory.setOnAction(event -> {
             this.tableView.getItems().clear();
-            if (btnEntityHistory.getText().equals("История документа")) {
-                List<LandPlotHistory> history = landPlotHistoryService.getLandPlotHistory(activeRowID, dateRangePicker.getStartDate(),dateRangePicker.getEndDate());
-                btnEntityHistory.setText("Назад");
-                refreshTableView(FXCollections.observableArrayList(history));
-            } else {
-                btnEntityHistory.setText("История документа");
-                refresh();
-            }
+            getEntityHistory(landPlotHistoryService, dateRangePicker.getStartDate(),dateRangePicker.getEndDate());
         });
     }
 
     @FXML
     void initialize() {
-        setTableView(tableView);
+        initializeController();
+    }
 
+    @Override
+    protected void configurateControllerElements() {
+        setTableView(tableView);
         setTabPane(tabPane);
 
         setTabUpdate(tabUpdate);
@@ -132,14 +123,17 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
         configureTableView();
 
         setBtnEntityHistory(btnEntityHistory);
+    }
 
+    @Override
+    protected void initTableView() {
         tableView.setRowFactory(tv -> {
             TableRow<LandPlotHistory> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
                     LandPlotHistory clickedRow = row.getItem();
-                    activeRowID = new Long(clickedRow.getId());
-                    revId = new Integer(row.getItem().getRev());
+                    activeRowID = clickedRow.getId();
+                    revId = row.getItem().getRev();
                     if (event.getClickCount() == 2) {
                         System.out.println(clickedRow);
                         selectTabUpdate(clickedRow);
@@ -210,8 +204,7 @@ public class LandPlotArchiveController extends ArchiveContoller<LandPlotHistory>
 
     @FXML
     private void update() {
-        update(landPlotHistoryService, revId);
-        selectTabView();
+        update(landPlotHistoryService);
     }
 
     @Autowired
