@@ -4,7 +4,6 @@ import com.diploma.demo.archive.landplot.LandPlotHistory;
 import com.diploma.demo.archive.owner.OwnerArchive;
 import com.diploma.demo.archive.owner.service.OwnerArchiveServiceImpl;
 import com.diploma.demo.core.landplot.Address;
-import com.diploma.demo.core.owner.Owner;
 import com.diploma.demo.view.controllers.ArchiveContoller;
 import com.diploma.demo.view.elements.DateRangePicker;
 import javafx.beans.property.SimpleIntegerProperty;

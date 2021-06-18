@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @Data
@@ -18,8 +20,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Audited
+@SqlResultSetMapping(
+        name = "nativeSqlResult",
+        entities = @EntityResult(entityClass = LandPlot.class)
+)
 public class LandPlot {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -51,6 +56,10 @@ public class LandPlot {
 
     @Column(name = "surface")
     private Double surface;
+
+    @Column(name = "the_year")
+    private int year = 2021;
+
 
     @OneToMany(mappedBy = "landPlot",
             fetch = FetchType.LAZY)

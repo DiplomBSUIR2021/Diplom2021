@@ -5,6 +5,7 @@ import com.diploma.demo.core.landplot.repository.LandPlotRepository;
 import com.diploma.demo.core.landplot.service.LandPlotService;
 import com.diploma.demo.view.utils.TimeUtils;
 import org.hibernate.envers.AuditReader;
+import org.hibernate.envers.NotAudited;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,14 +76,19 @@ public class LandPlotServiceImpl implements LandPlotService {
     }
 
     @Override
+    @NotAudited
     public void delete(Long id) {
-        landPlotRepository.deleteById(id);
-        landPlotRepository.flush();
+       // landPlotRepository.detach();
+        landPlotRepository.customDelete(12);
+        // landPlotRepository.deleteById(id);
+        // landPlotRepository.flush();
     }
 
     @Override
     public void delete(LandPlot landPlot) {
-        landPlotRepository.delete(landPlot);
-        landPlotRepository.flush();
+        landPlotRepository.customDelete(landPlot.getId());
+        // landPlotRepository.delete(landPlot);
+        // landPlotRepository.flush();
     }
+
 }

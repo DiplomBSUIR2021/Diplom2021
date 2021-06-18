@@ -5,7 +5,9 @@ import com.diploma.demo.core.landplot.Address;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.annotation.Nullable;
 import javax.persistence.*;
+import java.sql.Date;
 
 @Data
 @Entity
@@ -38,6 +40,10 @@ public class LandPlotHistory extends AbstractRevEntity {
 
     @Column(name = "surface")
     private Double surface;
+
+    @Column(name = "the_year")
+    @Nullable
+    private Integer year;
 
     public static String getRevtypeString(short revtypeShort) {
         if (revtypeShort == 0) {
