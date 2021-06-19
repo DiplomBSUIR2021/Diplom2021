@@ -13,7 +13,7 @@ import javax.persistence.Embeddable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Address {
+public class Address implements Cloneable{
 
     @Column(name="region")
     private String region;
@@ -30,5 +30,9 @@ public class Address {
     @Column(name="apartment_n")
     private Long apartmentn;
 
+    public Address clone() throws CloneNotSupportedException{
+
+        return (Address) super.clone();
+    }
 
 }

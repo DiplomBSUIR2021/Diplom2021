@@ -10,4 +10,15 @@ public class OwnerArchiveServiceImpl extends AbstractService<OwnerArchive, Owner
     public OwnerArchiveServiceImpl(OwnerArchiveRepository repository) {
         super(repository);
     }
+
+    @Override
+    public OwnerArchive createArchiveEntityClone(OwnerArchive oldArchiveEntity) {
+        OwnerArchive cloneArchiveEntity= null;
+        try {
+            cloneArchiveEntity = oldArchiveEntity.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return cloneArchiveEntity;
+    }
 }

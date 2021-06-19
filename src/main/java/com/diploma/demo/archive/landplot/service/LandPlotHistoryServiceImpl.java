@@ -10,4 +10,26 @@ public class LandPlotHistoryServiceImpl extends AbstractService<LandPlotHistory,
     public LandPlotHistoryServiceImpl(LandPlotHistoryRepository repository) {
         super(repository);
     }
+
+    @Override
+    public LandPlotHistory createArchiveEntityClone(LandPlotHistory oldArchiveEntity) {
+        /*LandPlotHistory landPlotHistory = new LandPlotHistory();
+
+        landPlotHistory.setId(oldArchiveEntity.getId());
+        landPlotHistory.setAddress(oldArchiveEntity.getAddress());
+        landPlotHistory.setCadastralNumber(oldArchiveEntity.getCadastralNumber());
+        landPlotHistory.setCategory(oldArchiveEntity.getCategory());
+        landPlotHistory.setCurrentMarks(oldArchiveEntity.getCurrentMarks());
+        landPlotHistory.setIntendedUse(oldArchiveEntity.getIntendedUse());
+        landPlotHistory.setLandPlotPurpose(oldArchiveEntity.getLandPlotPurpose());
+        landPlotHistory.setNotes(oldArchiveEntity.getNotes());
+        landPlotHistory.setSurface(oldArchiveEntity.getSurface());*/
+        LandPlotHistory cloneArchiveEntity= null;
+        try {
+            cloneArchiveEntity = oldArchiveEntity.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return cloneArchiveEntity;
+    }
 }

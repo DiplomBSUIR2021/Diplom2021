@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "land_plot_aud")
 @NoArgsConstructor
-public class LandPlotHistory extends AbstractRevEntity {
+public class LandPlotHistory extends AbstractRevEntity implements Cloneable{
     @Column(name = "id")
     private Long id;
 
@@ -46,7 +46,11 @@ public class LandPlotHistory extends AbstractRevEntity {
         if (revtypeShort == 1) {
             return "Изменение";//"MOD";
         }
-        return "Удаление";//"DEL"; 2
+        if (revtypeShort == 2) {
+            return "Удаление";//"DEL"; 2
+        }
+
+        return "" + revtypeShort;
     }
 
     public static short getRevtypeNumb(String revtypeString) {
@@ -58,6 +62,12 @@ public class LandPlotHistory extends AbstractRevEntity {
         }
         // (obj[2].equals("DEL"))
         return 2;
+    }
+
+    public LandPlotHistory clone() throws CloneNotSupportedException{
+        LandPlotHistory landPlotHistory = (LandPlotHistory) super.clone();
+        landPlotHistory.address = (Address) address.clone();
+        return landPlotHistory;
     }
 
 }
