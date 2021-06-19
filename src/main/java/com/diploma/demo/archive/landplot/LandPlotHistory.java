@@ -2,12 +2,13 @@ package com.diploma.demo.archive.landplot;
 
 import com.diploma.demo.archive.abstraction.AbstractRevEntity;
 import com.diploma.demo.core.landplot.Address;
+import com.diploma.demo.core.landplot.LandPlot;
+import com.diploma.demo.core.revinfo.RevisionEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.annotation.Nullable;
 import javax.persistence.*;
-import java.sql.Date;
 
 @Data
 @Entity
@@ -45,6 +46,27 @@ public class LandPlotHistory extends AbstractRevEntity {
     @Nullable
     private Integer year;
 
+    public LandPlotHistory(LandPlot landPlot, RevisionEntity revisionEntity) {
+
+        // this();
+        this.setId(landPlot.getId());
+        this.setRevisionEntity(revisionEntity);
+        this.setRev(revisionEntity.getId());
+        this.setRevtype((short) 3);
+        /*this.address = landPlot.getAddress();
+        this.cadastralNumber = landPlot.getCadastralNumber();
+        this.category = landPlot.getCategory();
+        this.intendedUse = landPlot.getIntendedUse();
+        this.notes = landPlot.getNotes();
+        this.surface = landPlot.getSurface();
+        this.year = landPlot.getYear();
+
+        System.out.println("Get rev info with id" + revisionEntity.getId());
+        this.setRevisionEntity(revisionEntity);
+        this.setRevtype((short) 3);
+        // this.setRev(revisionEntity.getId());*/
+    }
+
     public static String getRevtypeString(short revtypeShort) {
         if (revtypeShort == 0) {
             return "Создание";//"ADD";
@@ -52,7 +74,10 @@ public class LandPlotHistory extends AbstractRevEntity {
         if (revtypeShort == 1) {
             return "Изменение";//"MOD";
         }
-        return "Удаление";//"DEL"; 2
+        if (revtypeShort == 1) {
+            return "Удаление";//"DEL"; 2
+        }
+        return "" + revtypeShort;
     }
 
     public static short getRevtypeNumb(String revtypeString) {

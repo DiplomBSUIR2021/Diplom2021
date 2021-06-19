@@ -27,7 +27,8 @@ public class RevisionEntity {
 
     @RevisionTimestamp
     @Column(name = "revtstmp")
-    private long timestamp;
+
+    private long timestamp = System.currentTimeMillis();
 
     public RevisionEntity(int id, long timestamp) {
         setId(id);

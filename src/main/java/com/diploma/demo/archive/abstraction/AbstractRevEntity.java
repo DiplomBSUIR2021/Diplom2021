@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Data
 public abstract class AbstractRevEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    // @GeneratedValue
     @Column(name = "rev")
     private int rev;
 
@@ -19,7 +19,7 @@ public abstract class AbstractRevEntity implements Serializable {
     @Column(name = "revtype")
     private short revtype;
 
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="rev")
     private RevisionEntity revisionEntity;
 }

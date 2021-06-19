@@ -4,14 +4,13 @@ import com.diploma.demo.core.act.Contract;
 import com.diploma.demo.core.owner.Owner;
 import com.diploma.demo.core.restriction.Restriction;
 import com.diploma.demo.core.stateregistration.StateRegistration;
+import com.diploma.demo.view.utils.TimeUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.util.Calendar;
 import java.util.List;
 
 @Data
@@ -20,10 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Audited
-@SqlResultSetMapping(
-        name = "nativeSqlResult",
-        entities = @EntityResult(entityClass = LandPlot.class)
-)
 public class LandPlot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,7 +53,7 @@ public class LandPlot {
     private Double surface;
 
     @Column(name = "the_year")
-    private int year = 2021;
+    private int year = TimeUtils.getCurrentYear();
 
 
     @OneToMany(mappedBy = "landPlot",
@@ -76,4 +71,6 @@ public class LandPlot {
 
     @OneToMany(mappedBy = "landPlot")
     private List<Owner> owner;
+
+
 }
