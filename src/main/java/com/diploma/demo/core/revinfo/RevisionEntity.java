@@ -3,7 +3,6 @@ package com.diploma.demo.core.revinfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.RevisionListener;
 import org.hibernate.envers.RevisionNumber;
 import org.hibernate.envers.RevisionTimestamp;
@@ -27,7 +26,7 @@ public class RevisionEntity {
 
     @RevisionTimestamp
     @Column(name = "revtstmp")
-    private long timestamp;
+    private long timestamp = System.currentTimeMillis();
 
     public RevisionEntity(int id, long timestamp) {
         setId(id);

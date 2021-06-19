@@ -2,6 +2,8 @@ package com.diploma.demo.archive.abstraction.service;
 
 import com.diploma.demo.archive.abstraction.AbstractRevEntity;
 import com.diploma.demo.archive.abstraction.CommonRepository;
+import com.diploma.demo.core.revinfo.RevisionEntity;
+import com.diploma.demo.core.revinfo.repository.RevisionEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.constraints.NotNull;
@@ -12,6 +14,10 @@ import java.util.Optional;
 public abstract class AbstractService <E extends AbstractRevEntity, R extends CommonRepository<E>> implements ArchiveService<E> {
     @Autowired
     R repository;
+
+    @Autowired
+    RevisionEntityRepository revisionEntityRepository;
+
     public AbstractService(R repository) {
         this.repository = repository;
     }
@@ -37,11 +43,11 @@ public abstract class AbstractService <E extends AbstractRevEntity, R extends Co
             long timeEnd = convertToDateViaSqlDate(endDate).getTime();
             return repository.findAllToById(id, timeEnd);
         }
-        return getEntityHistory(new Long(id));
+        return getEntityHistory(id);
     }
 
     public List<E> getEntityHistory(@NotNull Long id) {
-        return repository.findAllById((long) id);
+        return repository.findAllById(id);
     }
 
     public List<E> getFullHistory(LocalDate startDate, LocalDate endDate) {
@@ -72,10 +78,25 @@ public abstract class AbstractService <E extends AbstractRevEntity, R extends Co
         return repository.findById(id);
     }
 
+    public abstract E createArchiveEntityClone(E oldArchiveEntity);
+
     @Override
     public void update(E archiveEntity) {
-        // rewrite?
-        archiveEntity.setRevtype((short) 1);
-        repository.saveAndFlush(archiveEntity);
+        E entity = createArchiveEntityClone(archiveEntity);
+        System.out.println(entity.getClass());
+
+        // revinfo
+        RevisionEntity revisionEntity = new RevisionEntity();
+        revisionEntityRepository.saveAndFlush(revisionEntity);
+
+        entity.setRevtype((short) 3);
+        entity.setRevisionEntity(revisionEntity);
+        entity.setRev(revisionEntity.getId());
+
+        System.out.println(entity);
+        System.out.println("rev " + entity.getRev());
+        System.out.println("revisionEntity id " + revisionEntity.getId());
+
+        repository.saveAndFlush(entity);
     }
 }

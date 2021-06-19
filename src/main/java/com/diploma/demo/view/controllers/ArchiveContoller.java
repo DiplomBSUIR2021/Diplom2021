@@ -84,7 +84,7 @@ public abstract class ArchiveContoller<T extends AbstractRevEntity> extends Crud
 
         feelForm(object);
 
-        tabPane.getTabs().add(tabUpdate);
+        tryAddTabToTabPane(tabPane, tabUpdate);
         selectTab(tabUpdate);
     }
 

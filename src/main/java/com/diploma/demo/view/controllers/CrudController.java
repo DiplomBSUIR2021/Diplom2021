@@ -103,7 +103,7 @@ public abstract class CrudController<T> extends CrudUtils {
         hideNode(buttonUpdate);
         unhideNode(buttonCreate);
 
-        tabPane.getTabs().add(tabCreate);
+        tryAddTabToTabPane(tabPane, tabCreate);
         selectTab(tabCreate);
     }
 
@@ -128,7 +128,7 @@ public abstract class CrudController<T> extends CrudUtils {
         unhideNode(buttonUpdate);
         hideNode(buttonCreate);
 
-        tabPane.getTabs().add(tabCreate);
+        tryAddTabToTabPane(tabPane, tabCreate);
         selectTab(tabCreate);
     }
 
@@ -189,4 +189,13 @@ public abstract class CrudController<T> extends CrudUtils {
 
     protected abstract void configurateControllerElements();
     protected abstract void initTableView();
+
+    protected void tryAddTabToTabPane(TabPane tabPane, Tab tab) {
+        if (tabPane.getTabs().contains(tab)) {
+            return;
+        }
+        tabPane.getTabs().add(tab);
+        tab.setOnClosed(e -> tabPane.getTabs().remove(tab));
+        tab.setOnSelectionChanged (e -> System.out.println("tab change"));
+    }
 }

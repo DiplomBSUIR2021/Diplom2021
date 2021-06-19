@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "owner_aud")
 @NoArgsConstructor
-public class OwnerArchive extends AbstractRevEntity {
+public class OwnerArchive extends AbstractRevEntity implements Cloneable{
     @Column(name = "id")
     private Long id;
 
@@ -74,4 +74,11 @@ public class OwnerArchive extends AbstractRevEntity {
     @Column(name="whatsapp_number")
     @Pattern(regexp = "\\+375[0-9]{9}")
     private String whatsappNumber;
+
+    public OwnerArchive clone() throws CloneNotSupportedException{
+        OwnerArchive ownerArchive = (OwnerArchive) super.clone();
+        ownerArchive.address = address.clone();
+        ownerArchive.postAddress = postAddress.clone();
+        return ownerArchive;
+    }
 }

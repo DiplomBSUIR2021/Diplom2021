@@ -10,4 +10,15 @@ public class LandPlotHistoryServiceImpl extends AbstractService<LandPlotHistory,
     public LandPlotHistoryServiceImpl(LandPlotHistoryRepository repository) {
         super(repository);
     }
+
+    @Override
+    public LandPlotHistory createArchiveEntityClone(LandPlotHistory oldArchiveEntity) {
+        LandPlotHistory cloneArchiveEntity= null;
+        try {
+            cloneArchiveEntity = oldArchiveEntity.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return cloneArchiveEntity;
+    }
 }
