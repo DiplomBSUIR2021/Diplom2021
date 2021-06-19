@@ -43,11 +43,11 @@ public abstract class AbstractService <E extends AbstractRevEntity, R extends Co
             long timeEnd = convertToDateViaSqlDate(endDate).getTime();
             return repository.findAllToById(id, timeEnd);
         }
-        return getEntityHistory(new Long(id));
+        return getEntityHistory(id);
     }
 
     public List<E> getEntityHistory(@NotNull Long id) {
-        return repository.findAllById((long) id);
+        return repository.findAllById(id);
     }
 
     public List<E> getFullHistory(LocalDate startDate, LocalDate endDate) {

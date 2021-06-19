@@ -77,8 +77,8 @@ public class OwnerArchive extends AbstractRevEntity implements Cloneable{
 
     public OwnerArchive clone() throws CloneNotSupportedException{
         OwnerArchive ownerArchive = (OwnerArchive) super.clone();
-        ownerArchive.address = (Address) address.clone();
-        ownerArchive.postAddress = (Address) postAddress.clone();
+        ownerArchive.address = address.clone();
+        ownerArchive.postAddress = postAddress.clone();
         return ownerArchive;
     }
 }

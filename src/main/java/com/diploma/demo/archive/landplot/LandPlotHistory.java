@@ -50,6 +50,10 @@ public class LandPlotHistory extends AbstractRevEntity implements Cloneable{
             return "Удаление";//"DEL"; 2
         }
 
+        if (revtypeShort == 3) {
+            return "Изменено супервизором";
+        }
+
         return "" + revtypeShort;
     }
 
@@ -66,7 +70,7 @@ public class LandPlotHistory extends AbstractRevEntity implements Cloneable{
 
     public LandPlotHistory clone() throws CloneNotSupportedException{
         LandPlotHistory landPlotHistory = (LandPlotHistory) super.clone();
-        landPlotHistory.address = (Address) address.clone();
+        landPlotHistory.address = address.clone();
         return landPlotHistory;
     }
 
