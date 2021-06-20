@@ -1,0 +1,15 @@
+
+CREATE TABLE land_plot_y0 PARTITION OF land_plot
+    FOR VALUES FROM ('2021-01-01') TO ('2022-01-01');
+
+CREATE TABLE land_plot_y1 PARTITION OF land_plot
+    FOR VALUES FROM ('2020-01-01') TO ('2021-01-01');
+
+CREATE TABLE land_plot_y2 PARTITION OF land_plot
+    FOR VALUES FROM ('2019-01-01') TO ('2020-01-01');
+
+CREATE TABLE land_plot_y3 PARTITION OF land_plot
+    FOR VALUES FROM ('2018-01-01') TO ('2019-01-01');
+
+CREATE TABLE land_plot_y4 PARTITION OF land_plot
+    FOR VALUES FROM ('2017-01-01') TO ('2018-01-01');

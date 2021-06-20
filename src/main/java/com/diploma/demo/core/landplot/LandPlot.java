@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -51,6 +52,9 @@ public class LandPlot {
 
     @Column(name = "surface")
     private Double surface;
+
+    @Column(name = "the_year")
+    private LocalDate year = LocalDate.now();
 
     @OneToMany(mappedBy = "landPlot",
             fetch = FetchType.LAZY)

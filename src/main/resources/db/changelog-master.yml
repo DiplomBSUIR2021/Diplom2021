@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/03052021_upd_owners.sql
   - include:
       file: db/changelog/update_auth.sql
+  - include:
+      file: db/changelog/annual_archiving.sql

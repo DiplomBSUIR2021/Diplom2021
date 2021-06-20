@@ -1,5 +1,3 @@
-alter table if exists land_plot add column apartment_n int8;
-alter table if exists land_plot_aud add column apartment_n int8;
 alter table if exists organization add column apartment_n int8;
 alter table if exists organization_aud add column apartment_n int8;
 alter table if exists owner add column registration_date date;
@@ -44,5 +42,5 @@ alter table if exists right_of_use add column land_plot_id int8;
 alter table if exists right_of_use_aud add column land_plot_id int8;
 alter table if exists state_registration add column owner_id int8;
 alter table if exists state_registration_aud add column owner_id int8;
-alter table if exists right_of_use add constraint FK1cip269mbvwn5bsuod8jgkxky foreign key (land_plot_id) references land_plot;
+alter table if exists right_of_use add constraint FK1cip269mbvwn5bsuod8jgkxky foreign key (land_plot_id, the_year) references land_plot;
 alter table if exists state_registration add constraint FKf73w0xe7mh5xommr7welyphwg foreign key (owner_id) references owner;
