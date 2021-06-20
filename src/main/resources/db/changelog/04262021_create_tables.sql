@@ -1,28 +1,281 @@
-create table act (id  bigserial not null, date date, name varchar(255), number varchar(255), organization varchar(255), restriction_id int8, primary key (id));
-create table act_aud (id int8 not null, rev int4 not null, revtype int2, date date, name varchar(255), number varchar(255), organization varchar(255), restriction_id int8, primary key (id, rev));
-create table building (id  bigserial not null, floor_n int4, individual_number varchar(255), underground_floor_n int4, primary key (id));
-create table building_aud (id int8 not null, rev int4 not null, revtype int2, floor_n int4, individual_number varchar(255), underground_floor_n int4, primary key (id, rev));
-create table contract (id  bigserial not null, agreement_participant_1 varchar(255), agreement_participant_2 varchar(255), date timestamp, date_time timestamp, name varchar(255), land_plot_id int8, primary key (id));
-create table contract_aud (id int8 not null, rev int4 not null, revtype int2, agreement_participant_1 varchar(255), agreement_participant_2 varchar(255), date timestamp, date_time timestamp, name varchar(255), land_plot_id int8, primary key (id, rev));
-create table isolated_room (id  bigserial not null, inventory_number varchar(255), surface float8, building_id int8, primary key (id));
-create table isolated_room_aud (id int8 not null, rev int4 not null, revtype int2, inventory_number varchar(255), surface float8, building_id int8, primary key (id, rev));
-create table land_plot (id  bigserial not null, apartmentn int8, city varchar(255), home_number varchar(255), region varchar(255), street varchar(255), cadastral_number varchar(255), category varchar(255), current_marks varchar(255), intended_use varchar(255), land_plot_purpose varchar(255), notes varchar(255), surface float8, primary key (id));
-create table land_plot_aud (id int8 not null, rev int4 not null, revtype int2, apartmentn int8, city varchar(255), home_number varchar(255), region varchar(255), street varchar(255), cadastral_number varchar(255), category varchar(255), current_marks varchar(255), intended_use varchar(255), land_plot_purpose varchar(255), notes varchar(255), surface float8, primary key (id, rev));
-create table organization (id  bigserial not null, apartmentn int8, city varchar(255), home_number varchar(255), region varchar(255), street varchar(255), name varchar(255), registration_date date, type varchar(255), unp varchar(255), right_of_use_id int8, primary key (id));
-create table organization_aud (id int8 not null, rev int4 not null, revtype int2, apartmentn int8, city varchar(255), home_number varchar(255), region varchar(255), street varchar(255), name varchar(255), registration_date date, type varchar(255), unp varchar(255), right_of_use_id int8, primary key (id, rev));
-create table owner (type varchar(31) not null, id  bigserial not null, name varchar(255), unp varchar(255), birth_date date, doc_n varchar(255), doc_type varchar(255), personal_number varchar(255), land_plot_id int8, ownership_id int8, right_of_use_id int8, owner_id int8, primary key (id));
-create table owner_aud (id int8 not null, rev int4 not null, type varchar(31), revtype int2, name varchar(255), land_plot_id int8, ownership_id int8, right_of_use_id int8, primary key (id, rev));
-create table ownership (id  bigserial not null, proportion float8, registration_date date, owner_id int8, primary key (id));
-create table ownership_aud (id int8 not null, rev int4 not null, revtype int2, proportion float8, registration_date date, owner_id int8, primary key (id, rev));
-create table restriction (id  bigserial not null, description varchar(255), land_plot_id int8, primary key (id));
-create table restriction_aud (id int8 not null, rev int4 not null, revtype int2, description varchar(255), land_plot_id int8, primary key (id, rev));
-create table revinfo (rev int4 not null, revtstmp int8, primary key (rev));
-create table right_of_use (id  bigserial not null, cost_desceription varchar(255), description varchar(255), proportion float8, validity_period date, owner_id int8, primary key (id));
-create table right_of_use_aud (id int8 not null, rev int4 not null, revtype int2, cost_desceription varchar(255), description varchar(255), proportion float8, validity_period date, owner_id int8, primary key (id, rev));
-create table state_registration (id  bigserial not null, date date, issue_organization varchar(255), land_plot_id int8, right_of_use_id int8, primary key (id));
-create table state_registration_aud (id int8 not null, rev int4 not null, revtype int2, date date, issue_organization varchar(255), land_plot_id int8, right_of_use_id int8, primary key (id, rev));
-create table uninsulated_room (id  bigserial not null, inventory_number varchar(255), surface float8, building_id int8, primary key (id));
-create table uninsulated_room_aud (id int8 not null, rev int4 not null, revtype int2, inventory_number varchar(255), surface float8, building_id int8, primary key (id, rev));
+create table act
+(
+    id  bigserial not null,
+    date date,
+    name varchar(255),
+    number varchar(255),
+    organization varchar(255),
+    restriction_id int8,
+    primary key (id)
+);
+create table act_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    date date,
+    name varchar(255),
+    number varchar(255),
+    organization varchar(255),
+    restriction_id int8,
+    primary key (id, rev)
+);
+create table building
+(
+    id  bigserial not null,
+    floor_n int4,
+    individual_number varchar(255),
+    underground_floor_n int4,
+    primary key (id)
+);
+create table building_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    floor_n int4,
+    individual_number varchar(255),
+    underground_floor_n int4,
+    primary key (id, rev)
+);
+create table contract
+(
+    id  bigserial not null,
+    agreement_participant_1 varchar(255),
+    agreement_participant_2 varchar(255),
+    date timestamp,
+    date_time timestamp,
+    name varchar(255),
+    land_plot_id int8,
+    primary key (id)
+);
+create table contract_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    agreement_participant_1 varchar(255),
+    agreement_participant_2 varchar(255),
+    date timestamp,
+    date_time timestamp,
+    name varchar(255),
+    land_plot_id int8,
+    primary key (id, rev)
+);
+create table isolated_room
+(
+    id  bigserial not null,
+    inventory_number varchar(255),
+    surface float8,
+    building_id int8,
+    primary key (id)
+);
+create table isolated_room_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    inventory_number varchar(255),
+    surface float8,
+    building_id int8,
+    primary key (id, rev)
+);
+create table land_plot
+(
+    id  bigserial not null,
+    apartmentn int8,
+    city varchar(255),
+    home_number varchar(255),
+    region varchar(255),
+    street varchar(255),
+    cadastral_number varchar(255),
+    category varchar(255),
+    current_marks varchar(255),
+    intended_use varchar(255),
+    land_plot_purpose varchar(255),
+    notes varchar(255),
+    surface float8,
+    primary key (id)
+);
+create table land_plot_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    apartmentn int8,
+    city varchar(255),
+    home_number varchar(255),
+    region varchar(255),
+    street varchar(255),
+    cadastral_number varchar(255),
+    category varchar(255),
+    current_marks varchar(255),
+    intended_use varchar(255),
+    land_plot_purpose varchar(255),
+    notes varchar(255),
+    surface float8,
+    primary key (id, rev)
+);
+create table organization
+(
+    id  bigserial not null,
+    apartmentn int8,
+    city varchar(255),
+    home_number varchar(255),
+    region varchar(255),
+    street varchar(255),
+    name varchar(255),
+    registration_date date,
+    type varchar(255),
+    unp varchar(255),
+    right_of_use_id int8,
+    primary key (id)
+);
+create table organization_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    apartmentn int8,
+    city varchar(255),
+    home_number varchar(255),
+    region varchar(255),
+    street varchar(255),
+    name varchar(255),
+    registration_date date,
+    type varchar(255),
+    unp varchar(255),
+    right_of_use_id int8,
+    primary key (id, rev)
+);
+create table owner
+(
+    type varchar(31) not null,
+    id  bigserial not null,
+    name varchar(255),
+    unp varchar(255),
+    birth_date date,
+    doc_n varchar(255),
+    doc_type varchar(255),
+    personal_number varchar(255),
+    land_plot_id int8,
+    ownership_id int8,
+    right_of_use_id int8,
+    owner_id int8,
+    primary key (id)
+);
+create table owner_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    type varchar(31),
+    revtype int2,
+    name varchar(255),
+    land_plot_id int8,
+    ownership_id int8,
+    right_of_use_id int8,
+    primary key (id, rev)
+);
+create table ownership
+(
+    id  bigserial not null,
+    proportion float8,
+    registration_date date,
+    owner_id int8,
+    primary key (id)
+);
+create table ownership_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    proportion float8,
+    registration_date date,
+    owner_id int8,
+    primary key (id, rev)
+);
+create table restriction
+(
+    id  bigserial not null,
+    description varchar(255),
+    land_plot_id int8,
+    primary key (id)
+);
+create table restriction_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    description varchar(255),
+    land_plot_id int8,
+    primary key (id, rev)
+);
+create table revinfo
+(
+    rev int4 not null,
+    revtstmp int8,
+    primary key (rev)
+);
+create table right_of_use
+(
+    id  bigserial not null,
+    cost_desceription varchar(255),
+    description varchar(255),
+    proportion float8,
+    validity_period date,
+    owner_id int8,
+    primary key (id)
+);
+create table right_of_use_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    cost_desceription varchar(255),
+    description varchar(255),
+    proportion float8,
+    validity_period date,
+    owner_id int8,
+    primary key (id, rev)
+);
+create table state_registration
+(
+    id  bigserial not null,
+    date date,
+    issue_organization varchar(255),
+    land_plot_id int8,
+    right_of_use_id int8,
+    primary key (id)
+);
+create table state_registration_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    date date,
+    issue_organization varchar(255),
+    land_plot_id int8,
+    right_of_use_id int8,
+    primary key (id, rev)
+);
+create table uninsulated_room
+(
+    id  bigserial not null,
+    inventory_number varchar(255),
+    surface float8,
+    building_id int8,
+    primary key (id)
+);
+create table uninsulated_room_aud
+(
+    id int8 not null,
+    rev int4 not null,
+    revtype int2,
+    inventory_number varchar(255),
+    surface float8,
+    building_id int8,
+    primary key (id, rev)
+);
 create sequence hibernate_sequence start 1 increment 1;
 alter table if exists act add constraint FKgmvldqvsrtco8bvy3y5tdfdd foreign key (restriction_id) references restriction;
 alter table if exists act_aud add constraint FKb0f5itylsi3afb4veji5rw797 foreign key (rev) references revinfo;
