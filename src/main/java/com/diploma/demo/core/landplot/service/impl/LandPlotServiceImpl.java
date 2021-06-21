@@ -85,4 +85,8 @@ public class LandPlotServiceImpl implements LandPlotService {
         landPlotRepository.delete(landPlot);
         landPlotRepository.flush();
     }
+
+    public List<LandPlot> findDis() {
+        return landPlotRepository.findDis();
+    }
 }

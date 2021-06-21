@@ -3,6 +3,9 @@ package com.diploma.demo.view.auth.adminPanel;
 import com.diploma.demo.auth.AuthUtils;
 import com.diploma.demo.auth.User;
 import com.diploma.demo.auth.service.UserService;
+import com.diploma.demo.core.landplot.LandPlot;
+import com.diploma.demo.core.landplot.service.LandPlotService;
+import com.diploma.demo.core.landplot.service.impl.LandPlotServiceImpl;
 import com.diploma.demo.view.controllers.CrudController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -21,6 +24,8 @@ import java.util.List;
 @Component
 public class AdminPanelController extends CrudController<User> {
     UserService userService;
+    LandPlotServiceImpl landPlotService;
+    // private PgInheritsService annualArchiving;
 
     @FXML private VBox VBox;
     @FXML private TableView<User> tableView;
@@ -31,12 +36,14 @@ public class AdminPanelController extends CrudController<User> {
     @FXML private UserRolesController userRolesPopupController;
 
     @Autowired
-    public AdminPanelController(UserService userService) {
+    public AdminPanelController(UserService userService, LandPlotServiceImpl landPlotService) {
         this.userService = userService;
+        this.landPlotService = landPlotService;
     }
 
     @FXML void initialize() {
         initializeController();
+        //annualArchiving.startAnnualArchiving();
     }
 
     @Override
@@ -124,5 +131,15 @@ public class AdminPanelController extends CrudController<User> {
     @Override
     protected void updateObjectFromForm(User object) {
         return;
+    }
+
+
+    @FXML private void startArchive() {
+        System.out.println("hello");
+        List<LandPlot> names = landPlotService.findDis();
+        System.out.println("names length " + names.size());
+        for (int i = 0; i < names.size(); i += 1) {
+            System.out.println(names.get(i).getYear());
+        }
     }
 }
