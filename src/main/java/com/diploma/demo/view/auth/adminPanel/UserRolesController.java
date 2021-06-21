@@ -62,7 +62,7 @@ public class UserRolesController extends CrudController<User> {
                     // System.out.println("hohoho : " + item);
                     this.setText(item);
                     if (currentUser != null && currentUser.hasRole(item)) {
-                        this.setStyle("-fx-background-color: #00FF00;");
+                        this.setStyle("-fx-background-color: #00BFFF");
                     } else {
                         this.setStyle("");
                     }

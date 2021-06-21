@@ -36,6 +36,8 @@ public class ProfileController {
     @FXML AdminPanelController adminPanelController;
 
     @FXML Label role_label;
+    @FXML Label labelName;
+    @FXML Label labelPass;
 
     @FXML TextField tfLogin;
 
@@ -43,6 +45,7 @@ public class ProfileController {
 
     @FXML Button btnLogin;
     @FXML Button btnLogout;
+    @FXML Button btnRegister;
 
     @FXML void initialize() {
         updateInfo();
@@ -74,6 +77,9 @@ public class ProfileController {
             CrudUtils.hideNode(btnLogin);
             CrudUtils.hideNode(tfLogin);
             CrudUtils.hideNode(pfPassword);
+            CrudUtils.hideNode(labelName);
+            CrudUtils.hideNode(labelPass);
+            CrudUtils.hideNode(btnRegister);
 
             adminPanelController.tryShowAdminPanel();
         } catch (AuthenticationException e) {
@@ -88,6 +94,9 @@ public class ProfileController {
             CrudUtils.unhideNode(btnLogin);
             CrudUtils.unhideNode(tfLogin);
             CrudUtils.unhideNode(pfPassword);
+            CrudUtils.unhideNode(labelName);
+            CrudUtils.unhideNode(labelPass);
+            CrudUtils.unhideNode(btnRegister);
             CrudUtils.hideNode(btnLogout);
 
             adminPanelController.hideAdminPanel();

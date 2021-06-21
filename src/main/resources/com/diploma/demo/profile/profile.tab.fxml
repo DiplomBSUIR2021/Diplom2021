@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="400.0" prefWidth="600.0"
+<VBox
       xmlns="http://javafx.com/javafx/11.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.diploma.demo.view.auth.ProfileController">
@@ -16,13 +16,13 @@
     </AnchorPane>
     <AnchorPane prefHeight="220.0" prefWidth="600.0" fx:id="ap1">
         <TextField fx:id="tfLogin" layoutX="108.0" layoutY="29.0" prefHeight="20.0" prefWidth="318.0" />
-        <Label layoutX="30.0" layoutY="30.0">User Name</Label>
-        <Label layoutX="34.0" layoutY="82.0" text="password">password</Label>
+        <Label fx:id="labelName" layoutX="30.0" layoutY="30.0">User Name</Label>
+        <Label fx:id="labelPass" layoutX="34.0" layoutY="82.0" text="password">password</Label>
         <PasswordField fx:id="pfPassword" layoutX="108.0" layoutY="78.0" prefHeight="25.0" prefWidth="324.0" />
         <Button fx:id="btnLogin" layoutX="23.0" layoutY="130.0" onAction="#login" prefHeight="25.0" prefWidth="73.0">
             LOGIN
         </Button>
-        <Button onAction="#openCreatePopup">Create</Button>
+        <Button fx:id="btnRegister" onAction="#openCreatePopup">Регистрация</Button>
     </AnchorPane>
 
     <fx:include fx:id="creationPopup" source="creationPopup.fxml" visible = "false" managed="false"/>
